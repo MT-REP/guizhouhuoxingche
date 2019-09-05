@@ -10,7 +10,6 @@ MotusTimer::MotusTimer(int timer, QObject *parent) :QObject(parent),m_timer(time
     m_id=0;
 }
 
-
 //回调函数
 void WINAPI CALLBACK MotusTimer::mmtimer_proc(uint timerId, uint uMsg, DWORD_PTR user, DWORD_PTR, DWORD_PTR)
 {
@@ -19,7 +18,6 @@ void WINAPI CALLBACK MotusTimer::mmtimer_proc(uint timerId, uint uMsg, DWORD_PTR
     {}
     emit t->timeout();
 }
-
 
 //析构函数
 MotusTimer::~MotusTimer()

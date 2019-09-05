@@ -6,6 +6,7 @@
 
 QT       += core gui
 QT       += network
+QT += widgets
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = MotusPlatfrom
@@ -27,15 +28,51 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     motustimer.cpp \
-    motussocket.cpp
+    motussocket.cpp \
+    motusrunlog.cpp \
+    motususerlogin.cpp \
+    motuschangepassword.cpp \
+    motususermanagement.cpp \
+    motuslevelswitch.cpp \
+    motusaflatformstatus.cpp \
+    motushand.cpp \
+    motusoperationview.cpp \
+    motusplatfrom.cpp \
+    motusbaseplc.cpp \
+    motusplcicontrol.cpp \
+    motusplcocontrol.cpp \
+    motussinglecontrol.cpp \
+    motuscarcontrol.cpp
 
 HEADERS += \
         mainwindow.h \
     motustimer.h \
-    motussocket.h
+    motussocket.h \
+    motusrunlog.h \
+    motususerlogin.h \
+    motuschangepassword.h \
+    motususermanagement.h \
+    motuslevelswitch.h \
+    motusaflatformstatus.h \
+    motushand.h \
+    motusoperationview.h \
+    motusplatfrom.h \
+    motusbaseplc.h \
+    motusplcicontrol.h \
+    motusplcocontrol.h \
+    motussinglecontrol.h \
+    motuscarcontrol.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    motusrunlog.ui \
+    motususerlogin.ui \
+    motuschangepassword.ui \
+    motususermanagement.ui \
+    motuslevelswitch.ui \
+    motusaflatformstatus.ui \
+    motushand.ui \
+    motusoperationview.ui
 
 RC_FILE = motus.rc
 
@@ -48,10 +85,19 @@ DESTDIR=bin
 if:debug {
      DESTDIR=./debug
      LIBS += -L./debug
+     LIBS += -L"C:\Qt\Qt5.9.3\5.9.3\mingw53_32\lib" -lqwtd   #qwt文件配置
 } else:release {
      DESTDIR=./release
      LIBS += -L./release
+     LIBS += -L"C:\Qt\Qt5.9.3\5.9.3\mingw53_32\lib" -lqwt     #qwt文件配置
 }
 
 LIBS += -lwinmm
 
+#QWT 文件配置
+DEFINES += QT_DLL QWT_DLL
+INCLUDEPATH += C:\Qt\Qt5.9.3\5.9.3\mingw53_32\include\Qwt
+###################################################################
+
+RESOURCES += \
+    resources.qrc

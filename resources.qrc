@@ -1,0 +1,33 @@
+<RCC>
+    <qresource prefix="/">
+        <file>picture/downpage.png</file>
+        <file>picture/tableback.png</file>
+        <file>picture/uppage.png</file>
+        <file>picture/errorbackground.png</file>
+        <file>picture/loginbeijing.png</file>
+        <file>picture/passwordChange.png</file>
+        <file>picture/caozuo.png</file>
+        <file>picture/caozuo_hover.png</file>
+        <file>picture/caozuo_pressed.jpg</file>
+        <file>picture/guanli.png</file>
+        <file>picture/guanli_hover.png</file>
+        <file>picture/guanli_pressed.png</file>
+        <file>picture/userbackground.png</file>
+        <file>picture/userSwitchBackground.png</file>
+        <file>picture/tuichu.png</file>
+        <file>picture/yonghu.png</file>
+        <file>picture/cuowu.png</file>
+        <file>picture/jiankong.png</file>
+        <file>picture/shoudong.png</file>
+        <file>picture/yundong.png</file>
+        <file>picture/run.png</file>
+        <file>picture/reset.png</file>
+        <file>picture/kaiji.png</file>
+        <file>picture/savefile.png</file>
+        <file>picture/deletefile.png</file>
+        <file>picture/openfile.png</file>
+        <file>picture/playbackground.png</file>
+        <file>picture/statusbackground.jpg</file>
+        <file>picture/handbackground.png</file>
+    </qresource>
+</RCC>

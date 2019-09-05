@@ -3,12 +3,16 @@
 MotusSocket::MotusSocket(QObject *parent) : QObject(parent)
 {
     isInit=false;
-    remoteaddr=NULL;
-    remotePort=5000;
+    for(int i=0;i<MaxNum;i++)
+    {
+        remoteaddr[i]=NULL;
+        remotePort[i]=10000;
+    }
+
 }
 
 //网络初始化
-void MotusSocket::initSocket(int bindPort)
+bool MotusSocket::initSocket(int bindPort)
 {
       //创建UdpSocket
       motusUdpServer = new QUdpSocket(this);
@@ -19,28 +23,32 @@ void MotusSocket::initSocket(int bindPort)
           connect(motusUdpServer, SIGNAL(readyRead()),this, SLOT(readPendingDatagrams()));
           //初始化完成
           isInit=true;
+          return true;
       }
       else
       {
           QMessageBox box;
-          box.setText("连接播放器的IP出现\r\n网络错误");
+          box.setText("绑定IP出现\r\n网络错误");
           box.exec();
       }
+      return false;
 }
 
 //设置远程IP和端口
-void MotusSocket::setRemoteIpAndPort(QString remoteIP,int remotePort)
+void MotusSocket::setRemoteIpAndPort(QString remoteIP,int remotePort,int index)
 {
-    if(remoteaddr==NULL)
+    if(index>=MaxNum)
+        return;
+    if(remoteaddr[index]==NULL)
     {
-        remoteaddr=new QHostAddress();
-        remoteaddr->setAddress(remoteIP);
+        remoteaddr[index]=new QHostAddress();
+        remoteaddr[index]->setAddress(remoteIP);
     }
     else
     {
-        remoteaddr->setAddress(remoteIP);
+        remoteaddr[index]->setAddress(remoteIP);
     }
-    this->remotePort=remotePort;
+    this->remotePort[index]=remotePort;
 }
 
 //接收数据
@@ -50,17 +58,20 @@ void MotusSocket::readPendingDatagrams()
      {
          QByteArray data;
          data.resize(motusUdpServer->pendingDatagramSize());
-         motusUdpServer->readDatagram(data.data(),data.size());//读取数据
+         motusUdpServer->readDatagram(data.data(),data.size(),&recvRemoteaddr);//读取数据
+         emit sendDataSign(data.data(),data.size(),recvRemoteaddr);
      }
 }
 
 //发送数据
-void MotusSocket::sendData(char data[],int length)
+void MotusSocket::sendData(char data[],int length,int index)
 {
-    if(remoteaddr!=NULL&&isInit)
+    if(index>=MaxNum)
+        return;
+    if(remoteaddr[index]!=NULL&&isInit)
     {
         //发送数据
-        motusUdpServer->writeDatagram(data,length,*remoteaddr,remotePort);
+        motusUdpServer->writeDatagram(data,length,*(remoteaddr[index]),remotePort[index]);
     }
 }
 
@@ -71,9 +82,12 @@ void MotusSocket::closeSocket()
     {
         motusUdpServer->close();
     }
-    if(remoteaddr!=NULL)
+    for(int i=0;i<MaxNum;i++)
     {
-        remoteaddr->clear();
+        if(remoteaddr[i]!=NULL)
+        {
+            remoteaddr[i]->clear();
+        }
     }
 }
 
