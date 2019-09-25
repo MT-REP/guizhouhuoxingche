@@ -29,7 +29,7 @@ enum PlatfromCode{NullCode=0,Automatic=1,HandMove=2};
 
 //平台子指令
 enum PlatfromHandCmd{NullCmd=0,CompressBarLock=1,
-                     GuardBarUp=2,GuardBarDown=3,GuardBarLock=5,CarFront=6,CarBack=7,
+                     GuardBarUp=2,GuardBarDown=3,WaittingCustomer=4,CarFront=6,CarBack=7,
                      PlatfromUp=8, PlatfromDown=9,ColdWind=10,SprayWater=11,SeatLight=12,
                      OutputClear=13,SmokeEffect=14,StrobeEffect=15,HubbleEffect=16,};
 
@@ -93,9 +93,11 @@ private:
     MotusPlcIControl  pleverDownFromIn;//压杆下限位
     MotusPlcIControl  pleverUpFromIn;  //压杆上限位
     MotusPlcIControl  pleverLockFromIn;//压杆锁限位
-    MotusSingleControl railUpControl;  //护栏上控制
-    MotusSingleControl railDownControl;//护栏下控制
-    MotusPlcIControl  railLockFromIn;  //护栏锁限位
+    MotusSingleControl railUpControl;  //护栏上控制*
+    MotusSingleControl railDownControl;//护栏下控制*
+    MotusPlcIControl  railLockFromIn;  //护栏锁限位*
+    MotusPlcIControl  railUpFromIn;  //护栏上限位
+    MotusPlcIControl  railDownFromIn;//护栏下限位
     MotusCarControl   mCarControl;     //小车控制
     MotusPlcIControl  freChangeFaultFromIn;//变频器故障
     MotusPlcIControl  driverFaultFromIn;//驱动器故障
@@ -104,18 +106,18 @@ private:
     MotusPlcIControl  saftBelt2FromIn;  //2#安全带
     MotusPlcIControl  saftBelt3FromIn;  //3#安全带
     MotusPlcIControl  saftBelt4FromIn;  //4#安全带
-    MotusPlcIControl  saftBelt5FromIn;  //5#安全带
-    MotusPlcIControl  saftBelt6FromIn;  //6#安全带
-    MotusPlcIControl  saftBelt7FromIn;  //7#安全带
-    MotusPlcIControl  saftBelt8FromIn;  //8#安全带
+    MotusPlcIControl  railReverFromIn;     //护栏翻转
 
-    MotusPlcOControl  faultFromOut;    //故障指示灯
-    MotusPlcOControl  mSureFromOut;    //确认指示灯
-    MotusPlcOControl  resetFromOut;    //复位指示灯
-    MotusPlcOControl  handFromOut;     //手动指示灯
-    MotusPlcOControl  waitFromOut;     //待客指示灯
+
+    MotusPlcOControl  faultFromOut;       //故障指示灯
+    MotusPlcOControl  mSureFromOut;       //确认指示灯
+    MotusPlcOControl  resetFromOut;       //复位指示灯
+    MotusPlcOControl  handFromOut;        //手动指示灯
+    MotusPlcOControl  waitFromOut;        //待客指示灯
+    MotusPlcOControl  railUpFromOut;      //护栏上输出
+    MotusPlcOControl  railDownFromOut;    //护栏下输出
     MotusPlcOControl  pleverLockFromOut;  //压杆锁
-    MotusPlcOControl  railLockFromOut;    //护栏锁定
+    MotusPlcOControl  railLockFromOut;    //护栏锁定*
     MotusPlcOControl  coolWindFromOut;    //冷风特效
     MotusPlcOControl  waterSprayFromOut;  //喷水特效
     MotusPlcOControl  seatLightFromOut;   //座椅照明

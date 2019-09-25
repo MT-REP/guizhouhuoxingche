@@ -92,16 +92,19 @@ MainWindow::MainWindow(QWidget *parent) :
     saftBelt2FromIn.initPara(&mMotusBasePlc,22);   //2#安全带
     saftBelt3FromIn.initPara(&mMotusBasePlc,23);   //3#安全带
     saftBelt4FromIn.initPara(&mMotusBasePlc,24);   //4#安全带
-    saftBelt5FromIn.initPara(&mMotusBasePlc,25);   //5#安全带
-    saftBelt6FromIn.initPara(&mMotusBasePlc,26);   //6#安全带
-    saftBelt7FromIn.initPara(&mMotusBasePlc,27);   //7#安全带
-    saftBelt8FromIn.initPara(&mMotusBasePlc,28);   //8#安全带
+    railUpFromIn.initPara(&mMotusBasePlc,7);       //护栏上限位
+    railDownFromIn.initPara(&mMotusBasePlc,8);     //护栏下限位
+    railReverFromIn.initPara(&mMotusBasePlc,25);   //护栏翻转
     faultFromOut.initPara(&mMotusBasePlc,29);     //故障指示灯
     mSureFromOut.initPara(&mMotusBasePlc,30);     //确认指示灯
     resetFromOut.initPara(&mMotusBasePlc,31);     //复位指示灯
     handFromOut.initPara(&mMotusBasePlc,32);      //手动指示灯
     waitFromOut.initPara(&mMotusBasePlc,33);      //待客指示灯
-    pleverLockFromOut.initPara(&mMotusBasePlc,36);   //压杆锁
+
+    pleverLockFromOut.initPara(&mMotusBasePlc,36);  //压杆锁
+    railUpFromOut.initPara(&mMotusBasePlc,37);      //护栏上输出
+    railDownFromOut.initPara(&mMotusBasePlc,38);    //护栏下输出
+
     railLockFromOut.initPara(&mMotusBasePlc,39);     //护栏锁定
     coolWindFromOut.initPara(&mMotusBasePlc,45);     //冷风特效
     waterSprayFromOut.initPara(&mMotusBasePlc,46);   //喷水特效
@@ -157,6 +160,7 @@ void MainWindow::masterClock(void)
     {
         case Automatic:
         {
+            /*
             //初始默认值
             if(pathStep==0)
             {
@@ -2099,6 +2103,7 @@ void MainWindow::masterClock(void)
                     break;
                 }
             }
+            */
             break;
         }
         case HandMove:
@@ -2123,7 +2128,7 @@ void MainWindow::masterClock(void)
                         }
                         break;
                      }
-                //特效
+                //泡泡
                 case HubbleEffect:
                      {
                         if(plcStatus[0])
@@ -2141,13 +2146,29 @@ void MainWindow::masterClock(void)
                         }
                         break;
                      }
+                //待客指示灯
+                case WaittingCustomer:
+                     {
+                        if(plcStatus[currentHandPlatfrom])
+                        {
+                           waitFromOut.setValue(actionValue,currentHandPlatfrom);
+                        }
+                        break;
+                     }
                 //护栏升
                 case GuardBarUp:
                      {
                         if(plcStatus[currentHandPlatfrom]
-                          &&!railUpControl.getIStatus(currentHandPlatfrom))
+                          &&(!railUpFromIn.getStatus(currentHandPlatfrom)
+                             ||!railReverFromIn.getStatus(currentHandPlatfrom)))
                         {
-                           railUpControl.action(currentHandPlatfrom);
+                           railUpFromOut.setControl(true,currentHandPlatfrom);
+                        }
+                        else  if(plcStatus[currentHandPlatfrom]
+                                 &&railUpFromIn.getStatus(currentHandPlatfrom)
+                                 &&railReverFromIn.getStatus(currentHandPlatfrom))
+                        {
+                           railUpFromOut.setControl(false,currentHandPlatfrom);
                         }
                         break;
                      }
@@ -2155,19 +2176,15 @@ void MainWindow::masterClock(void)
                 case GuardBarDown:
                      {
                         if(plcStatus[currentHandPlatfrom]
-                           &&!railDownControl.getIStatus(currentHandPlatfrom))
+                           &&!railDownFromIn.getStatus(currentHandPlatfrom))
                         {
-                           railDownControl.action(currentHandPlatfrom);
+                           railDownFromOut.setControl(true,currentHandPlatfrom);
                         }
-                        break;
-                     }
-                //护栏锁定
-                case GuardBarLock:
-                     {
-                        if(plcStatus[currentHandPlatfrom])
-                        {
-                           railLockFromOut.setValue(actionValue,currentHandPlatfrom);
-                        }
+                        else if(plcStatus[currentHandPlatfrom]                                
+                                &&railDownFromIn.getStatus(currentHandPlatfrom))
+                         {
+                            railDownFromOut.setControl(false,currentHandPlatfrom);
+                         }
                         break;
                      }
                 //冷风特效
@@ -2220,47 +2237,90 @@ void MainWindow::masterClock(void)
                      {
                         if(plcStatus[currentHandPlatfrom])
                         {
-                            //小车触碰到极限位 进行报错处理
-                            if(mCarControl.getLimitStatus(currentHandPlatfrom))
+                            //小车触碰到极限位 进行处理 后退关闭
+                            if(mCarControl.getLimitStatus(currentHandPlatfrom)&&mCarControl.getBackControl(currentHandPlatfrom))
                             {
                                 mCarControl.setBackControl(false,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车触碰极限位 前进关闭
+                            if(mCarControl.getLimitStatus(currentHandPlatfrom)&&mCarControl.getFrontControl(currentHandPlatfrom))
+                            {
                                 mCarControl.setFrontControl(false,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车触碰到极限位  高速关闭
+                            if(mCarControl.getLimitStatus(currentHandPlatfrom)&&mCarControl.getHighSpeedControl(currentHandPlatfrom))
+                            {
                                 mCarControl.setHighSpeedControl(false,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车触碰到极限位  低速关闭
+                            if(mCarControl.getLimitStatus(currentHandPlatfrom)&&mCarControl.getLowSpeedControl(currentHandPlatfrom))
+                            {
                                 mCarControl.setLowSpeedControl(false,currentHandPlatfrom);
-                                mCarControl.setGasBrakeControl(true,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车触碰到极限位  气刹开关闭
+                            if(mCarControl.getLimitStatus(currentHandPlatfrom)&&mCarControl.getGasBrakeControl(currentHandPlatfrom))
+                            {
+                                mCarControl.setGasBrakeControl(false,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车触碰到极限位  气刹关打开
+                            if(mCarControl.getLimitStatus(currentHandPlatfrom)&&!mCarControl.getGasBrakeCloseControl(currentHandPlatfrom))
+                            {
+                                mCarControl.setGasBrakeCloseControl(true,currentHandPlatfrom);
                                 break;
                             }
                             //判断小车是否到位
-                            if(mCarControl.getFrontStopStatus(currentHandPlatfrom)&&!mCarControl.getFrontControl(currentHandPlatfrom)
+                            if(mCarControl.getFrontStopStatus(currentHandPlatfrom)
+                               &&!mCarControl.getFrontControl(currentHandPlatfrom)&&!mCarControl.getBackControl(currentHandPlatfrom)
                                &&!mCarControl.getHighSpeedControl(currentHandPlatfrom)&&!mCarControl.getLowSpeedControl(currentHandPlatfrom)
-                               &&mCarControl.getGasBrake(currentHandPlatfrom)&&mCarControl.getGasBrakeControl(currentHandPlatfrom)) break;
-                            //气动抱闸打开
-                            if(!mCarControl.getFrontStopStatus(currentHandPlatfrom)
-                                &&(mCarControl.getGasBrake(currentHandPlatfrom)||mCarControl.getGasBrakeControl(currentHandPlatfrom)))
+                               &&mCarControl.getGasBrake(currentHandPlatfrom)&&!mCarControl.getGasBrakeControl(currentHandPlatfrom)
+                               &&mCarControl.getGasBrakeCloseControl(currentHandPlatfrom)) break;
+
+                            //小车后退  气刹关关闭
+                            if(!mCarControl.getFrontStopStatus(currentHandPlatfrom)&&mCarControl.getGasBrakeCloseControl(currentHandPlatfrom))
+                            {
+                                mCarControl.setGasBrakeCloseControl(false,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车后退  气刹开打开
+                            if(!mCarControl.getFrontStopStatus(currentHandPlatfrom)&&!mCarControl.getGasBrakeControl(currentHandPlatfrom))
+                            {
+                                mCarControl.setGasBrakeControl(true,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车后退  高速关闭
+                            if(!mCarControl.getFrontStopStatus(currentHandPlatfrom)&&mCarControl.getHighSpeedControl(currentHandPlatfrom))
+                            {
+                                mCarControl.setHighSpeedControl(false,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车后退 后退打开
+                            if(!mCarControl.getFrontStopStatus(currentHandPlatfrom)&&mCarControl.getBackControl(currentHandPlatfrom))
                             {
                                 mCarControl.setBackControl(false,currentHandPlatfrom);
-                                mCarControl.setFrontControl(false,currentHandPlatfrom);
-                                mCarControl.setHighSpeedControl(false,currentHandPlatfrom);
-                                mCarControl.setLowSpeedControl(false,currentHandPlatfrom);
-                                mCarControl.setGasBrakeControl(false,currentHandPlatfrom);
+                                break;
                             }
-                            //设置速度
-                            if(!mCarControl.getFrontStopStatus(currentHandPlatfrom)&&!mCarControl.getGasBrake(currentHandPlatfrom)&&!mCarControl.getGasBrakeControl(currentHandPlatfrom)
-                               &&(!mCarControl.getFrontControl(currentHandPlatfrom)||mCarControl.getHighSpeedControl(currentHandPlatfrom)||!mCarControl.getLowSpeedControl(currentHandPlatfrom)))
+                            //小车后退 前进关闭
+                            if(!mCarControl.getFrontStopStatus(currentHandPlatfrom)&&!mCarControl.getFrontControl(currentHandPlatfrom))
                             {
                                 mCarControl.setFrontControl(true,currentHandPlatfrom);
-                                mCarControl.setHighSpeedControl(false,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车后退 低速打开
+                            if(!mCarControl.getFrontStopStatus(currentHandPlatfrom)&&!mCarControl.getLowSpeedControl(currentHandPlatfrom))
+                            {
                                 mCarControl.setLowSpeedControl(true,currentHandPlatfrom);
+                                break;
                             }
                             //清除速度
-                            if(mCarControl.getFrontStopStatus(currentHandPlatfrom)&&
-                               (mCarControl.getFrontControl(currentHandPlatfrom)||mCarControl.getHighSpeedControl(currentHandPlatfrom)
-                                ||mCarControl.getLowSpeedControl(currentHandPlatfrom)||!mCarControl.getGasBrakeControl(currentHandPlatfrom)))
+                            if(mCarControl.getFrontStopStatus(currentHandPlatfrom))
                             {
-                                mCarControl.setFrontControl(false,currentHandPlatfrom);
-                                mCarControl.setLowSpeedControl(false,currentHandPlatfrom);
-                                mCarControl.setHighSpeedControl(false,currentHandPlatfrom);
-                                mCarControl.setGasBrakeControl(true,currentHandPlatfrom);
+                               mCarControl.clearOutput(currentHandPlatfrom);
+                               break;
                             }
                         }
                         break;
@@ -2270,60 +2330,103 @@ void MainWindow::masterClock(void)
                      {
                         if(plcStatus[currentHandPlatfrom])
                         {
-                            //小车触碰到极限位 进行报错处理
-                            if(mCarControl.getLimitStatus(currentHandPlatfrom))
+                            //小车触碰到极限位 进行处理 后退关闭
+                            if(mCarControl.getLimitStatus(currentHandPlatfrom)&&mCarControl.getBackControl(currentHandPlatfrom))
                             {
                                 mCarControl.setBackControl(false,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车触碰极限位 前进关闭
+                            if(mCarControl.getLimitStatus(currentHandPlatfrom)&&mCarControl.getFrontControl(currentHandPlatfrom))
+                            {
                                 mCarControl.setFrontControl(false,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车触碰到极限位  高速关闭
+                            if(mCarControl.getLimitStatus(currentHandPlatfrom)&&mCarControl.getHighSpeedControl(currentHandPlatfrom))
+                            {
                                 mCarControl.setHighSpeedControl(false,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车触碰到极限位  低速关闭
+                            if(mCarControl.getLimitStatus(currentHandPlatfrom)&&mCarControl.getLowSpeedControl(currentHandPlatfrom))
+                            {
                                 mCarControl.setLowSpeedControl(false,currentHandPlatfrom);
-                                mCarControl.setGasBrakeControl(true,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车触碰到极限位  气刹开关闭
+                            if(mCarControl.getLimitStatus(currentHandPlatfrom)&&mCarControl.getGasBrakeControl(currentHandPlatfrom))
+                            {
+                                mCarControl.setGasBrakeControl(false,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车触碰到极限位  气刹关打开
+                            if(mCarControl.getLimitStatus(currentHandPlatfrom)&&!mCarControl.getGasBrakeCloseControl(currentHandPlatfrom))
+                            {
+                                mCarControl.setGasBrakeCloseControl(true,currentHandPlatfrom);
                                 break;
                             }
                             //判断小车是否到位
-                            if(mCarControl.getBackStopStatus(currentHandPlatfrom)&&!mCarControl.getBackControl(currentHandPlatfrom)
+                            if(mCarControl.getBackStopStatus(currentHandPlatfrom)
+                               &&!mCarControl.getFrontControl(currentHandPlatfrom)&&!mCarControl.getBackControl(currentHandPlatfrom)
                                &&!mCarControl.getHighSpeedControl(currentHandPlatfrom)&&!mCarControl.getLowSpeedControl(currentHandPlatfrom)
-                               &&mCarControl.getGasBrake(currentHandPlatfrom)&&mCarControl.getGasBrakeControl(currentHandPlatfrom)) break;
-                            //气动抱闸打开
-                            if(!mCarControl.getBackStopStatus(currentHandPlatfrom)
-                                &&(mCarControl.getGasBrake(currentHandPlatfrom)||mCarControl.getGasBrakeControl(currentHandPlatfrom)))
+                               &&mCarControl.getGasBrake(currentHandPlatfrom)&&!mCarControl.getGasBrakeControl(currentHandPlatfrom)
+                               &&mCarControl.getGasBrakeCloseControl(currentHandPlatfrom))   break;
+
+                            //小车后退  气刹关关闭
+                            if(!mCarControl.getBackStopStatus(currentHandPlatfrom)&&mCarControl.getGasBrakeCloseControl(currentHandPlatfrom))
                             {
-                                mCarControl.setBackControl(false,currentHandPlatfrom);
-                                mCarControl.setFrontControl(false,currentHandPlatfrom);
-                                mCarControl.setHighSpeedControl(false,currentHandPlatfrom);
-                                mCarControl.setLowSpeedControl(false,currentHandPlatfrom);
-                                mCarControl.setGasBrakeControl(false,currentHandPlatfrom);
+                                mCarControl.setGasBrakeCloseControl(false,currentHandPlatfrom);
+                                break;
                             }
-                            //设置速度
-                            if(!mCarControl.getBackStopStatus(currentHandPlatfrom)&&!mCarControl.getGasBrake(currentHandPlatfrom)&&!mCarControl.getGasBrakeControl(currentHandPlatfrom)
-                               &&(!mCarControl.getBackControl(currentHandPlatfrom)||mCarControl.getHighSpeedControl(currentHandPlatfrom)||!mCarControl.getLowSpeedControl(currentHandPlatfrom)))
+                            //小车后退  气刹开打开
+                            if(!mCarControl.getBackStopStatus(currentHandPlatfrom)&&!mCarControl.getGasBrakeControl(currentHandPlatfrom))
+                            {
+                                mCarControl.setGasBrakeControl(true,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车后退  高速关闭
+                            if(!mCarControl.getBackStopStatus(currentHandPlatfrom)&&mCarControl.getHighSpeedControl(currentHandPlatfrom))
+                            {
+                                mCarControl.setHighSpeedControl(false,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车后退 前进关闭
+                            if(!mCarControl.getBackStopStatus(currentHandPlatfrom)&&mCarControl.getFrontControl(currentHandPlatfrom))
+                            {
+                                mCarControl.setFrontControl(false,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车后退 后退打开
+                            if(!mCarControl.getBackStopStatus(currentHandPlatfrom)&&!mCarControl.getBackControl(currentHandPlatfrom))
                             {
                                 mCarControl.setBackControl(true,currentHandPlatfrom);
-                                mCarControl.setHighSpeedControl(false,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车后退 低速打开
+                            if(!mCarControl.getBackStopStatus(currentHandPlatfrom)&&!mCarControl.getLowSpeedControl(currentHandPlatfrom))
+                            {
                                 mCarControl.setLowSpeedControl(true,currentHandPlatfrom);
+                                break;
                             }
                             //清除速度
-                            if(mCarControl.getBackStopStatus(currentHandPlatfrom)&&
-                               (mCarControl.getBackControl(currentHandPlatfrom)||mCarControl.getHighSpeedControl(currentHandPlatfrom)
-                                ||mCarControl.getLowSpeedControl(currentHandPlatfrom)||!mCarControl.getGasBrakeControl(currentHandPlatfrom)))
+                            if(mCarControl.getBackStopStatus(currentHandPlatfrom))
                             {
-                                mCarControl.setBackControl(false,currentHandPlatfrom);
-                                mCarControl.setLowSpeedControl(false,currentHandPlatfrom);
-                                mCarControl.setHighSpeedControl(false,currentHandPlatfrom);
-                                mCarControl.setGasBrakeControl(true,currentHandPlatfrom);
+                               mCarControl.clearOutput(currentHandPlatfrom);
+                               break;
                             }
                         }
                         break;
                      }
                 //输出清除
                 case OutputClear:
-                     {
-                        if(plcStatus[currentHandPlatfrom])
-                        {
-                            mCarControl.clearOutput(currentHandPlatfrom);
-                        }
-                        break;
-                     }
+                 {
+                    if(plcStatus[currentHandPlatfrom])
+                    {
+                        mCarControl.clearOutput(currentHandPlatfrom);
+                    }
+                    break;
+                 }
                 default:
                     break;
             }

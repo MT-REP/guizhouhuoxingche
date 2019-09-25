@@ -44,8 +44,6 @@ private slots:
     void on_guardBarUp_clicked();
     //护栏降
     void on_guardBarDown_clicked();
-    //护栏锁定
-    void on_guardBarLock_clicked();
     //小车前进
     void on_carFront_clicked();
     //小车后退
@@ -67,6 +65,8 @@ private slots:
     void on_strobeEffect_clicked();
     //泡泡特效
     void on_hubbleEffect_clicked();
+    void on_waitingLight_clicked();
+
 private:
     Ui::MotusHand *ui;
     bool staticPermission;//私有权限

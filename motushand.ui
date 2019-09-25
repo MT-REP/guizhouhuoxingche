@@ -201,7 +201,7 @@
      <string>护栏降</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="guardBarLock">
+   <widget class="QPushButton" name="waitingLight">
     <property name="geometry">
      <rect>
       <x>580</x>
@@ -211,7 +211,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>护栏锁定</string>
+     <string>待客</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pressureBarLock">

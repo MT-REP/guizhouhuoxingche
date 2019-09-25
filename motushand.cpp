@@ -280,8 +280,8 @@ void MotusHand::on_guardBarDown_clicked()
     emit sendMainWindoewCmd(platfromIndex,GuardBarDown,1);
 }
 
-//护栏锁定
-void MotusHand::on_guardBarLock_clicked()
+//待客指示灯
+void MotusHand::on_waitingLight_clicked()
 {
     static bool ret=false;
     if(!staticPermission)
@@ -289,7 +289,7 @@ void MotusHand::on_guardBarLock_clicked()
         QMessageBox::information(NULL,"友情提示","请在手动模式下操作");
         return;
     }
-    emit sendMainWindoewCmd(platfromIndex,GuardBarLock,1,!ret);
+    emit sendMainWindoewCmd(platfromIndex,WaittingCustomer,1,!ret);
     ret=!ret;
 }
 
@@ -386,5 +386,3 @@ void MotusHand::on_outputClear_clicked()
     }
     emit sendMainWindoewCmd(platfromIndex,OutputClear,1);
 }
-
-

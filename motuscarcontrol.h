@@ -21,18 +21,18 @@ public:
     bool getHighSpeedControl(int index);
     bool getLowSpeedControl(int index);
     bool getGasBrakeControl(int index);
+    bool getGasBrakeCloseControl(int index);
     bool setFrontControl(bool value,int index);
     bool setBackControl(bool value,int index);
     bool setHighSpeedControl(bool value,int index);
     bool setLowSpeedControl(bool value,int index);
     bool setGasBrakeControl(bool value,int index);
-    bool setCarFront(int index);
-    bool setCarBack(int index);
+    bool setGasBrakeCloseControl(bool value,int index);
     bool clearOutput(int index);
 private:
     MotusBasePlc *mMotusBasePlc;
     int inposition[6];
-    int outposition[5];
+    int outposition[6];
 signals:
 public slots:
 };

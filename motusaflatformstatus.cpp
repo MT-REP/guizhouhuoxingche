@@ -10,11 +10,11 @@ MotusaFlatformStatus::MotusaFlatformStatus(QWidget *parent) :
     statusLineEdit[0]=ui->lineEdit_1; statusLineEdit[1]=ui->lineEdit_2; statusLineEdit[2]=ui->lineEdit_3;
     statusLineEdit[3]=ui->lineEdit_4; statusLineEdit[4]=ui->lineEdit_5; statusLineEdit[5]=ui->lineEdit_6;
     //主控PLC状态
-    mainPushButton[0]=ui->pushButton_1; mainPushButton[5]=ui->pushButton_6; mainPushButton[10]=ui->pushButton_11;
-    mainPushButton[1]=ui->pushButton_2; mainPushButton[6]=ui->pushButton_7; mainPushButton[11]=ui->pushButton_12;
-    mainPushButton[2]=ui->pushButton_3; mainPushButton[7]=ui->pushButton_8; mainPushButton[12]=ui->pushButton_13;
-    mainPushButton[3]=ui->pushButton_4; mainPushButton[8]=ui->pushButton_9; mainPushButton[13]=ui->pushButton_14;
-    mainPushButton[4]=ui->pushButton_5; mainPushButton[9]=ui->pushButton_10;
+    mainPushButton[0]=ui->pushButton_1; mainPushButton[5]=ui->pushButton_6; mainPushButton[10]=ui->pushButton_11; mainPushButton[15]=ui->pushButton_16; mainPushButton[20]=ui->pushButton_21;
+    mainPushButton[1]=ui->pushButton_2; mainPushButton[6]=ui->pushButton_7; mainPushButton[11]=ui->pushButton_12; mainPushButton[16]=ui->pushButton_17;
+    mainPushButton[2]=ui->pushButton_3; mainPushButton[7]=ui->pushButton_8; mainPushButton[12]=ui->pushButton_13; mainPushButton[17]=ui->pushButton_18;
+    mainPushButton[3]=ui->pushButton_4; mainPushButton[8]=ui->pushButton_9; mainPushButton[13]=ui->pushButton_14; mainPushButton[18]=ui->pushButton_19;
+    mainPushButton[4]=ui->pushButton_5; mainPushButton[9]=ui->pushButton_10; mainPushButton[14]=ui->pushButton_15; mainPushButton[19]=ui->pushButton_20;
     //从PLC状态
     fromPushButton[0]=ui->pButton_1;  fromPushButton[12]=ui->pButton_13; fromPushButton[24]=ui->pButton_25; fromPushButton[36]=ui->pButton_37;
     fromPushButton[1]=ui->pButton_2;  fromPushButton[13]=ui->pButton_14; fromPushButton[25]=ui->pButton_26; fromPushButton[37]=ui->pButton_38;
@@ -28,6 +28,7 @@ MotusaFlatformStatus::MotusaFlatformStatus(QWidget *parent) :
     fromPushButton[9]=ui->pButton_10; fromPushButton[21]=ui->pButton_22; fromPushButton[33]=ui->pButton_34; fromPushButton[45]=ui->pButton_46;
     fromPushButton[10]=ui->pButton_11;fromPushButton[22]=ui->pButton_23; fromPushButton[34]=ui->pButton_35; fromPushButton[46]=ui->pButton_47;
     fromPushButton[11]=ui->pButton_12;fromPushButton[23]=ui->pButton_24; fromPushButton[35]=ui->pButton_36; fromPushButton[47]=ui->pButton_48;
+    fromPushButton[48]=ui->pButton_49;
     //
     plcStatusButton[0]=ui->plcStatus0;plcStatusButton[1]=ui->plcStatus1;plcStatusButton[2]=ui->plcStatus2;
     plcStatusButton[3]=ui->plcStatus3;plcStatusButton[4]=ui->plcStatus4;plcStatusButton[5]=ui->plcStatus5;
@@ -62,7 +63,7 @@ void MotusaFlatformStatus::viewPlcStatus(bool status[7],int length)
 }
 
 //显示主控PLC的状态
-void MotusaFlatformStatus::viewMainPlcStatus(bool status[14],int num)
+void MotusaFlatformStatus::viewMainPlcStatus(bool status[21],int num)
 {
     for(int i=0;i<num;i++)
     {
@@ -74,7 +75,7 @@ void MotusaFlatformStatus::viewMainPlcStatus(bool status[14],int num)
 }
 
 //显示从PLC的状态
-void MotusaFlatformStatus::viewFromPlcStatus(bool status[48],int num)
+void MotusaFlatformStatus::viewFromPlcStatus(bool status[49],int num)
 {
     for(int i=0;i<num;i++)
     {
