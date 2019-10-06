@@ -12,12 +12,12 @@ MotusPlatfrom::MotusPlatfrom(QObject *parent) : QObject(parent)
 //初始化函数
 void MotusPlatfrom::initPara()
 {
-    mMotusSocket.setRemoteIpAndPort("192.168.0.121",5000,0);
-    mMotusSocket.setRemoteIpAndPort("192.168.0.122",5000,1);
-    mMotusSocket.setRemoteIpAndPort("192.168.0.123",5000,2);
-    mMotusSocket.setRemoteIpAndPort("192.168.0.124",5000,3);
-    mMotusSocket.setRemoteIpAndPort("192.168.0.125",5000,4);
-    mMotusSocket.setRemoteIpAndPort("192.168.0.126",5000,5);
+    mMotusSocket.setRemoteIpAndPort("192.168.1.121",5000,0);
+    mMotusSocket.setRemoteIpAndPort("192.168.1.122",5000,1);
+    mMotusSocket.setRemoteIpAndPort("192.168.1.123",5000,2);
+    mMotusSocket.setRemoteIpAndPort("192.168.1.124",5000,3);
+    mMotusSocket.setRemoteIpAndPort("192.168.1.125",5000,4);
+    mMotusSocket.setRemoteIpAndPort("192.168.1.126",5000,5);
     mMotusSocket.initSocket(10000);
     connect(&mMotusSocket, SIGNAL(sendDataSign(char*,int,QHostAddress)),this, SLOT(recvDataSign(char*,int,QHostAddress)));
 }
@@ -25,7 +25,7 @@ void MotusPlatfrom::initPara()
 //接收数据信号槽函数
 void MotusPlatfrom::recvDataSign(char *data,int lenght,QHostAddress recvRemoteaddr)
 {
-    static QString  strIP[6]={"192.168.0.121","192.168.0.122","192.168.0.123","192.168.0.124","192.168.0.125","192.168.0.126"};
+    static QString  strIP[6]={"192.168.1.121","192.168.1.122","192.168.1.123","192.168.1.124","192.168.1.125","192.168.1.126"};
     QString recvIP;
     recvIP=recvRemoteaddr.toString().remove("::ffff:");
     for(int i=0;i<6;i++)

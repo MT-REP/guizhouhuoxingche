@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QList>
 #include <QModelIndex>
+//#include <QTcpSocket>
 typedef struct MovieIndex
 {
     QString fileMovieName;    //电影名称
@@ -76,7 +77,9 @@ public:
     ~MotusOperationView();
 signals:
     void sendOperationCmd(int cmd);
-    void txtDataChange(QList<M_MovieData>&movieData);
+    void txtDataChange(QList<M_MovieData>&movieData,QString movieorder);
+public slots:
+    void recvOperateViewText(QString text);
 private slots:
     void recvPlay(bool isPlay);
     void tableViewDoubleClicked(const QModelIndex &temp);
@@ -86,7 +89,6 @@ private slots:
     void on_playFileLoad_clicked();
     void on_playRestartButton_clicked();
     void on_playStopButton_clicked();
-
 private:
     bool readmoviefile(QString filename,QList<M_MovieIndex>&mMovieiIndexList);  //读电影配置数据
     bool writemoviefile(QString filename,QList<M_MovieIndex>&mMovieiIndexList); //写电影配置数据
@@ -94,6 +96,7 @@ private:
     bool writetxtfile(QString filename,QList<M_MovieData>&movieData);           //写入电影数据
     bool deletetxtfile(const QString &filename);
 private:
+    //QTcpSocket mQTcpSocket;
     Ui::MotusOperationView *ui;
     QStandardItemModel *m_playmodel;     //文件模式
     QList<M_MovieIndex>mMovieiIndexList; //电影索引链表

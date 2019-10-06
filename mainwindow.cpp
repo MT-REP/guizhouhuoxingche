@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "motustimer.h"
-//#include <QMessageBox>
+#include <QMessageBox>
 #include<QDebug>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -11,8 +11,9 @@ MainWindow::MainWindow(QWidget *parent) :
     //播放主页
     mMotusOperationView=new MotusOperationView(this);
     connect(this,SIGNAL(sendPlay(bool)),mMotusOperationView,SLOT(recvPlay(bool)));
-    connect(mMotusOperationView,SIGNAL(txtDataChange(QList<M_MovieData>&)),this,SLOT(txtDataChange(QList<M_MovieData>&)));
+    connect(mMotusOperationView,SIGNAL(txtDataChange(QList<M_MovieData>&,QString)),this,SLOT(txtDataChange(QList<M_MovieData>&,QString)));
     connect(mMotusOperationView,SIGNAL(sendOperationCmd(int)),this,SLOT(recvOperationCmd(int)));
+    connect(this,SIGNAL(setOperateViewText(QString)),mMotusOperationView,SLOT(recvOperateViewText(QString)));
     mMotusOperationView->init();
     //状态监测
     plcIndex=1;
@@ -40,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
     pathStep=0;
     viewId=0;
     currentHandPlatfrom=0;
+    playMovieCount=0;
     for(int i=0;i<6;i++)
     {
         platfromAble[i]=true;
@@ -81,9 +83,6 @@ MainWindow::MainWindow(QWidget *parent) :
     pleverDownFromIn.initPara(&mMotusBasePlc,4); //压杆下限位
     pleverUpFromIn.initPara(&mMotusBasePlc,5);   //压杆上限位
     pleverLockFromIn.initPara(&mMotusBasePlc,6); //压杆锁限位
-    railUpControl.initPara(&mMotusBasePlc,7,37);   //护栏上控制
-    railDownControl.initPara(&mMotusBasePlc,8,38); //护栏下控制
-    railLockFromIn.initPara(&mMotusBasePlc,9);   //护栏锁限位
     mCarControl.initPara(&mMotusBasePlc);        //小车控制
     freChangeFaultFromIn.initPara(&mMotusBasePlc,16); //变频器故障
     driverFaultFromIn.initPara(&mMotusBasePlc,17); //驱动器故障
@@ -104,8 +103,6 @@ MainWindow::MainWindow(QWidget *parent) :
     pleverLockFromOut.initPara(&mMotusBasePlc,36);  //压杆锁
     railUpFromOut.initPara(&mMotusBasePlc,37);      //护栏上输出
     railDownFromOut.initPara(&mMotusBasePlc,38);    //护栏下输出
-
-    railLockFromOut.initPara(&mMotusBasePlc,39);     //护栏锁定
     coolWindFromOut.initPara(&mMotusBasePlc,45);     //冷风特效
     waterSprayFromOut.initPara(&mMotusBasePlc,46);   //喷水特效
     seatLightFromOut.initPara(&mMotusBasePlc,47);    //座椅照明
@@ -119,6 +116,16 @@ MainWindow::MainWindow(QWidget *parent) :
     on_playButton_clicked();
 
     ui->centralWidget->setLayout(ui->mainGridLayout);
+    if(mQTcpSocket.bind(20000))
+    {
+        mQTcpSocket.connectToHost("192.168.1.7",23);
+        if (!mQTcpSocket.waitForConnected(1000))
+        QMessageBox::information(this,"友情提示","未连接到视频播放器");
+    }
+    else
+    {
+        QMessageBox::information(this,"友情提示","TcpSocket绑定端口失败");
+    }
 
     //启动定时器
     mMotusTimer->start();
@@ -134,16 +141,16 @@ MainWindow::~MainWindow()
 }
 
 //接收传过来的参数
-void MainWindow::txtDataChange(QList<M_MovieData>&movieData)
+void MainWindow::txtDataChange(QList<M_MovieData>&movieData,QString movieorder)
 {
     playMovieData=movieData;
+    movieSque=movieorder;
 }
 
 
 //主时钟
 void MainWindow::masterClock(void)
 {
-    //qDebug()<<scramOControl.getStatus(0);
     static unsigned long timeCount=0;
     static bool plcStatus[7];
     timeCount++;
@@ -160,7 +167,93 @@ void MainWindow::masterClock(void)
     {
         case Automatic:
         {
-            /*
+            //复位按键
+            if(pathStep==4||pathStep==5||pathStep==6||pathStep==7||pathStep==8)
+            {
+               if(plcStatus[0]&&resetHostIn.getStatus(0))
+               {
+                   for(int i=0;i<10;i++)
+                   {
+                      resetBit[i]=true;
+                   }
+                   pathStep=0;
+               }
+            }
+            //故障信息处理
+            if(pathStep==1||pathStep==2||pathStep==4||pathStep==5||pathStep==6||pathStep==8)
+            {
+                 int i=0;
+                 if(plcStatus[0]&&scramHostIn.getStatus(0))
+                 {
+                     pathStep=7;
+                     errorMessage.sprintf("%d%s",0,"急停按键按下");
+                     mMotusRunLog->addStringLog(errorMessage);
+                 }
+                 //平台可以后退   ----
+                 for(i=0;i<6;i++)
+                 {
+                     mMotusOperaterStatus.platerror[i]=false;
+                     if(platfromAble[i]&&(platfromStatus[i]==119))
+                     {
+                         if(pathStep==5||pathStep==6)
+                         {
+                             mMotusOperaterStatus.platerror[i]=true;
+                             errorMessage.sprintf("%d%s",i+1,"平台驱动器错误");
+                         }
+                         else
+                         {
+                             pathStep=7;
+                             errorMessage.sprintf("%d%s",i+1,"平台驱动器错误");
+                             mMotusRunLog->addStringLog(errorMessage);
+                             break;
+                         }
+                     }
+                 }
+                 //驱动器错误     ----
+                 for(i=0;i<6;i++)
+                 {
+                     mMotusOperaterStatus.platerror[i]=false;
+                     if(platfromAble[i]&&plcStatus[i+1]&&driverFaultFromIn.getStatus(i+1))
+                     {
+                         if(pathStep==5||pathStep==6)
+                         {
+                             mMotusOperaterStatus.platerror[i]=true;
+                             if(driverFaultFromIn.getStatus(i+1)) errorMessage.sprintf("%d%s",i+1,"驱动器故障");
+                         }
+                         else
+                         {
+                             pathStep=7;
+                             if(driverFaultFromIn.getStatus(i+1)) errorMessage.sprintf("%d%s",i+1,"驱动器故障");
+                             mMotusRunLog->addStringLog(errorMessage);
+                             break;
+                         }
+                     }
+                 }
+                 //变频器故障     ----
+                 for(i=0;i<6;i++)
+                 {
+                     mMotusOperaterStatus.freerror[i]=false;
+                     if(platfromAble[i]&&plcStatus[i+1]
+                       &&(freChangeFaultFromIn.getStatus(i+1)||scramFromIn.getStatus(i+1)))
+                     {
+                         if(pathStep==5||pathStep==6)
+                         {
+                             mMotusOperaterStatus.freerror[i]=true;
+                             if(freChangeFaultFromIn.getStatus(i+1)) errorMessage.sprintf("%d%s",i+1,"变频器故障");
+                             if(scramFromIn.getStatus(i+1)) errorMessage.sprintf("%d%s",i+1,"急停按下");
+                         }
+                         else
+                         {
+                             pathStep=7;
+                             if(freChangeFaultFromIn.getStatus(i+1)) errorMessage.sprintf("%d%s",i+1,"变频器故障");
+                             mMotusRunLog->addStringLog(errorMessage);
+                             if(scramFromIn.getStatus(i+1)) errorMessage.sprintf("%d%s",i+1,"急停按下");
+                             mMotusRunLog->addStringLog(errorMessage);
+                             break;
+                         }
+                     }
+                 }
+            }
             //初始默认值
             if(pathStep==0)
             {
@@ -188,7 +281,7 @@ void MainWindow::masterClock(void)
                     stepMessage.sprintf("%d%s",steppath1,"熄灭恢复指示灯");
                     break;
                 }
-                else if(steppath1==0&&!faultHostOut.getStatus(0))
+                else if(steppath1==0&&faultHostOut.getStatus(0))
                 {
                     stepMessage.sprintf("%d%s",steppath1,"熄灭故障指示灯");
                     break;
@@ -259,7 +352,8 @@ void MainWindow::masterClock(void)
                         else if(platfromAble[i]&&!plcStatus[i+1])
                         {
                             pathStep=7;
-                            errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -285,7 +379,8 @@ void MainWindow::masterClock(void)
                         else if(platfromAble[i]&&!plcStatus[i+1])
                         {
                             pathStep=7;
-                            errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -311,7 +406,8 @@ void MainWindow::masterClock(void)
                         else if(platfromAble[i]&&!plcStatus[i+1])
                         {
                             pathStep=7;
-                            errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -337,7 +433,8 @@ void MainWindow::masterClock(void)
                         else if(platfromAble[i]&&!plcStatus[i+1])
                         {
                             pathStep=7;
-                            errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -363,7 +460,8 @@ void MainWindow::masterClock(void)
                         else if(platfromAble[i]&&!plcStatus[i+1])
                         {
                             pathStep=7;
-                            errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -383,13 +481,14 @@ void MainWindow::masterClock(void)
                         if(platfromAble[i]&&plcStatus[i+1])
                         {
                             totalCount+=1;
-                            retBool=railUpControl.setControl(false,i+1);
+                            retBool=railUpFromOut.setControl(false,i+1);
                             if(retBool) retCount+=1;
                         }
                         else if(platfromAble[i]&&!plcStatus[i+1])
                         {
                             pathStep=7;
-                            errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -409,13 +508,14 @@ void MainWindow::masterClock(void)
                         if(platfromAble[i]&&plcStatus[i+1])
                         {
                             totalCount+=1;
-                            retBool=railDownControl.setControl(false,i+1);
+                            retBool=railDownFromOut.setControl(false,i+1);
                             if(retBool) retCount+=1;
                         }
                         else if(platfromAble[i]&&!plcStatus[i+1])
                         {
                             pathStep=7;
-                            errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -441,23 +541,26 @@ void MainWindow::masterClock(void)
                         else if(platfromAble[i]&&!plcStatus[i+1])
                         {
                             pathStep=7;
-                            errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
                     if(retCount==totalCount)
                     {
+                        stepMessage.sprintf("%d%s",steppath1,"平台回底");
                         steppath1=0;
                         pathStep=2;
-                        stepMessage.sprintf("%d%s",steppath1,"平台回底");
                     }
                     break;
                 }
                 //////////////////////////从PLC控制/////////////////////////////
-            } else if(pathStep==1&&!plcStatus[0])
+            }
+            else if(pathStep==1&&!plcStatus[0])
             {
                 pathStep=7;
-                errorMessage.sprintf("%d%s",0,"PLC通讯异常");
+                errorMessage.sprintf("%d%s",0,"号PLC通讯异常");
+                mMotusRunLog->addStringLog(errorMessage);
                 break;
             }
             //准备处理
@@ -468,10 +571,10 @@ void MainWindow::masterClock(void)
                 bool retBool=false;                       //返回结果
                 int retCount=0;                           //结果个数
                 int totalCount=0;                         //统计个数
-                emit sendHandPermissin(false); //不允许手动操作
+                emit sendHandPermissin(false);            //不允许手动操作
                 emit sendPlay(false);
                 //复位初始化
-                if(resetBit[2]){  steppath2=0;  resetBit[2]=false; }
+                if(resetBit[2]) { steppath2=0;  resetBit[2]=false; }
                 //平台回底
                 if(steppath2==0)
                 {
@@ -487,7 +590,7 @@ void MainWindow::masterClock(void)
                             //平台中位回底
                             if(platfromStatus[i]==3||platfromStatus[i]==15) mMotusPlatfrom.sendPlatfromCmd(7,i);
                             //平台顶位回中
-                            if(platfromStatus[i]==11) mMotusPlatfrom.sendPlatfromCmd(2,i);
+                            if(platfromStatus[i]==11) mMotusPlatfrom.sendPlatfromCmd(7,i);
                             //平台运动回底
                             if(platfromStatus[i]==4) mMotusPlatfrom.sendPlatfromCmd(7,i);
                             //平台初始化寻低
@@ -498,39 +601,10 @@ void MainWindow::masterClock(void)
                         else if(platfromAble[i]&&(!mMotusPlatfrom.getConnect(i)||!plcStatus[i+1]))
                         {
                             pathStep=7;
-                            if(!mMotusPlatfrom.getConnect(i)) errorMessage.sprintf("%d%s",i+1,"平台通讯异常");
-                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
-                            break;
-                        }
-                    }
-                    if(retCount==totalCount)
-                    {
-                        steppath2+=1;
-                        stepMessage.sprintf("%d%s",steppath2,"护栏锁输出关");
-                    }
-                    break;
-                }
-                //护栏锁定输出关
-                if(steppath2==1)
-                {
-                    retCount=0; totalCount=0;
-                    for(i=0;i<6;i++)
-                    {
-                        //平台是否连接 plc是否连接 平台是否可用
-                        if(platfromAble[i]&&plcStatus[i+1])
-                        {
-                            totalCount+=1;  retBool=false;
-                            //护栏锁输出关  护栏锁限位
-                            if(!railLockFromIn.getStatus(i+1)&&!railLockFromOut.getStatus(i+1))  retBool=true;
-                            //护栏锁输出关
-                            if(railLockFromOut.getStatus(i+1)) railLockFromOut.setValue(false,i+1);
-                            //计数
-                            if(retBool) retCount+=1;
-                        }
-                        else if(platfromAble[i]&&!plcStatus[i+1])
-                        {
-                            pathStep=7;
-                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            if(!mMotusPlatfrom.getConnect(i)) errorMessage.sprintf("%d%s",i+1,"号平台通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
+                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -542,7 +616,7 @@ void MainWindow::masterClock(void)
                     break;
                 }
                 //护栏下降
-                if(steppath2==2)
+                if(steppath2==1)
                 {
                     retCount=0; totalCount=0;
                     for(i=0;i<6;i++)
@@ -551,15 +625,28 @@ void MainWindow::masterClock(void)
                         if(platfromAble[i]&&plcStatus[i+1])
                         {
                             totalCount+=1;  retBool=false;
-                            //护栏降
-                            if(railDownControl.action(i+1))  retBool=true;
+                            //后退停止位
+                            if(!mCarControl.getBackStopStatus(i+1))
+                            {
+                                //护栏降完成
+                                if(railDownFromIn.getStatus(i+1)&&!railDownFromOut.getStatus(i+1)) retBool=true;
+                                //护栏降
+                                if(!railDownFromIn.getStatus(i+1))  railDownFromOut.setControl(true,i+1);
+                                //护栏降输出关闭
+                                if(railDownFromIn.getStatus(i+1)&&railDownFromOut.getStatus(i+1)) railDownFromOut.setControl(false,i+1);
+                            }
+                            else
+                            {
+                                retBool=true;
+                            }
                             //计数
                             if(retBool) retCount+=1;
                         }
                         else if(platfromAble[i]&&!plcStatus[i+1])
                         {
                             pathStep=7;
-                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -571,7 +658,7 @@ void MainWindow::masterClock(void)
                     break;
                 }
                 //平台后退
-                if(steppath2==3)
+                if(steppath2==2)
                 {
                     retCount=0; totalCount=0;
                     for(i=0;i<6;i++)
@@ -585,35 +672,55 @@ void MainWindow::masterClock(void)
                             {
                                 pathStep=7;
                                 errorMessage.sprintf("%d%s",i+1,"小车触碰到极限位");
+                                mMotusRunLog->addStringLog(errorMessage);
                                 break;
-                            }
+                            }                            
                             //判断小车是否到位
-                            if(mCarControl.getBackStopStatus(i+1)&&!mCarControl.getBackControl(i+1)
+                            if(mCarControl.getBackStopStatus(i+1)
+                               &&!mCarControl.getFrontControl(i+1)&&!mCarControl.getBackControl(i+1)
                                &&!mCarControl.getHighSpeedControl(i+1)&&!mCarControl.getLowSpeedControl(i+1)
-                               &&mCarControl.getGasBrake(i+1)&&mCarControl.getGasBrakeControl(i+1)) retBool=true;
-                            //气动抱闸打开
-                            if(!mCarControl.getBackStopStatus(i+1)
-                                &&(mCarControl.getGasBrake(i+1)||mCarControl.getGasBrakeControl(i+1)))
+                               &&mCarControl.getGasBrake(i+1)&&!mCarControl.getGasBrakeControl(i+1)
+                               &&!mCarControl.getGasBrakeCloseControl(i+1))   retBool=true;
+                            //小车后退  气刹关关闭
+                            if(!mCarControl.getBackStopStatus(i+1)&&mCarControl.getGasBrakeCloseControl(i+1))
                             {
-                                mCarControl.setGasBrakeControl(false,i+1);
+                                mCarControl.setGasBrakeCloseControl(false,i+1);
+                                continue;
                             }
-                            //设置速度
-                            if(!mCarControl.getBackStopStatus(i+1)&&!mCarControl.getGasBrake(i+1)&&!mCarControl.getGasBrakeControl(i+1)
-                               &&(!mCarControl.getBackControl(i+1)||mCarControl.getHighSpeedControl(i+1)||!mCarControl.getLowSpeedControl(i+1)))
+                            //小车后退  气刹开打开
+                            if(!mCarControl.getBackStopStatus(i+1)&&!mCarControl.getGasBrakeControl(i+1))
+                            {
+                                mCarControl.setGasBrakeControl(true,i+1);
+                                continue;
+                            }
+                            //小车后退  高速关闭
+                            if(!mCarControl.getBackStopStatus(i+1)&&mCarControl.getHighSpeedControl(i+1))
+                            {
+                                mCarControl.setHighSpeedControl(false,i+1);
+                                continue;
+                            }
+                            //小车后退 前进关闭
+                            if(!mCarControl.getBackStopStatus(i+1)&&mCarControl.getFrontControl(i+1))
+                            {
+                                mCarControl.setFrontControl(false,i+1);
+                                continue;
+                            }
+                            //小车后退 后退打开
+                            if(!mCarControl.getBackStopStatus(i+1)&&!mCarControl.getGasBrake(i+1)&&!mCarControl.getBackControl(i+1))
                             {
                                 mCarControl.setBackControl(true,i+1);
-                                mCarControl.setHighSpeedControl(false,i+1);
+                                continue;
+                            }
+                            //小车后退 低速打开
+                            if(!mCarControl.getBackStopStatus(i+1)&&!mCarControl.getGasBrake(i+1)&&!mCarControl.getLowSpeedControl(i+1))
+                            {
                                 mCarControl.setLowSpeedControl(true,i+1);
+                                continue;
                             }
                             //清除速度
-                            if(mCarControl.getBackStopStatus(i+1)&&
-                               (mCarControl.getBackControl(i+1)||mCarControl.getHighSpeedControl(i+1)
-                                ||mCarControl.getLowSpeedControl(i+1)||!mCarControl.getGasBrakeControl(i+1)))
+                            if(mCarControl.getBackStopStatus(i+1))
                             {
-                                mCarControl.setBackControl(false,i+1);
-                                mCarControl.setLowSpeedControl(false,i+1);
-                                mCarControl.setHighSpeedControl(false,i+1);
-                                mCarControl.setGasBrakeControl(true,i+1);
+                               mCarControl.clearOutput(i+1);                              
                             }
                             //计数
                             if(retBool) retCount+=1;
@@ -622,6 +729,7 @@ void MainWindow::masterClock(void)
                         {
                             pathStep=7;
                             if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -633,7 +741,7 @@ void MainWindow::masterClock(void)
                     break;
                 }
                 //护栏上升
-                if(steppath2==4)
+                if(steppath2==3)
                 {
                     retCount=0; totalCount=0;
                     for(i=0;i<6;i++)
@@ -642,46 +750,20 @@ void MainWindow::masterClock(void)
                         if(platfromAble[i]&&plcStatus[i+1])
                         {
                             totalCount+=1;  retBool=false;
-                            //护栏上升
-                            if(railUpControl.action(i+1))  retBool=true;
+                            if(!railUpFromIn.getStatus(i+1)||!railReverFromIn.getStatus(i+1))
+                               railUpFromOut.setControl(true,i+1);
+                            if(railUpFromIn.getStatus(i+1)&&railReverFromIn.getStatus(i+1)&&railUpFromOut.getStatus(i+1))
+                               railUpFromOut.setControl(false,i+1);
+                            if(railUpFromIn.getStatus(i+1)&&railReverFromIn.getStatus(i+1)&&!railUpFromOut.getStatus(i+1))
+                               retBool=true;
                             //计数
                             if(retBool) retCount+=1;
                         }
                         else if(platfromAble[i]&&!plcStatus[i+1])
                         {
                             pathStep=7;
-                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
-                            break;
-                        }
-                    }
-                    if(retCount==totalCount)
-                    {
-                        steppath2+=1;
-                        stepMessage.sprintf("%d%s",steppath2,"护栏锁定");
-                    }
-                    break;
-                }
-                //护栏锁定
-                if(steppath2==5)
-                {
-                    retCount=0; totalCount=0;
-                    for(i=0;i<6;i++)
-                    {
-                        //平台是否连接 plc是否连接 平台是否可用
-                        if(platfromAble[i]&&plcStatus[i+1])
-                        {
-                            totalCount+=1;  retBool=false;
-                            //护栏锁输出 护栏锁限位
-                            if(railLockFromIn.getStatus(i+1)&&railLockFromOut.getStatus(i+1))  retBool=true;
-                            //护栏锁输出
-                            if(!railLockFromOut.getStatus(i+1)) railLockFromOut.setValue(true,i+1);
-                            //计数
-                            if(retBool) retCount+=1;
-                        }
-                        else if(platfromAble[i]&&!plcStatus[i+1])
-                        {
-                            pathStep=7;
-                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -693,7 +775,7 @@ void MainWindow::masterClock(void)
                     break;
                 }
                 //平台运动到顶
-                if(steppath2==6)
+                if(steppath2==4)
                 {
                     retCount=0; totalCount=0;
                     for(i=0;i<6;i++)
@@ -710,7 +792,8 @@ void MainWindow::masterClock(void)
                             else if((platfromStatus[i]==1||platfromStatus[i]==13)&&!cylinderFromIn.getStatus(i+1))
                             {
                                 pathStep=7;
-                                errorMessage.sprintf("%d%s",i+1,"平台出错");
+                                errorMessage.sprintf("%d%s",i+1,"号平台出错");
+                                mMotusRunLog->addStringLog(errorMessage);
                                 break;
                             }
                             //平台中位到顶
@@ -722,39 +805,10 @@ void MainWindow::masterClock(void)
                         else if(platfromAble[i]&&(!mMotusPlatfrom.getConnect(i)||!plcStatus[i+1]))
                         {
                             pathStep=7;
-                            if(!mMotusPlatfrom.getConnect(i)) errorMessage.sprintf("%d%s",i+1,"平台通讯异常");
-                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
-                            break;
-                        }
-                    }
-                    if(retCount==totalCount)
-                    {
-                        steppath2+=1;
-                        stepMessage.sprintf("%d%s",steppath2,"压杆锁定开");
-                    }
-                    break;
-                }
-                //压杆锁定开
-                if(steppath2==7)
-                {
-                    retCount=0; totalCount=0;
-                    for(i=0;i<6;i++)
-                    {
-                        //平台是否连接 plc是否连接 平台是否可用
-                        if(platfromAble[i]&&plcStatus[i+1])
-                        {
-                            totalCount+=1;  retBool=false;
-                            //压杆锁输出关  压杆锁限位
-                            if(!pleverLockFromIn.getStatus(i+1)&&!pleverLockFromOut.getStatus(i+1))  retBool=true;
-                            //压杆锁输出关
-                            if(railLockFromOut.getStatus(i+1)) railLockFromOut.setValue(false,i+1);
-                            //计数
-                            if(retBool) retCount+=1;
-                        }
-                        else if(platfromAble[i]&&!plcStatus[i+1])
-                        {
-                            pathStep=7;
-                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            if(!mMotusPlatfrom.getConnect(i)) errorMessage.sprintf("%d%s",i+1,"号平台通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
+                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -766,7 +820,7 @@ void MainWindow::masterClock(void)
                     break;
                 }
                 //座位照明开
-                if(steppath2==8)
+                if(steppath2==5)
                 {
                     retCount=0; totalCount=0;
                     for(i=0;i<6;i++)
@@ -775,7 +829,7 @@ void MainWindow::masterClock(void)
                         if(platfromAble[i]&&plcStatus[i+1])
                         {
                             totalCount+=1;  retBool=false;
-                            //压杆锁输出关  压杆锁限位
+                            //座位照明开
                             if(seatLightFromOut.setControl(true,i+1))  retBool=true;
                             //计数
                             if(retBool) retCount+=1;
@@ -783,7 +837,8 @@ void MainWindow::masterClock(void)
                         else if(platfromAble[i]&&!plcStatus[i+1])
                         {
                             pathStep=7;
-                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -795,24 +850,26 @@ void MainWindow::masterClock(void)
                     break;
                 }
                 //主待客指示灯点亮
-                if(steppath2==9&&plcStatus[0]&&waitHostOut.setControl(true,0))
+                if(steppath2==6&&plcStatus[0]&&waitHostOut.setControl(true,0))
                 {
                     steppath2+=1;
                     stepMessage.sprintf("%d%s",steppath2,"从待客指示灯点亮");
                     break;
                 }
-                else if(steppath2==9&&!plcStatus[0])
+                else if(steppath2==6&&!plcStatus[0])
                 {
                     pathStep=7;
-                    errorMessage.sprintf("%d%s",0,"PLC通讯异常");
+                    errorMessage.sprintf("%d%s",0,"号PLC通讯异常");
+                    mMotusRunLog->addStringLog(errorMessage);
                     break;
                 }
                 //从待客指示灯点亮
-                if(steppath2==10)
+                if(steppath2==7)
                 {
                     retCount=0; totalCount=0;
                     for(i=0;i<6;i++)
                     {
+                        mMotusOperaterStatus.makesure[i]=false;
                         //平台是否连接 plc是否连接 平台是否可用
                         if(platfromAble[i]&&plcStatus[i+1])
                         {
@@ -827,7 +884,64 @@ void MainWindow::masterClock(void)
                         else if(platfromAble[i]&&!plcStatus[i+1])
                         {
                             pathStep=7;
-                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
+                            break;
+                        }
+                    }
+                    if(retCount==totalCount)
+                    {
+                        steppath2+=1;
+                        stepMessage.sprintf("%d%s",steppath2,"可以上客和下客");
+                    }
+                    break;
+                }
+                //压下压杆后，确认指示灯亮后，按下确认按键
+                if(steppath2==8)
+                {
+                    retCount=0; totalCount=0;
+                    for(i=0;i<6;i++)
+                    {
+                        //平台是否连接 plc是否连接 平台是否可用
+                        if(platfromAble[i]&&plcStatus[i+1])
+                        {
+                            totalCount+=1;  retBool=false;
+                            //初始化确认数组参数
+                            if(!pleverDownFromIn.getStatus(i+1))
+                                mMotusOperaterStatus.makesure[i]=false;
+                            //确认指示灯点亮
+                            if(pleverDownFromIn.getStatus(i+1)&&!mSureFromOut.getStatus(i+1)&&!mMotusOperaterStatus.makesure[i])
+                             mSureFromOut.setValue(true,i+1);
+                            //标志位置true
+                            if(pleverDownFromIn.getStatus(i+1)
+                              &&saftBelt1FromIn.getStatus(i+1)
+                              &&saftBelt2FromIn.getStatus(i+1)
+                              &&saftBelt3FromIn.getStatus(i+1)
+                              &&saftBelt4FromIn.getStatus(i+1)
+                              &&msureFormIn.getStatus(i+1)
+                              &&mSureFromOut.getStatus(i+1)
+                              &&!mMotusOperaterStatus.makesure[i])
+                             mMotusOperaterStatus.makesure[i]=true;
+                             //熄灭确认指示灯
+                            if(pleverDownFromIn.getStatus(i+1)&&mSureFromOut.getStatus(i+1)&&mMotusOperaterStatus.makesure[i])
+                             mSureFromOut.setValue(false,i+1);
+                            //运行按键
+                            if(pleverDownFromIn.getStatus(i+1)
+                                &&saftBelt1FromIn.getStatus(i+1)
+                                &&saftBelt2FromIn.getStatus(i+1)
+                                &&saftBelt3FromIn.getStatus(i+1)
+                                &&saftBelt4FromIn.getStatus(i+1)
+                               &&!mSureFromOut.getStatus(i+1)
+                               &&mMotusOperaterStatus.makesure[i])
+                            retBool=true;
+                            //计数
+                            if(retBool) retCount+=1;
+                        }
+                        else if(platfromAble[i]&&!plcStatus[i+1])
+                        {
+                            pathStep=7;
+                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -835,7 +949,7 @@ void MainWindow::masterClock(void)
                     {
                         steppath2=0;
                         pathStep=3;
-                        stepMessage.sprintf("%d%s",steppath2,"运行按键有效");
+                        stepMessage.sprintf("%d%s",steppath2,"待客状态");
                     }
                     break;
                 }
@@ -845,7 +959,10 @@ void MainWindow::masterClock(void)
             {
                 emit sendHandPermissin(true); //不允许手动操作
                 emit sendPlay(false);
-               resetBit[8]=true;
+                if(renewHostIn.getStatus(0))
+                {
+                    pathStep=4;
+                }
             }
             //运动准备
             if(pathStep==4)
@@ -855,77 +972,31 @@ void MainWindow::masterClock(void)
                 bool retBool=false;                       //返回结果
                 int retCount=0;                           //结果个数
                 int totalCount=0;                         //统计个数
-                bool safeBelt=false;                      //安全带标志位
                 emit sendHandPermissin(false); //不允许手动操作
                 emit sendPlay(false);
                 //复位初始化
                 if(resetBit[4]){  steppath4=0;  resetBit[4]=false; }
-                //压杆锁定
-                if(steppath4==0)
-                {
-                    retCount=0; totalCount=0;
-                    for(i=0;i<6;i++)
-                    {
-                        //平台是否连接 plc是否连接 平台是否可用
-                        if(platfromAble[i]&&plcStatus[i+1])
-                        {
-                            totalCount+=1;  retBool=false; safeBelt=false;
-                            //安全带检测
-                            if(saftBelt1FromIn.getStatus(i+1)&&saftBelt2FromIn.getStatus(i+1)
-                               &&saftBelt2FromIn.getStatus(i+1)&&saftBelt3FromIn.getStatus(i+1)
-                               &&saftBelt4FromIn.getStatus(i+1)&&saftBelt5FromIn.getStatus(i+1)
-                               &&saftBelt6FromIn.getStatus(i+1)&&saftBelt7FromIn.getStatus(i+1))  safeBelt=true;
-                            //压杆检测
-                            if(pleverDownFromIn.getStatus(i+1)
-                               &&pleverLockFromOut.getStatus(i+1)
-                               &&pleverLockFromIn.getStatus(i+1)
-                               &&safeBelt
-                               &&!mSureFromOut.getStatus(i+1))  retBool=true;
-                            //确认指示灯点亮和熄灭
-                            if(!mSureFromOut.getStatus(i+1)
-                               &&pleverDownFromIn.getStatus(i+1)
-                               &&safeBelt
-                               &&!pleverLockFromIn.getStatus(i+1)) mSureFromOut.setValue(true,i+1);
-                            else   if(mSureFromOut.getStatus(i+1)
-                                      &&(!pleverDownFromIn.getStatus(i+1)||!safeBelt)) mSureFromOut.setValue(false,i+1);
-                            //确认指示灯熄灭，压杆锁定
-                            if(pleverDownFromIn.getStatus(i+1)
-                               &&safeBelt
-                               &&(!pleverLockFromOut.getStatus(i+1)||mSureFromOut.getStatus(i+1))
-                               &&msureFormIn.getStatus(i+1))
-                            { mSureFromOut.setValue(false,i+1);pleverLockFromOut.setValue(true,i+1);}
-                            //计数
-                            if(retBool) retCount+=1;
-                        }
-                        else if(platfromAble[i]&&!plcStatus[i+1])
-                        {
-                            pathStep=7;
-                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
-                            break;
-                        }
-                    }
-                    if(retCount==totalCount)
-                    {
-                        steppath4+=1;
-                        stepMessage.sprintf("%d%s",steppath4,"待客指示灯熄灭");
-                    }
-                    break;
-                }
                 //主待客指示灯熄灭
-                if(steppath4==1&&plcStatus[0]&&waitHostOut.setControl(false,0))
+                if(steppath4==0&&plcStatus[0]&&waitHostOut.setControl(false,0))
                 {
                     steppath4+=1;
                     stepMessage.sprintf("%d%s",steppath4,"从待客指示灯熄灭");
                     break;
                 }
-                else if(steppath4==1&&!plcStatus[0])
+                else if(steppath4==0&&plcStatus[0]&&waitHostOut.getStatus(0))
+                {
+                    stepMessage.sprintf("%d%s",steppath4,"主待客指示灯熄灭");
+                    break;
+                }
+                else if(steppath4==0&&!plcStatus[0])
                 {
                     pathStep=7;
                     errorMessage.sprintf("%d%s",0,"PLC通讯异常");
+                    mMotusRunLog->addStringLog(errorMessage);
                     break;
                 }
                 //从待客指示灯熄灭
-                if(steppath4==2)
+                if(steppath4==1)
                 {
                     retCount=0; totalCount=0;
                     for(i=0;i<6;i++)
@@ -945,6 +1016,7 @@ void MainWindow::masterClock(void)
                         {
                             pathStep=7;
                             if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -956,20 +1028,21 @@ void MainWindow::masterClock(void)
                     break;
                 }
                 //主复位按键点亮
-                if(steppath4==3&&plcStatus[0]&&resetHostOut.setControl(true,0))
+                if(steppath4==2&&plcStatus[0]&&resetHostOut.setControl(true,0))
                 {
                     steppath4+=1;
                     stepMessage.sprintf("%d%s",steppath4,"座位照明关");
                     break;
                 }
-                else if(steppath4==3&&!plcStatus[0])
+                else if(steppath4==2&&!plcStatus[0])
                 {
                     pathStep=7;
                     errorMessage.sprintf("%d%s",0,"PLC通讯异常");
+                    mMotusRunLog->addStringLog(errorMessage);
                     break;
                 }
                 //座位照明关
-                if(steppath4==4)
+                if(steppath4==3)
                 {
                     retCount=0; totalCount=0;
                     for(i=0;i<6;i++)
@@ -988,7 +1061,8 @@ void MainWindow::masterClock(void)
                         else if(platfromAble[i]&&!plcStatus[i+1])
                         {
                             pathStep=7;
-                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -999,38 +1073,47 @@ void MainWindow::masterClock(void)
                     }
                     break;
                 }
+                //影片载入
+                if(steppath4==4)
+                {
+                    const char mdata[14] = {0x4C,0x4F,0x41,0x44,0x20,0x30,0x30,0x31,0x2E ,0x58,0x4D,0x4C,0x0D ,0x0A };			//LOAD 001
+                    //movieSque
+                    mQTcpSocket.write(mdata,14);
+                    steppath4+=1;
+                    break;
+                }
                 //平台运动中位 护栏下降
                 if(steppath4==5)
                 {
                     retCount=0; totalCount=0;
                     for(i=0;i<6;i++)
                     {
+                        mMotusOperaterStatus.slowbit[i]=false;
                         //平台是否连接 plc是否连接 平台是否可用
                         if(platfromAble[i]&&mMotusPlatfrom.getConnect(i)&&plcStatus[i+1])
                         {
                             totalCount+=1;  retBool=false;
                             //平台回中位 护栏下降
-                            if((platfromStatus[i]==3||platfromStatus[i]==15)
-                               &&!cylinderFromIn.getStatus(i+1)
-                               &&railDownControl.getIStatus(i+1)
-                               &&!railDownControl.getOStatus(i+1)
-                               &&railLockFromIn.getStatus(i+1)
-                               &&railLockFromOut.getStatus(i+1)
+                            if((platfromStatus[i]==3||platfromStatus[i]==15)                             
+                               &&railDownFromIn.getStatus(i+1)
+                               &&!railDownFromOut.getStatus(i+1)
                                ) retBool=true;
                             //平台回中
-                            if(platfromStatus[i]==11&&!cylinderFromIn.getStatus(i+1)) mMotusPlatfrom.sendPlatfromCmd(2,i);
-                            //锁定解除
-                            if(!railDownControl.getIStatus(i+1)&&railLockFromOut.getStatus(i+1)) railLockFromOut.setValue(false,i+1);
-                            //护栏锁定
-                            else if(railDownControl.action(i+1)&&!railLockFromOut.getStatus(i+1)) railLockFromOut.setValue(true,i+1);
+                            if(platfromStatus[i]==11) mMotusPlatfrom.sendPlatfromCmd(2,i);
+                            //护栏下降
+                            if(!railDownFromIn.getStatus(i+1)) railDownFromOut.setValue(true,i+1);
+                            //护栏下降后输出关闭
+                            if(railDownFromIn.getStatus(i+1)&&railDownFromOut.getStatus(i+1)) railDownFromOut.setValue(false,i+1);
                             //计数
                             if(retBool) retCount+=1;
                         }
                         else if(platfromAble[i]&&(!mMotusPlatfrom.getConnect(i)||!plcStatus[i+1]))
                         {
                             pathStep=7;
-                            if(!mMotusPlatfrom.getConnect(i)) errorMessage.sprintf("%d%s",i+1,"平台通讯异常");
-                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            if(!mMotusPlatfrom.getConnect(i)) errorMessage.sprintf("%d%s",i+1,"号平台通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
+                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -1047,48 +1130,77 @@ void MainWindow::masterClock(void)
                     retCount=0; totalCount=0;
                     for(i=0;i<6;i++)
                     {
+                        mMotusOperaterStatus.liftbelt[i]=true;
                         //平台是否连接 plc是否连接 平台是否可用
                         if(platfromAble[i]&&plcStatus[i+1])
                         {
                             totalCount+=1;  retBool=false;
-                            //正确停止
-                            if(mCarControl.getFrontStopStatus(i+1)&&mCarControl.getGasBrake(i+1)
-                               &&mCarControl.getGasBrakeControl(i+1)
+                            //小车触碰到极限位 进行报错处理
+                            if(mCarControl.getLimitStatus(i+1))
+                            {
+                                pathStep=7;
+                                errorMessage.sprintf("%d%s",i+1,"小车触碰到极限位");
+                                mMotusRunLog->addStringLog(errorMessage);
+                                break;
+                            }
+                            //判断小车是否到位
+                            if(mCarControl.getFrontStopStatus(i+1)
                                &&!mCarControl.getFrontControl(i+1)&&!mCarControl.getBackControl(i+1)
                                &&!mCarControl.getHighSpeedControl(i+1)&&!mCarControl.getLowSpeedControl(i+1)
-                              ) retBool=true;
-                            //解除锁定
-                            if(!mCarControl.getFrontStopStatus(i+1)&&!mCarControl.getLimitStatus(i+1)&&mCarControl.getGasBrakeControl(i+1))
+                               &&mCarControl.getGasBrake(i+1)&&!mCarControl.getGasBrakeControl(i+1)
+                               &&!mCarControl.getGasBrakeCloseControl(i+1)) retBool=true;
+                            //小车前进  气刹关关闭
+                            if(!mCarControl.getFrontStopStatus(i+1)&&mCarControl.getGasBrakeCloseControl(i+1))
                             {
-                                mCarControl.setFrontControl(false,i+1); mCarControl.setBackControl(false,i+1); mCarControl.setHighSpeedControl(false,i+1);
-                                mCarControl.setLowSpeedControl(false,i+1);mCarControl.setGasBrakeControl(false,i+1);
+                                mCarControl.setGasBrakeCloseControl(false,i+1);
+                                continue;
                             }
-                            //小车前进
-                            if(mCarControl.getBackStopStatus(i+1)&&!mCarControl.getGasBrake(i+1)&&!mCarControl.getGasBrakeControl(i+1)
-                               &&!mCarControl.getLowSpeedControl(i+1)&&(!mCarControl.getFrontControl(i+1)||!mCarControl.getHighSpeedControl(i+1)))
+                            //小车前进  气刹开打开
+                            if(!mCarControl.getFrontStopStatus(i+1)&&!mCarControl.getGasBrakeControl(i+1))
                             {
-                                mCarControl.setFrontControl(true,i+1);mCarControl.setHighSpeedControl(true,i+1);
+                                mCarControl.setGasBrakeControl(true,i+1);
+                                continue;
                             }
-                            //小车减速
-                            if(!mCarControl.getGasBrake(i+1)&&!mCarControl.getGasBrakeControl(i+1)
-                               &&mCarControl.getFrontLowSpeed(i+1)&&mCarControl.getHighSpeedControl(i+1))
+                            //小车前进  后退关闭
+                            if(!mCarControl.getFrontStopStatus(i+1)&&mCarControl.getBackControl(i+1))
                             {
-                                mCarControl.setHighSpeedControl(false,i+1);mCarControl.setLowSpeedControl(true,i+1);
+                                mCarControl.setBackControl(false,i+1);
+                                continue;
                             }
-                            //小车停止
-                            if(!mCarControl.getGasBrake(i+1)&&!mCarControl.getGasBrakeControl(i+1)
-                               &&mCarControl.getFrontStopStatus(i+1)
-                               &&(mCarControl.getFrontControl(i+1)||mCarControl.getLowSpeedControl(i+1)||mCarControl.getHighSpeedControl(i+1))
-                               )
+                            //小车后退 前进打开
+                            if(!mCarControl.getFrontStopStatus(i+1)&&!mCarControl.getGasBrake(i+1)&&!mCarControl.getFrontControl(i+1))
                             {
-                                mCarControl.setFrontControl(false,i+1); mCarControl.setHighSpeedControl(false,i+1);
-                                mCarControl.setLowSpeedControl(false,i+1);
+                                mCarControl.setFrontControl(true,i+1);
+                                continue;
                             }
-                            //小车刹车
-                            if(!mCarControl.getGasBrake(i+1)&&!mCarControl.getGasBrakeControl(i+1)
-                               &&mCarControl.getFrontStopStatus(i+1)
-                               &&!mCarControl.getFrontControl(i+1)&&!mCarControl.getLowSpeedControl(i+1)&&!mCarControl.getHighSpeedControl(i+1)
-                               )  mCarControl.setGasBrakeControl(true,i+1);
+                            //小车前进  高速打开
+                            if(!mCarControl.getFrontStopStatus(i+1)&&!mMotusOperaterStatus.slowbit[i]&&!mCarControl.getGasBrake(i+1)&&!mCarControl.getHighSpeedControl(i+1))
+                            {
+                                mCarControl.setHighSpeedControl(true,i+1);
+                                continue;
+                            }
+                            //小车前进  高速关闭
+                            if(!mCarControl.getFrontStopStatus(i+1)&&!mMotusOperaterStatus.slowbit[i]&&mCarControl.getFrontLowSpeed(i+1))
+                            {
+                               mMotusOperaterStatus.slowbit[i]=true;
+                            }
+                            //小车前进  高速打开
+                            if(!mCarControl.getFrontStopStatus(i+1)&&mMotusOperaterStatus.slowbit[i]&&!mCarControl.getGasBrake(i+1)&&mCarControl.getHighSpeedControl(i+1))
+                            {
+                                mCarControl.setHighSpeedControl(false,i+1);
+                                continue;
+                            }
+                            //小车后退 低速打开
+                            if(!mCarControl.getFrontStopStatus(i+1)&&mMotusOperaterStatus.slowbit[i]&&!mCarControl.getGasBrake(i+1)&&!mCarControl.getLowSpeedControl(i+1))
+                            {
+                                mCarControl.setLowSpeedControl(true,i+1);
+                                continue;
+                            }
+                            //清除速度
+                            if(mCarControl.getFrontStopStatus(i+1))
+                            {
+                               mCarControl.clearOutput(i+1);                              
+                            }
                             //计数
                             if(retBool) retCount+=1;
                         }
@@ -1096,15 +1208,25 @@ void MainWindow::masterClock(void)
                         {
                             pathStep=7;
                             errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
                     if(retCount==totalCount)
                     {
-                        steppath4=0;
-                        pathStep=5;
+                        steppath4+=1;
                         stepMessage.sprintf("%d%s",steppath4,"平台运动");
                     }
+                    break;
+                }
+                //影片播放信号发送
+                if(steppath4==7)
+                {
+                    const char VideoPlayCmd[6] = {0x50,0x4C,0x41,0x59,0x0D,0x0A};
+                    mQTcpSocket.write(VideoPlayCmd,6);
+                    mMotusOperaterStatus.playbit=true;
+                    steppath4=0;
+                    pathStep=5;
                     break;
                 }
             }
@@ -1121,68 +1243,13 @@ void MainWindow::masterClock(void)
                 emit sendPlay(true);
                 //复位初始化
                 if(resetBit[5]){  steppath5=0;  resetBit[5]=false; }
-                //恢复指示灯熄灭
+                //平台运动
                 if(steppath5==0)
                 {
-                    retCount=0; totalCount=0;
-                    for(i=0;i<6;i++)
-                    {
-                        //平台是否连接 plc是否连接 平台是否可用
-                        if(platfromAble[i]&&plcStatus[i+1])
-                        {
-                            totalCount+=1;  retBool=false;
-                            //恢复指示灯熄灭
-                            if(renewHostOut.setControl(false,0))  retBool=true;
-                            //计数
-                            if(retBool) retCount+=1;
-                        }
-                        else if(platfromAble[i]&&!plcStatus[i+1])
-                        {
-                            pathStep=7;
-                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
-                            break;
-                        }
-                    }
-                    if(retCount==totalCount)
-                    {
-                        steppath5+=1;
-                        stepMessage.sprintf("%d%s",steppath5,"继续指示灯熄灭");
-                    }
-                    break;
-                }
-                //继续指示灯熄灭
-                if(steppath5==1)
-                {
-                    retCount=0; totalCount=0;
-                    for(i=0;i<6;i++)
-                    {
-                        //平台是否连接 plc是否连接 平台是否可用
-                        if(platfromAble[i]&&plcStatus[i+1])
-                        {
-                            totalCount+=1;  retBool=false;
-                            //继续指示灯熄灭
-                            if(continueHostOut.setControl(false,0))  retBool=true;
-                            //计数
-                            if(retBool) retCount+=1;
-                        }
-                        else if(platfromAble[i]&&!plcStatus[i+1])
-                        {
-                            pathStep=7;
-                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
-                            break;
-                        }
-                        saftBeltBit[i]=true;
-                    }
-                    if(retCount==totalCount)
-                    {
-                        steppath5+=1;
-                        stepMessage.sprintf("%d%s",steppath5,"平台动作");
-                    }
-                    break;
-                }
-                //平台运动
-                if(steppath5==2)
-                {
+                    static int mainpos[3]={11,12,13};
+                    bool mainbit[3];
+                    static int sencondpos[2]={45,46};
+                    bool sencondbit[2];
                     retCount=0; totalCount=0; float data[6]={0.f,0.f,0.f,0.f,0.f,0.f};
                     for(i=0;i<6;i++)
                     {
@@ -1192,33 +1259,24 @@ void MainWindow::masterClock(void)
                             safeBelt=false;
                             //安全带检测
                             if(saftBelt1FromIn.getStatus(i+1)&&saftBelt2FromIn.getStatus(i+1)
-                               &&saftBelt2FromIn.getStatus(i+1)&&saftBelt3FromIn.getStatus(i+1)
-                               &&saftBelt4FromIn.getStatus(i+1)&&saftBelt5FromIn.getStatus(i+1)
-                               &&saftBelt6FromIn.getStatus(i+1)&&saftBelt7FromIn.getStatus(i+1))  safeBelt=true;
+                               &&saftBelt2FromIn.getStatus(i+1)&&saftBelt3FromIn.getStatus(i+1))  safeBelt=true;
                             //安全带松开回中
-                            if(!safeBelt&&saftBeltBit[i]) saftBeltBit[i]=false;
+                            if(!safeBelt&&mMotusOperaterStatus.liftbelt[i]) mMotusOperaterStatus.liftbelt[i]=false;
                             //安全带松开回中执行
-                            if(!saftBeltBit[i])
+                            if(!mMotusOperaterStatus.liftbelt[i])
                             {
                                 mMotusPlatfrom.sendPlatfromCmd(2,i);    //平台回中
-                                coolWindFromOut.setValue(false,i+1);    //冷风特效关
-                                waterSprayFromOut.setValue(false,i+1);  //喷水特效关
-                                smokeHostOut.setValue(false,0);         //烟雾特效
-                                strobeHostOut.setValue(false,0);        //频闪特效
-                                hubbleHostOut.setValue(false,0);        //泡泡特效
-                                continue;
+                                mainbit[0]=mainbit[1]=mainbit[2]=false;
+                                sencondbit[0]=sencondbit[1]=false;
+                                mMotusBasePlc.writePlcIo(mainbit,mainpos,3,0);
+                                mMotusBasePlc.writePlcIo(sencondbit,sencondpos,2,i+1);
                             }
                             //////////////////////////////////////////////////////////////////////////////////////
                             //平台回中位 护栏下降
                             if((platfromStatus[i]==3||platfromStatus[i]==15||platfromStatus[i]==4)
-                               &&!cylinderFromIn.getStatus(i+1)
-                               &&railDownControl.getIStatus(i+1)
-                               &&!railDownControl.getOStatus(i+1)
-                               &&railLockFromIn.getStatus(i+1)
-                               &&railLockFromOut.getStatus(i+1)
-                               &&pleverLockFromIn.getStatus(i+1)
-                               &&pleverLockFromOut.getStatus(i+1)
-                               &&safeBelt
+                               &&railDownFromIn.getStatus(i+1)
+                               &&pleverDownFromIn.getStatus(i+1)
+                               &&mMotusOperaterStatus.liftbelt[i]
                                )
                             {
                                 if(playMovieCount<playMovieData.size())
@@ -1230,82 +1288,88 @@ void MainWindow::masterClock(void)
                                    data[4]=playMovieData[playMovieCount].atu5;
                                    data[5]=playMovieData[playMovieCount].atu6;
                                    mMotusPlatfrom.sendPlatfromAttu(data,i);
-                                   if((playMovieData[playMovieCount].speeff&0x1)==0x1) smokeHostOut.setValue(true,0);
-                                   else smokeHostOut.setValue(false,0);
-
-                                   if((playMovieData[playMovieCount].speeff&0x2)==0x2) strobeHostOut.setValue(true,0);
-                                   else strobeHostOut.setValue(false,0);
-
-                                   if((playMovieData[playMovieCount].speeff&0x4)==0x4) hubbleHostOut.setValue(true,0);
-                                   else hubbleHostOut.setValue(false,0);
-
-                                   if((playMovieData[playMovieCount].speeff&0x8)==0x8) coolWindFromOut.setValue(true,i+1);
-                                   else coolWindFromOut.setValue(false,i+1);
-
-                                   if((playMovieData[playMovieCount].speeff&0x10)==0x10) waterSprayFromOut.setValue(true,i+1);
-                                   else waterSprayFromOut.setValue(false,i+1);
+                                   if((playMovieData[playMovieCount].speeff&0x1)==0x1) mainbit[0]=true;
+                                   else mainbit[0]=false;
+                                   if((playMovieData[playMovieCount].speeff&0x2)==0x2) mainbit[1]=true;
+                                   else mainbit[1]=false;
+                                   if((playMovieData[playMovieCount].speeff&0x4)==0x4) mainbit[2]=true;
+                                   else mainbit[2]=false;
+                                   if((playMovieData[playMovieCount].speeff&0x8)==0x8) sencondbit[0]=true;
+                                   else sencondbit[0]=false;
+                                   if((playMovieData[playMovieCount].speeff&0x10)==0x10) sencondbit[1]=true;
+                                   else sencondbit[1]=false;
+                                   mMotusBasePlc.writePlcIo(mainbit,mainpos,3,0);
+                                   mMotusBasePlc.writePlcIo(sencondbit,sencondpos,2,i+1);
                                 }
                             }
                             ////////////////////////////////////////////////////////////////////////////////////////
                         }
                         else if(platfromAble[i]&&(!mMotusPlatfrom.getConnect(i)||!plcStatus[i+1]))
                         {
-                            pathStep=6;
+                            pathStep=7;
+                            playMovieCount=0;
                             if(!mMotusPlatfrom.getConnect(i)) errorMessage.sprintf("%d%s",i+1,"平台通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
+                    playMovieCount++;
                     if(playMovieCount>=playMovieData.size())
                     {
                         playMovieCount=0;
                         emit sendPlay(false);
+                        mMotusOperaterStatus.playbit=false;
                         steppath5+=1;
                         stepMessage.sprintf("%d%s",steppath5,"烟雾特效关");
                     }
                     break;
                 }
                 //烟雾特效关
-                if(steppath5==3&&plcStatus[0]&&smokeHostOut.setControl(false,0))
+                if(steppath5==1&&plcStatus[0]&&smokeHostOut.setControl(false,0))
                 {
                     steppath5+=1;
                     stepMessage.sprintf("%d%s",steppath5,"频闪特效关");
                     break;
                 }
-                else if(steppath5==3&&!plcStatus[0])
+                else if(steppath5==1&&!plcStatus[0])
                 {
                     pathStep=7;
-                    errorMessage.sprintf("%d%s",0,"PLC通讯异常");
+                    errorMessage.sprintf("%d%s",0,"号PLC通讯异常");
+                    mMotusRunLog->addStringLog(errorMessage);
                     break;
                 }
                 //频闪特效关
-                if(steppath5==4&&plcStatus[0]&&strobeHostOut.setControl(false,0))
+                if(steppath5==2&&plcStatus[0]&&strobeHostOut.setControl(false,0))
                 {
                     steppath5+=1;
                     stepMessage.sprintf("%d%s",steppath5,"泡泡特效关");
                     break;
                 }
-                else if(steppath5==4&&!plcStatus[0])
+                else if(steppath5==2&&!plcStatus[0])
                 {
                     pathStep=7;
-                    errorMessage.sprintf("%d%s",0,"PLC通讯异常");
+                    errorMessage.sprintf("%d%s",0,"号PLC通讯异常");
+                    mMotusRunLog->addStringLog(errorMessage);
                     break;
                 }
                 //泡泡特效关
-                if(steppath5==5&&plcStatus[0]&&hubbleHostOut.setControl(false,0))
+                if(steppath5==3&&plcStatus[0]&&hubbleHostOut.setControl(false,0))
                 {
                     steppath5+=1;
                     stepMessage.sprintf("%d%s",steppath5,"冷风特效关");
                     break;
                 }
-                else if(steppath5==5&&!plcStatus[0])
+                else if(steppath5==3&&!plcStatus[0])
                 {
                     pathStep=7;
-                    errorMessage.sprintf("%d%s",0,"PLC通讯异常");
+                    errorMessage.sprintf("%d%s",0,"号PLC通讯异常");
+                    mMotusRunLog->addStringLog(errorMessage);
                     break;
                 }
                 //冷风特效关
-                if(steppath5==6)
+                if(steppath5==4)
                 {
                     retCount=0; totalCount=0;
                     for(i=0;i<6;i++)
@@ -1316,13 +1380,15 @@ void MainWindow::masterClock(void)
                             totalCount+=1;  retBool=false;
                             //冷风特效关
                             if(coolWindFromOut.setControl(false,0))  retBool=true;
+                            else if(mMotusOperaterStatus.freerror[i]) retBool=true;
                             //计数
                             if(retBool) retCount+=1;
                         }
                         else if(platfromAble[i]&&!plcStatus[i+1])
                         {
                             pathStep=7;
-                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -1334,7 +1400,7 @@ void MainWindow::masterClock(void)
                     break;
                 }
                 //喷水特效关
-                if(steppath5==7)
+                if(steppath5==5)
                 {
                     retCount=0; totalCount=0;
                     for(i=0;i<6;i++)
@@ -1345,6 +1411,7 @@ void MainWindow::masterClock(void)
                             totalCount+=1;  retBool=false;
                             //冷风特效关
                             if(waterSprayFromOut.setControl(false,0))  retBool=true;
+                            else if(mMotusOperaterStatus.freerror[i]) retBool=true;
                             //计数
                             if(retBool) retCount+=1;
                         }
@@ -1352,50 +1419,16 @@ void MainWindow::masterClock(void)
                         {
                             pathStep=7;
                             if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
                     if(retCount==totalCount)
                     {
-                        steppath5+=1;
-                        stepMessage.sprintf("%d%s",steppath5,"继续/恢复指示灯亮");
-                    }
-                    break;
-                }
-                //继续/恢复指示灯亮
-                if(steppath5==8&&plcStatus[0]&&renewHostOut.setControl(true,0)
-                                             &&continueHostOut.setControl(true,0))
-                {
-                    steppath5+=1;
-                    stepMessage.sprintf("%d%s",steppath5,"平台恢复/继续选择");
-                    break;
-                }
-                else if(steppath5==8&&!plcStatus[0])
-                {
-                    pathStep=7;
-                    errorMessage.sprintf("%d%s",0,"PLC通讯异常");
-                    break;
-                }
-                //平台恢复/继续选择
-                if(steppath5==8&&plcStatus[0])
-                {
-                    if(renewHostIn.getStatus(0))
-                    {
                         steppath5=0;
                         pathStep=6;
-                        stepMessage.sprintf("%d%s",steppath5,"恢复指示灯关");
+                        stepMessage.sprintf("%d%s",steppath5,"平台回中");
                     }
-                    if(continueHostIn.getStatus(0))
-                    {
-                        steppath5=0;
-                        stepMessage.sprintf("%d%s",steppath5,"恢复指示灯熄灭");
-                    }
-                    break;
-                }
-                else if(steppath5==8&&!plcStatus[0])
-                {
-                    pathStep=7;
-                    errorMessage.sprintf("%d%s",0,"PLC通讯异常");
                     break;
                 }
             }
@@ -1407,95 +1440,39 @@ void MainWindow::masterClock(void)
                 bool retBool=false;                       //返回结果
                 int retCount=0;                           //结果个数
                 int totalCount=0;                         //统计个数
-                emit sendHandPermissin(false); //不允许手动操作
+                emit sendHandPermissin(false);            //不允许手动操作
                 emit sendPlay(false);
                 //复位初始化
                 if(resetBit[6]){  steppath6=0;  resetBit[6]=false; }
-                //继续指示灯关
+                //平台回中
                 if(steppath6==0)
                 {
                     retCount=0; totalCount=0;
                     for(i=0;i<6;i++)
                     {
-                        //平台是否连接 plc是否连接 平台是否可用
-                        if(platfromAble[i]&&plcStatus[i+1])
-                        {
-                            totalCount+=1;  retBool=false;
-                            //继续指示灯关
-                            if(continueHostOut.setControl(false,0))  retBool=true;
-                            //计数
-                            if(retBool) retCount+=1;
-                        }
-                        else if(platfromAble[i]&&!plcStatus[i+1])
-                        {
-                            pathStep=7;
-                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
-                            break;
-                        }
-                    }
-                    if(retCount==totalCount)
-                    {
-                        steppath6+=1;
-                        stepMessage.sprintf("%d%s",steppath6,"恢复指示灯关");
-                    }
-                    break;
-                }
-                //恢复指示灯关
-                if(steppath6==1)
-                {
-                    retCount=0; totalCount=0;
-                    for(i=0;i<6;i++)
-                    {
-                        //平台是否连接 plc是否连接 平台是否可用
-                        if(platfromAble[i]&&plcStatus[i+1])
-                        {
-                            totalCount+=1;  retBool=false;
-                            //恢复指示灯关
-                            if(renewHostOut.setControl(false,0))  retBool=true;
-                            //计数
-                            if(retBool) retCount+=1;
-                        }
-                        else if(platfromAble[i]&&!plcStatus[i+1])
-                        {
-                            pathStep=7;
-                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
-                            break;
-                        }
-                    }
-                    if(retCount==totalCount)
-                    {
-                        steppath6+=1;
-                        stepMessage.sprintf("%d%s",steppath6,"平台回中");
-                    }
-                    break;
-                }
-                //平台回中
-                if(steppath6==2)
-                {
-                    retCount=0; totalCount=0;
-                    for(i=0;i<6;i++)
-                    {
+                        mMotusOperaterStatus.slowbit[i]=false;
                         //平台是否连接 plc是否连接 平台是否可用
                         if(platfromAble[i]&&mMotusPlatfrom.getConnect(i)&&plcStatus[i+1])
                         {
                             totalCount+=1;  retBool=false;
                             //平台回中位
                             if((platfromStatus[i]==3||platfromStatus[i]==15)
-                               &&!cylinderFromIn.getStatus(i+1)
                                &&mCarControl.getFrontStopStatus(i+1)
-                               &&pleverLockFromOut.getStatus(i+1)
+                               &&pleverDownFromIn.getStatus(i+1)
                                ) retBool=true;
+                            else if(mMotusOperaterStatus.platerror[i]) retBool=true;
                             //平台回中
                             if(platfromStatus[i]==4
-                               &&!cylinderFromIn.getStatus(i+1)
                                &&mCarControl.getFrontStopStatus(i+1)
-                               &&pleverLockFromOut.getStatus(i+1)) mMotusPlatfrom.sendPlatfromCmd(2,i);
+                               &&pleverDownFromIn.getStatus(i+1)) mMotusPlatfrom.sendPlatfromCmd(2,i);
                             //小车未在前进停止位 压杆未压下
-                            if(!mCarControl.getFrontStopStatus(i+1)||!pleverLockFromOut.getStatus(i+1))
+                            if(!mCarControl.getFrontStopStatus(i+1)||!pleverDownFromIn.getStatus(i+1))
                             {
                                 pathStep=7;
                                 if(!mCarControl.getFrontStopStatus(i+1)) errorMessage.sprintf("%d%s",i+1,"平台未在前进停止位");
-                                if(!pleverLockFromOut.getStatus(i+1)) errorMessage.sprintf("%d%s",i+1,"压杆未锁定");
+                                mMotusRunLog->addStringLog(errorMessage);
+                                if(!pleverDownFromIn.getStatus(i+1)) errorMessage.sprintf("%d%s",i+1,"压杆未锁定");
+                                mMotusRunLog->addStringLog(errorMessage);
                                 break;
                             }
                             //计数
@@ -1505,7 +1482,9 @@ void MainWindow::masterClock(void)
                         {
                             pathStep=7;
                             if(!mMotusPlatfrom.getConnect(i)) errorMessage.sprintf("%d%s",i+1,"平台通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -1517,7 +1496,7 @@ void MainWindow::masterClock(void)
                     break;
                 }
                 //平台后退
-                if(steppath6==3)
+                if(steppath6==1)
                 {
                     retCount=0; totalCount=0;
                     for(i=0;i<6;i++)
@@ -1526,51 +1505,80 @@ void MainWindow::masterClock(void)
                         if(platfromAble[i]&&plcStatus[i+1])
                         {
                             totalCount+=1;  retBool=false;
-                            //正确停止
-                            if(mCarControl.getBackStopStatus(i+1)&&mCarControl.getGasBrake(i+1)&&mCarControl.getGasBrakeControl(i+1)
+                            //小车触碰到极限位 进行报错处理
+                            if(mCarControl.getLimitStatus(i+1))
+                            {
+                                errorMessage.sprintf("%d%s",i+1,"小车触碰到极限位");
+                                mMotusRunLog->addStringLog(errorMessage);
+                                mMotusOperaterStatus.freerror[i]=true;
+                                retBool=true;
+                                if(retBool) retCount+=1;
+                                continue;
+                            }
+                            //判断小车是否到位
+                            if(mCarControl.getBackStopStatus(i+1)
                                &&!mCarControl.getFrontControl(i+1)&&!mCarControl.getBackControl(i+1)
                                &&!mCarControl.getHighSpeedControl(i+1)&&!mCarControl.getLowSpeedControl(i+1)
-                              ) retBool=true;
-                            //解除锁定
-                            if(!mCarControl.getBackStopStatus(i+1)&&!mCarControl.getLimitStatus(i+1)
-                               &&mCarControl.getGasBrakeControl(i+1))
+                               &&mCarControl.getGasBrake(i+1)&&!mCarControl.getGasBrakeControl(i+1)
+                               &&!mCarControl.getGasBrakeCloseControl(i+1)) retBool=true;
+                            else if(mMotusOperaterStatus.freerror[i])
                             {
-                                mCarControl.setFrontControl(false,i+1); mCarControl.setBackControl(false,i+1);
-                                mCarControl.setHighSpeedControl(false,i+1); mCarControl.setLowSpeedControl(false,i+1);
-                                mCarControl.setGasBrakeControl(false,i+1);
-                            }else if(mCarControl.getLimitStatus(i+1))
-                            {
-                                pathStep=7;
-                                errorMessage.sprintf("%d%s",i+1,"平台触碰到极限位");
-                                break;
+                                retBool=true;
+                                if(retBool) retCount+=1;
+                                continue;
                             }
-                            //小车后退
-                            if(mCarControl.getFrontStopStatus(i+1)&&!mCarControl.getGasBrake(i+1)&&!mCarControl.getGasBrakeControl(i+1)
-                               &&(!mCarControl.getBackControl(i+1)||!mCarControl.getHighSpeedControl(i+1)))
+                            //小车后退  气刹关关闭
+                            if(!mCarControl.getBackStopStatus(i+1)&&mCarControl.getGasBrakeCloseControl(i+1))
                             {
-                                mCarControl.setBackControl(true,i+1); mCarControl.setHighSpeedControl(true,i+1);
+                                mCarControl.setGasBrakeCloseControl(false,i+1);
+                                continue;
                             }
-                            //小车减速
-                            if(!mCarControl.getGasBrake(i+1)&&!mCarControl.getGasBrakeControl(i+1)
-                               &&mCarControl.getBackLowSpeed(i+1)&&mCarControl.getHighSpeedControl(i+1))
+                            //小车后退  气刹开打开
+                            if(!mCarControl.getBackStopStatus(i+1)&&!mCarControl.getGasBrakeControl(i+1))
                             {
-                                mCarControl.setHighSpeedControl(false,i+1);mCarControl.setLowSpeedControl(true,i+1);
+                                mCarControl.setGasBrakeControl(true,i+1);
+                                continue;
                             }
-                            //小车停止
-                            if(!mCarControl.getGasBrake(i+1)&&!mCarControl.getGasBrakeControl(i+1)
-                               &&mCarControl.getBackStopStatus(i+1)
-                               &&(mCarControl.getBackControl(i+1)||mCarControl.getLowSpeedControl(i+1)||mCarControl.getHighSpeedControl(i+1))
-                               )
+                            //小车后退  前进关闭
+                            if(!mCarControl.getBackStopStatus(i+1)&&mCarControl.getFrontControl(i+1))
                             {
-                                mCarControl.setFrontControl(false,i+1);mCarControl.setBackControl(false,i+1);
-                                mCarControl.setHighSpeedControl(false,i+1); mCarControl.setLowSpeedControl(false,i+1);
+                                mCarControl.setFrontControl(false,i+1);
+                                continue;
                             }
-                            //小车刹车
-                            if(!mCarControl.getGasBrakeControl(i+1)
-                               &&mCarControl.getBackStopStatus(i+1)
-                               &&!mCarControl.getBackControl(i+1)&&!mCarControl.getLowSpeedControl(i+1)&&!mCarControl.getHighSpeedControl(i+1)
-                               )mCarControl.setGasBrakeControl(true,i+1);
-                            /////////////////////////////////////////////////////////////////////////////////////////
+                            //小车后退 后退打开
+                            if(!mCarControl.getBackStopStatus(i+1)&&!mCarControl.getGasBrake(i+1)&&!mCarControl.getBackControl(i+1))
+                            {
+                                mCarControl.setBackControl(true,i+1);
+                                continue;
+                            }
+                            //小车后退  高速打开
+                            if(!mCarControl.getBackStopStatus(i+1)&&!mMotusOperaterStatus.slowbit[i]&&!mCarControl.getGasBrake(i+1)&&!mCarControl.getHighSpeedControl(i+1))
+                            {
+                                mCarControl.setHighSpeedControl(true,i+1);
+                                continue;
+                            }
+                            //小车前进  高速关闭
+                            if(!mCarControl.getBackStopStatus(i+1)&&!mMotusOperaterStatus.slowbit[i]&&mCarControl.getBackLowSpeed(i+1))
+                            {
+                               mMotusOperaterStatus.slowbit[i]=true;
+                            }
+                            //小车前进  高速打开
+                            if(!mCarControl.getBackStopStatus(i+1)&&mMotusOperaterStatus.slowbit[i]&&!mCarControl.getGasBrake(i+1)&&mCarControl.getHighSpeedControl(i+1))
+                            {
+                                mCarControl.setHighSpeedControl(false,i+1);
+                                continue;
+                            }
+                            //小车后退 低速打开
+                            if(!mCarControl.getBackStopStatus(i+1)&&mMotusOperaterStatus.slowbit[i]&&!mCarControl.getGasBrake(i+1)&&!mCarControl.getLowSpeedControl(i+1))
+                            {
+                                mCarControl.setLowSpeedControl(true,i+1);
+                                continue;
+                            }
+                            //清除速度
+                            if(mCarControl.getBackStopStatus(i+1))
+                            {
+                               mCarControl.clearOutput(i+1);                              
+                            }
                             //计数
                             if(retBool) retCount+=1;
                         }
@@ -1578,7 +1586,9 @@ void MainWindow::masterClock(void)
                         {
                             pathStep=7;
                             if(!mMotusPlatfrom.getConnect(i)) errorMessage.sprintf("%d%s",i+1,"平台通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -1589,8 +1599,8 @@ void MainWindow::masterClock(void)
                     }
                     break;
                 }
-                //平台顶位 护栏下降
-                if(steppath6==4)
+                //平台顶位 护栏上升
+                if(steppath6==2)
                 {
                     retCount=0; totalCount=0;
                     for(i=0;i<6;i++)
@@ -1599,20 +1609,29 @@ void MainWindow::masterClock(void)
                         if(platfromAble[i]&&mMotusPlatfrom.getConnect(i)&&plcStatus[i+1])
                         {
                             totalCount+=1;  retBool=false;
-                            //平台回顶位   护栏下降
+                            //平台回顶位   护栏上升
                             if((platfromStatus[i]==11)
-                               &&!cylinderFromIn.getStatus(i+1)
-                               &&railUpControl.getIStatus(i+1)
-                               &&!railUpControl.getOStatus(i+1)
-                               &&railLockFromIn.getStatus(i+1)
-                               &&railLockFromOut.getStatus(i+1)
+                               &&railUpFromIn.getStatus(i+1)
+                               &&railReverFromIn.getStatus(i+1)
+                               &&!railUpFromOut.getStatus(i+1)
                                ) retBool=true;
-                            //平台回中
-                            if((platfromStatus[i]==3||platfromStatus[i]==15)&&!cylinderFromIn.getStatus(i+1)) mMotusPlatfrom.sendPlatfromCmd(12,i);
-                            //锁定解除
-                            if(!railUpControl.getIStatus(i+1)&&railLockFromOut.getStatus(i+1)) railLockFromOut.setValue(false,i+1);
+                            else  if(mMotusOperaterStatus.platerror[i]
+                                     &&railUpFromIn.getStatus(i+1)
+                                     &&railReverFromIn.getStatus(i+1)
+                                     &&!railUpFromOut.getStatus(i+1)
+                                     ) retBool=true;
+                            else  if((platfromStatus[i]==11)
+                                     &&mMotusOperaterStatus.freerror[i]
+                                     ) retBool=true;
+                            else  if(mMotusOperaterStatus.platerror[i]
+                                     &&mMotusOperaterStatus.freerror[i]
+                                     ) retBool=true;
+                            //平台到顶
+                            if(platfromStatus[i]==3||platfromStatus[i]==15) mMotusPlatfrom.sendPlatfromCmd(12,i);
+                            //护栏上升
+                            if(!railUpFromIn.getStatus(i+1)||!railReverFromIn.getStatus(i+1)) railUpFromOut.setValue(true,i+1);
                             //护栏锁定
-                            else if(railUpControl.action(i+1)&&!railLockFromOut.getStatus(i+1)) railLockFromOut.setValue(true,i+1);
+                            if(railUpFromIn.getStatus(i+1)&&railReverFromIn.getStatus(i+1)&&railUpFromOut.getStatus(i+1)) railUpFromOut.setValue(false,i+1);
                             //计数
                             if(retBool) retCount+=1;
                         }
@@ -1620,63 +1639,35 @@ void MainWindow::masterClock(void)
                         {
                             pathStep=7;
                             if(!mMotusPlatfrom.getConnect(i)) errorMessage.sprintf("%d%s",i+1,"平台通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
                     if(retCount==totalCount)
                     {
                         steppath6+=1;
-                        stepMessage.sprintf("%d%s",steppath6,"压杆锁定开");
+                        stepMessage.sprintf("%d%s",steppath6,"待客指示灯亮");
                     }
                     break;
-                }
-                //压杆锁定开
-                if(steppath6==5)
-                {
-                    retCount=0; totalCount=0;
-                    for(i=0;i<6;i++)
-                    {
-                        //平台是否连接 plc是否连接 平台是否可用
-                        if(platfromAble[i]&&plcStatus[i+1])
-                        {
-                            totalCount+=1;  retBool=false;
-                            //压杆锁输出关  压杆锁限位
-                            if(!pleverLockFromIn.getStatus(i+1)&&!pleverLockFromOut.getStatus(i+1))  retBool=true;
-                            //压杆锁输出关
-                            if(railLockFromOut.getStatus(i+1)) railLockFromOut.setValue(false,i+1);
-                            //计数
-                            if(retBool) retCount+=1;
-                        }
-                        else if(platfromAble[i]&&!plcStatus[i+1])
-                        {
-                            pathStep=7;
-                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
-                            break;
-                        }
-                    }
-                    if(retCount==totalCount)
-                    {
-                        steppath6+=1;
-                        stepMessage.sprintf("%d%s",steppath6,"主待客指示灯点亮");
-                    }
-                    break;
-                }
+                }                
                 //主待客指示灯点亮
-                if(steppath6==6&&plcStatus[0]&&waitHostOut.setControl(true,0))
+                if(steppath6==3&&plcStatus[0]&&waitHostOut.setControl(true,0))
                 {
                     steppath6+=1;
                     stepMessage.sprintf("%d%s",steppath6,"从待客指示灯点亮");
                     break;
                 }
-                else if(steppath6==6&&!plcStatus[0])
+                else if(steppath6==3&&!plcStatus[0])
                 {
                     pathStep=7;
                     errorMessage.sprintf("%d%s",0,"PLC通讯异常");
+                    mMotusRunLog->addStringLog(errorMessage);
                     break;
                 }
                 //从待客指示灯点亮
-                if(steppath6==7)
+                if(steppath6==4)
                 {
                     retCount=0; totalCount=0;
                     for(i=0;i<6;i++)
@@ -1687,6 +1678,7 @@ void MainWindow::masterClock(void)
                             totalCount+=1;  retBool=false;
                             //从待客指示灯点亮
                             if(waitFromOut.getStatus(i+1))  retBool=true;
+                            else if(mMotusOperaterStatus.freerror[i])  retBool=true;
                             //从待客指示灯点亮
                             if(!waitFromOut.getStatus(i+1)) waitFromOut.setValue(true,i+1);
                             //计数
@@ -1696,6 +1688,7 @@ void MainWindow::masterClock(void)
                         {
                             pathStep=7;
                             if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -1707,7 +1700,39 @@ void MainWindow::masterClock(void)
                     break;
                 }
                 //座位照明开
-                if(steppath6==8)
+                if(steppath6==5)
+                {
+                    retCount=0; totalCount=0;
+                    for(i=0;i<6;i++)
+                    {
+                        mMotusOperaterStatus.makesure[i]=false;
+                        //平台是否连接 plc是否连接 平台是否可用
+                        if(platfromAble[i]&&plcStatus[i+1])
+                        {
+                            totalCount+=1;  retBool=false;
+                            //座位照明开
+                            if(seatLightFromOut.setControl(true,i+1))  retBool=true;
+                            else if(mMotusOperaterStatus.freerror[i])  retBool=true;
+                            //计数
+                            if(retBool) retCount+=1;
+                        }
+                        else if(platfromAble[i]&&!plcStatus[i+1])
+                        {
+                            pathStep=7;
+                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
+                            break;
+                        }
+                    }
+                    if(retCount==totalCount)
+                    {
+                        steppath6+=1;
+                        stepMessage.sprintf("%d%s",steppath6,"可以下客和上客");
+                    }
+                    break;
+                }
+                //压下压杆后，确认指示灯亮后，按下确认按键
+                if(steppath6==6)
                 {
                     retCount=0; totalCount=0;
                     for(i=0;i<6;i++)
@@ -1716,8 +1741,34 @@ void MainWindow::masterClock(void)
                         if(platfromAble[i]&&plcStatus[i+1])
                         {
                             totalCount+=1;  retBool=false;
-                            //座位照明开
-                            if(seatLightFromOut.setControl(true,i+1))  retBool=true;
+                            if(!pleverDownFromIn.getStatus(i+1))  mMotusOperaterStatus.makesure[i]=false;
+                            //确认指示灯点亮
+                            if(pleverDownFromIn.getStatus(i+1)&&!mSureFromOut.getStatus(i+1)&&!mMotusOperaterStatus.makesure[i])
+                             mSureFromOut.setValue(true,i+1);
+                            //标志位置true
+                            if(pleverDownFromIn.getStatus(i+1)
+                                    &&saftBelt1FromIn.getStatus(i+1)
+                                    &&saftBelt2FromIn.getStatus(i+1)
+                                    &&saftBelt3FromIn.getStatus(i+1)
+                                    &&saftBelt4FromIn.getStatus(i+1)
+                                    &&msureFormIn.getStatus(i+1)
+                                    &&mSureFromOut.getStatus(i+1)
+                                    &&!mMotusOperaterStatus.makesure[i])
+                             mMotusOperaterStatus.makesure[i]=true;
+                             //熄灭确认指示灯
+                            if(pleverDownFromIn.getStatus(i+1)&&mSureFromOut.getStatus(i+1)&&mMotusOperaterStatus.makesure[i])
+                             mSureFromOut.setValue(false,i+1);
+                            //运行按键
+                            if(pleverDownFromIn.getStatus(i+1)
+                                    &&saftBelt1FromIn.getStatus(i+1)
+                                    &&saftBelt2FromIn.getStatus(i+1)
+                                    &&saftBelt3FromIn.getStatus(i+1)
+                                    &&saftBelt4FromIn.getStatus(i+1)
+                                    &&!mSureFromOut.getStatus(i+1)
+                                    &&mMotusOperaterStatus.makesure[i])
+                                retBool=true;
+                            else if(mMotusOperaterStatus.freerror[i])
+                                retBool=true;
                             //计数
                             if(retBool) retCount+=1;
                         }
@@ -1725,6 +1776,7 @@ void MainWindow::masterClock(void)
                         {
                             pathStep=7;
                             if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -1732,7 +1784,7 @@ void MainWindow::masterClock(void)
                     {
                         steppath6=0;
                         pathStep=3;
-                        stepMessage.sprintf("%d%s",steppath6,"按下运行按键");
+                        stepMessage.sprintf("%d%s",steppath6,"待客状态");
                     }
                     break;
                 }
@@ -1751,61 +1803,109 @@ void MainWindow::masterClock(void)
                 if(resetBit[7]){steppath7=0;resetBit[7]=false;}
                 //////////////////////////主PLC程序控制//////////////////////
                 //点亮故障指示灯
-                if(steppath7==0&&faultHostOut.setControl(true,0))
+                if(steppath7==0&&plcStatus[0]&&faultHostOut.setControl(true,0))
                 {
                     steppath7+=1;
                     stepMessage.sprintf("%d%s",steppath7,"熄灭恢复指示灯");
                     break;
                 }
-                else if(steppath7==0&&faultHostOut.getStatus(0))
+                else if(steppath7==0&&plcStatus[0]&&!faultHostOut.getStatus(0))
                 {
                     stepMessage.sprintf("%d%s",steppath7,"点亮故障指示灯");
                     break;
                 }
+                else if(steppath7==0&&!plcStatus[0])
+                {
+                    steppath7+=1;
+                    stepMessage.sprintf("%d%s",steppath7,"熄灭恢复指示灯");
+                    break;
+                }
                 //熄灭恢复指示灯
-                if(steppath7==1&&renewHostOut.setControl(false,0))
+                if(steppath7==1&&plcStatus[0]&&renewHostOut.setControl(false,0))
+                {
+                    steppath7+=1;
+                    stepMessage.sprintf("%d%s",steppath7,"熄灭复位指示灯");
+                    break;
+                }
+                else if(steppath7==1&&!plcStatus[0])
                 {
                     steppath7+=1;
                     stepMessage.sprintf("%d%s",steppath7,"熄灭复位指示灯");
                     break;
                 }
                 //熄灭复位指示灯
-                if(steppath7==2&&resetHostOut.setControl(false,0))
+                if(steppath7==2&&plcStatus[0]&&resetHostOut.setControl(false,0))
+                {
+                    steppath7+=1;
+                    stepMessage.sprintf("%d%s",steppath7,"熄灭继续指示灯");
+                    break;
+                }
+                else if(steppath7==2&&!plcStatus[0])
                 {
                     steppath7+=1;
                     stepMessage.sprintf("%d%s",steppath7,"熄灭继续指示灯");
                     break;
                 }
                 //熄灭继续指示灯
-                if(steppath7==3&&continueHostOut.setControl(false,0))
+                if(steppath7==3&&plcStatus[0]&&continueHostOut.setControl(false,0))
+                {
+                    steppath7+=1;
+                    stepMessage.sprintf("%d%s",steppath7,"熄灭待客指示灯");
+                    break;
+                }
+                else if(steppath7==3&&!plcStatus[0])
                 {
                     steppath7+=1;
                     stepMessage.sprintf("%d%s",steppath7,"熄灭待客指示灯");
                     break;
                 }
                 //熄灭待客指示灯
-                if(steppath7==4&&waitHostOut.setControl(false,0))
+                if(steppath7==4&&plcStatus[0]&&waitHostOut.setControl(false,0))
+                {
+                    steppath7+=1;
+                    stepMessage.sprintf("%d%s",steppath7,"烟雾特效关");
+                    break;
+                }
+                else if(steppath7==4&&!plcStatus[0])
                 {
                     steppath7+=1;
                     stepMessage.sprintf("%d%s",steppath7,"烟雾特效关");
                     break;
                 }
                 //烟雾特效关
-                if(steppath7==5&&smokeHostOut.setControl(false,0))
+                if(steppath7==5&&plcStatus[0]&&smokeHostOut.setControl(false,0))
+                {
+                    steppath7+=1;
+                    stepMessage.sprintf("%d%s",steppath7,"频闪特效关");
+                    break;
+                }
+                else if(steppath7==5&&!plcStatus[0])
                 {
                     steppath7+=1;
                     stepMessage.sprintf("%d%s",steppath7,"频闪特效关");
                     break;
                 }
                 //频闪特效关
-                if(steppath7==6&&strobeHostOut.setControl(false,0))
+                if(steppath7==6&&plcStatus[0]&&strobeHostOut.setControl(false,0))
+                {
+                    steppath7+=1;
+                    stepMessage.sprintf("%d%s",steppath7,"泡泡特效关");
+                    break;
+                }
+                else if(steppath7==6&&!plcStatus[0])
                 {
                     steppath7+=1;
                     stepMessage.sprintf("%d%s",steppath7,"泡泡特效关");
                     break;
                 }
                 //泡泡特效关
-                if(steppath7==7&&hubbleHostOut.setControl(false,0))
+                if(steppath7==7&&plcStatus[0]&&hubbleHostOut.setControl(false,0))
+                {
+                    steppath7+=1;
+                    stepMessage.sprintf("%d%s",steppath7,"点亮故障指示灯");
+                    break;
+                }
+                else if(steppath7==7&&!plcStatus[0])
                 {
                     steppath7+=1;
                     stepMessage.sprintf("%d%s",steppath7,"点亮故障指示灯");
@@ -1816,25 +1916,27 @@ void MainWindow::masterClock(void)
                 //点亮故障指示灯
                 if(steppath7==8)
                 {
-                    retCount=0;    totalCount=0;
+                    retCount=0;   totalCount=0;
                     for(i=0;i<6;i++)
                     {
                         if(platfromAble[i]&&plcStatus[i+1])
                         {
                             totalCount+=1;
                             retBool=faultFromOut.setControl(true,i+1);
-                            if(retBool)retCount+=1;
+                            if(retBool) retCount+=1;
                         }
-                        else if(platfromAble[i]&&!plcStatus[i+1])
-                        {  errorMessage.sprintf("%d%s",i+1,"PLC通讯异常"); }
                     }
-                    if(retCount==totalCount) {steppath7+=1;stepMessage.sprintf("%d%s",steppath7,"熄灭确认指示灯");}
+                    if(retCount==totalCount)
+                    {
+                        steppath7+=1;
+                        stepMessage.sprintf("%d%s",steppath7,"熄灭确认指示灯");
+                    }
                     break;
                 }
                 //熄灭确认指示灯
                 if(steppath7==9)
                 {
-                    retCount=0;  totalCount=0;
+                    retCount=0;   totalCount=0;
                     for(i=0;i<6;i++)
                     {
                         if(platfromAble[i]&&plcStatus[i+1])
@@ -1843,34 +1945,38 @@ void MainWindow::masterClock(void)
                             retBool=mSureFromOut.setControl(false,i+1);
                             if(retBool) retCount+=1;
                         }
-                        else if(platfromAble[i]&&!plcStatus[i+1])
-                        {   errorMessage.sprintf("%d%s",i+1,"PLC通讯异常"); }
                     }
-                    if(retCount==totalCount) {steppath7+=1;stepMessage.sprintf("%d%s",steppath7,"熄灭待客指示灯");}
+                    if(retCount==totalCount)
+                    {
+                        steppath7+=1;
+                        stepMessage.sprintf("%d%s",steppath7,"熄灭待客指示灯");
+                    }
                     break;
                 }
                 //熄灭待客指示灯
                 if(steppath7==10)
                 {
-                    retCount=0;totalCount=0;
+                    retCount=0;   totalCount=0;
                     for(i=0;i<6;i++)
                     {
                         if(platfromAble[i]&&plcStatus[i+1])
                         {
                             totalCount+=1;
                             retBool=waitFromOut.setControl(false,i+1);
-                            if(retBool)retCount+=1;
+                            if(retBool) retCount+=1;
                         }
-                        else if(platfromAble[i]&&!plcStatus[i+1])
-                        {   errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");  }
                     }
-                    if(retCount==totalCount) {steppath7+=1;stepMessage.sprintf("%d%s",steppath7,"冷风特效关");}
+                    if(retCount==totalCount)
+                    {
+                        steppath7+=1;
+                        stepMessage.sprintf("%d%s",steppath7,"冷风特效关");
+                    }
                     break;
                 }
                 //冷风特效关
                 if(steppath7==11)
                 {
-                    retCount=0;totalCount=0;
+                    retCount=0;   totalCount=0;
                     for(i=0;i<6;i++)
                     {
                         if(platfromAble[i]&&plcStatus[i+1])
@@ -1879,18 +1985,18 @@ void MainWindow::masterClock(void)
                             retBool=coolWindFromOut.setControl(false,i+1);
                             if(retBool) retCount+=1;
                         }
-                        else if(platfromAble[i]&&!plcStatus[i+1])
-                        {
-                            errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
-                        }
                     }
-                    if(retCount==totalCount)  {steppath7+=1;stepMessage.sprintf("%d%s",steppath7,"喷水特效关");}
+                    if(retCount==totalCount)
+                    {
+                        steppath7+=1;
+                        stepMessage.sprintf("%d%s",steppath7,"喷水特效关");
+                    }
                     break;
                 }
                 //喷水特效关
                 if(steppath7==12)
                 {
-                    retCount=0; totalCount=0;
+                    retCount=0;   totalCount=0;
                     for(i=0;i<6;i++)
                     {
                         if(platfromAble[i]&&plcStatus[i+1])
@@ -1899,18 +2005,18 @@ void MainWindow::masterClock(void)
                             retBool=waterSprayFromOut.setControl(false,i+1);
                             if(retBool) retCount+=1;
                         }
-                        else if(platfromAble[i]&&!plcStatus[i+1])
-                        {
-                            errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
-                        }
                     }
-                    if(retCount==totalCount) {steppath7+=1;stepMessage.sprintf("%d%s",steppath7,"座椅照明开");}
+                    if(retCount==totalCount)
+                    {
+                        steppath7+=1;
+                        stepMessage.sprintf("%d%s",steppath7,"座椅照明开");
+                    }
                     break;
                 }
-                //座椅照明关
+                //座椅照明开
                 if(steppath7==13)
                 {
-                    retCount=0; totalCount=0;
+                    retCount=0;   totalCount=0;
                     for(i=0;i<6;i++)
                     {
                         if(platfromAble[i]&&plcStatus[i+1])
@@ -1919,73 +2025,85 @@ void MainWindow::masterClock(void)
                             retBool=seatLightFromOut.setControl(true,i+1);
                             if(retBool) retCount+=1;
                         }
-                        else if(platfromAble[i]&&!plcStatus[i+1])
-                        {
-                            errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
-                        }
                     }
-                    if(retCount==totalCount) {steppath7+=1;stepMessage.sprintf("%d%s",steppath7,"护栏上输出关");}
+                    if(retCount==totalCount)
+                    {
+                        steppath7+=1;
+                        stepMessage.sprintf("%d%s",steppath7,"护栏上输出关");
+                    }
                     break;
                 }
                 //护栏上输出关
                 if(steppath7==14)
                 {
-                    retCount=0; totalCount=0;
+                    retCount=0;   totalCount=0;
                     for(i=0;i<6;i++)
                     {
                         if(platfromAble[i]&&plcStatus[i+1])
                         {
                             totalCount+=1;
-                            retBool=railUpControl.setControl(false,i+1);
+                            retBool=railUpFromOut.setControl(false,i+1);
                             if(retBool) retCount+=1;
                         }
-                        else if(platfromAble[i]&&!plcStatus[i+1])
-                        {
-                            errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
-                        }
                     }
-                    if(retCount==totalCount) {steppath7+=1;stepMessage.sprintf("%d%s",steppath7,"护栏下输出关");}
+                    if(retCount==totalCount)
+                    {
+                        steppath7+=1;
+                        stepMessage.sprintf("%d%s",steppath7,"护栏下输出关");
+                    }
                     break;
                 }
                 //护栏下输出关
                 if(steppath7==15)
                 {
-                    retCount=0; totalCount=0;
+                    retCount=0;   totalCount=0;
                     for(i=0;i<6;i++)
                     {
                         if(platfromAble[i]&&plcStatus[i+1])
                         {
                             totalCount+=1;
-                            retBool=railDownControl.setControl(false,i+1);
+                            retBool=railDownFromOut.setControl(false,i+1);
                             if(retBool) retCount+=1;
                         }
-                        else if(platfromAble[i]&&!plcStatus[i+1])
-                        {
-                            errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
-                        }
                     }
-                    if(retCount==totalCount) {steppath7+=1;stepMessage.sprintf("%d%s",steppath7,"小车输出关");}
+                    if(retCount==totalCount)
+                    {
+                        steppath7+=1;
+                        stepMessage.sprintf("%d%s",steppath7,"小车输出关");
+                    }
                     break;
                 }
                 //小车输出关
                 if(steppath7==16)
                 {
+                    retCount=0;   totalCount=0;
                     for(i=0;i<6;i++)
                     {
                         if(platfromAble[i]&&plcStatus[i+1])
                         {
-                            mCarControl.clearOutput(i+1);
+                            totalCount+=1;
+                            retBool=mCarControl.clearOutput(i+1);
+                            if(retBool) retCount+=1;
                         }
-                        else if(platfromAble[i]&&!plcStatus[i+1])
-                        {
-                            errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
-                        }
+                    }
+                    if(retCount==totalCount)
+                    {
+                        steppath7+=1;
+                        stepMessage.sprintf("%d%s",steppath7,"点亮复位指示灯");
                     }
                     break;
                 }
-                //////////////////////////从PLC控制结束/////////////////////////////
-                /// 添加复位功能按键
-                ///////////////////////////////////////////////////////////////////
+                //点亮复位指示灯
+                if(steppath7==17&&plcStatus[0]&&resetHostOut.setControl(true,0))
+                {
+                    stepMessage.sprintf("%d%s",steppath7,"故障处理完成");
+                    break;
+                }
+                else if(steppath7==17&&!plcStatus[0])
+                {
+                    stepMessage.sprintf("%d%s",steppath7,"故障处理完成");
+                    break;
+                }
             }
             //关机处理
             if(pathStep==8)
@@ -1995,22 +2113,28 @@ void MainWindow::masterClock(void)
                 bool retBool=false;                       //返回结果
                 int retCount=0;                           //结果个数
                 int totalCount=0;                         //统计个数
-                emit sendHandPermissin(false); //不允许手动操作
+                emit sendHandPermissin(false);            //不允许手动操作
                 emit sendPlay(false);
                 //复位初始化
                 if(resetBit[8]){steppath8=0;resetBit[8]=false;}
                 //////////////////////////主PLC程序控制//////////////////////
                 //熄灭待客指示灯
-                if(steppath8==0&&waitHostOut.setControl(false,0))
+                if(steppath8==0&&plcStatus[0]&&waitHostOut.setControl(false,0))
                 {
                     steppath8+=1;
                     stepMessage.sprintf("%d%s",steppath8,"从待客指示灯关");
                     break;
                 }
-                else if(steppath8==0&&waitHostOut.getStatus(0))
+                else if(steppath8==0&&plcStatus[0]&&waitHostOut.getStatus(0))
                 {
                     stepMessage.sprintf("%d%s",steppath8,"熄灭主待客指示灯关");
                     break;
+                }
+                else if(steppath8==0&&!plcStatus[0])
+                {
+                    pathStep=7;
+                    errorMessage.sprintf("%d%s",0,"号PLC通讯异常");
+                    mMotusRunLog->addStringLog(errorMessage);
                 }
                 //熄灭待客指示灯
                 if(steppath8==1)
@@ -2027,7 +2151,8 @@ void MainWindow::masterClock(void)
                         else if(platfromAble[i]&&!plcStatus[i+1])
                         {
                             pathStep=7;
-                            errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -2053,7 +2178,8 @@ void MainWindow::masterClock(void)
                         else if(platfromAble[i]&&!plcStatus[i+1])
                         {
                             pathStep=7;
-                            errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
@@ -2090,20 +2216,21 @@ void MainWindow::masterClock(void)
                         else if(platfromAble[i]&&(!mMotusPlatfrom.getConnect(i)||!plcStatus[i+1]))
                         {
                             pathStep=7;
-                            if(!mMotusPlatfrom.getConnect(i)) errorMessage.sprintf("%d%s",i+1,"平台通讯异常");
-                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"PLC通讯异常");
+                            if(!mMotusPlatfrom.getConnect(i)) errorMessage.sprintf("%d%s",i+1,"号平台通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
+                            if(!plcStatus[i+1]) errorMessage.sprintf("%d%s",i+1,"号PLC通讯异常");
+                            mMotusRunLog->addStringLog(errorMessage);
                             break;
                         }
                     }
                     if(retCount==totalCount)
                     {
-                        pathStep=0;
                         stepMessage.sprintf("%d%s",steppath8,"关机结束");
+                        pathStep=0;
                     }
                     break;
                 }
             }
-            */
             break;
         }
         case HandMove:
@@ -2134,15 +2261,6 @@ void MainWindow::masterClock(void)
                         if(plcStatus[0])
                         {
                            hubbleHostOut.setValue(actionValue,0);
-                        }
-                        break;
-                     }
-                //压杆锁定
-                case CompressBarLock:
-                     {
-                        if(plcStatus[currentHandPlatfrom])
-                        {
-                           pleverLockFromOut.setValue(actionValue,currentHandPlatfrom);
                         }
                         break;
                      }
@@ -2268,9 +2386,15 @@ void MainWindow::masterClock(void)
                                 break;
                             }
                             //小车触碰到极限位  气刹关打开
-                            if(mCarControl.getLimitStatus(currentHandPlatfrom)&&!mCarControl.getGasBrakeCloseControl(currentHandPlatfrom))
+                            if(mCarControl.getLimitStatus(currentHandPlatfrom)&&!mCarControl.getGasBrake(currentHandPlatfrom)&&!mCarControl.getGasBrakeCloseControl(currentHandPlatfrom))
                             {
                                 mCarControl.setGasBrakeCloseControl(true,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车触碰到极限位  气刹刹住 气刹关输出关闭
+                            if(mCarControl.getLimitStatus(currentHandPlatfrom)&&mCarControl.getGasBrake(currentHandPlatfrom)&&mCarControl.getGasBrakeCloseControl(currentHandPlatfrom))
+                            {
+                                mCarControl.setGasBrakeCloseControl(false,currentHandPlatfrom);
                                 break;
                             }
                             //判断小车是否到位
@@ -2278,7 +2402,7 @@ void MainWindow::masterClock(void)
                                &&!mCarControl.getFrontControl(currentHandPlatfrom)&&!mCarControl.getBackControl(currentHandPlatfrom)
                                &&!mCarControl.getHighSpeedControl(currentHandPlatfrom)&&!mCarControl.getLowSpeedControl(currentHandPlatfrom)
                                &&mCarControl.getGasBrake(currentHandPlatfrom)&&!mCarControl.getGasBrakeControl(currentHandPlatfrom)
-                               &&mCarControl.getGasBrakeCloseControl(currentHandPlatfrom)) break;
+                               &&!mCarControl.getGasBrakeCloseControl(currentHandPlatfrom)) break;
 
                             //小车后退  气刹关关闭
                             if(!mCarControl.getFrontStopStatus(currentHandPlatfrom)&&mCarControl.getGasBrakeCloseControl(currentHandPlatfrom))
@@ -2298,20 +2422,20 @@ void MainWindow::masterClock(void)
                                 mCarControl.setHighSpeedControl(false,currentHandPlatfrom);
                                 break;
                             }
-                            //小车后退 后退打开
+                            //小车后退 后退关闭
                             if(!mCarControl.getFrontStopStatus(currentHandPlatfrom)&&mCarControl.getBackControl(currentHandPlatfrom))
                             {
                                 mCarControl.setBackControl(false,currentHandPlatfrom);
                                 break;
                             }
-                            //小车后退 前进关闭
-                            if(!mCarControl.getFrontStopStatus(currentHandPlatfrom)&&!mCarControl.getFrontControl(currentHandPlatfrom))
+                            //小车后退 前进打开
+                            if(!mCarControl.getFrontStopStatus(currentHandPlatfrom)&&!mCarControl.getGasBrake(currentHandPlatfrom)&&!mCarControl.getFrontControl(currentHandPlatfrom))
                             {
                                 mCarControl.setFrontControl(true,currentHandPlatfrom);
                                 break;
                             }
                             //小车后退 低速打开
-                            if(!mCarControl.getFrontStopStatus(currentHandPlatfrom)&&!mCarControl.getLowSpeedControl(currentHandPlatfrom))
+                            if(!mCarControl.getFrontStopStatus(currentHandPlatfrom)&&!mCarControl.getGasBrake(currentHandPlatfrom)&&!mCarControl.getLowSpeedControl(currentHandPlatfrom))
                             {
                                 mCarControl.setLowSpeedControl(true,currentHandPlatfrom);
                                 break;
@@ -2360,10 +2484,16 @@ void MainWindow::masterClock(void)
                                 mCarControl.setGasBrakeControl(false,currentHandPlatfrom);
                                 break;
                             }
-                            //小车触碰到极限位  气刹关打开
-                            if(mCarControl.getLimitStatus(currentHandPlatfrom)&&!mCarControl.getGasBrakeCloseControl(currentHandPlatfrom))
+                            //小车触碰到极限位  小车没有刹住 气刹关打开
+                            if(mCarControl.getLimitStatus(currentHandPlatfrom)&&!mCarControl.getGasBrake(currentHandPlatfrom)&&!mCarControl.getGasBrakeCloseControl(currentHandPlatfrom))
                             {
                                 mCarControl.setGasBrakeCloseControl(true,currentHandPlatfrom);
+                                break;
+                            }
+                            //小车触碰到极限位  小车已经刹住 气刹关关闭
+                            if(mCarControl.getLimitStatus(currentHandPlatfrom)&&mCarControl.getGasBrake(currentHandPlatfrom)&&mCarControl.getGasBrakeCloseControl(currentHandPlatfrom))
+                            {
+                                mCarControl.setGasBrakeCloseControl(false,currentHandPlatfrom);
                                 break;
                             }
                             //判断小车是否到位
@@ -2371,7 +2501,7 @@ void MainWindow::masterClock(void)
                                &&!mCarControl.getFrontControl(currentHandPlatfrom)&&!mCarControl.getBackControl(currentHandPlatfrom)
                                &&!mCarControl.getHighSpeedControl(currentHandPlatfrom)&&!mCarControl.getLowSpeedControl(currentHandPlatfrom)
                                &&mCarControl.getGasBrake(currentHandPlatfrom)&&!mCarControl.getGasBrakeControl(currentHandPlatfrom)
-                               &&mCarControl.getGasBrakeCloseControl(currentHandPlatfrom))   break;
+                               &&!mCarControl.getGasBrakeCloseControl(currentHandPlatfrom))   break;
 
                             //小车后退  气刹关关闭
                             if(!mCarControl.getBackStopStatus(currentHandPlatfrom)&&mCarControl.getGasBrakeCloseControl(currentHandPlatfrom))
@@ -2398,13 +2528,13 @@ void MainWindow::masterClock(void)
                                 break;
                             }
                             //小车后退 后退打开
-                            if(!mCarControl.getBackStopStatus(currentHandPlatfrom)&&!mCarControl.getBackControl(currentHandPlatfrom))
+                            if(!mCarControl.getBackStopStatus(currentHandPlatfrom)&&!mCarControl.getGasBrake(currentHandPlatfrom)&&!mCarControl.getBackControl(currentHandPlatfrom))
                             {
                                 mCarControl.setBackControl(true,currentHandPlatfrom);
                                 break;
                             }
                             //小车后退 低速打开
-                            if(!mCarControl.getBackStopStatus(currentHandPlatfrom)&&!mCarControl.getLowSpeedControl(currentHandPlatfrom))
+                            if(!mCarControl.getBackStopStatus(currentHandPlatfrom)&&!mCarControl.getGasBrake(currentHandPlatfrom)&&!mCarControl.getLowSpeedControl(currentHandPlatfrom))
                             {
                                 mCarControl.setLowSpeedControl(true,currentHandPlatfrom);
                                 break;
@@ -2437,6 +2567,11 @@ void MainWindow::masterClock(void)
     {
         switch(viewId)
         {
+            case 0:
+            {
+              mMotusOperationView->updateOperationStatus(pathStep, stepMessage,errorMessage, playMovieCount);
+              break;
+            }
             case 1:
             {
                 bool status[100]={false};
@@ -2476,23 +2611,42 @@ void MainWindow::recvOperationCmd(int cmd)
 {
     switch (cmd)
     {
+        //开机指令
         case StartUp:
              {
                  if(pathStep==0)
                  {
                     pathStep=1;
+                    emit setOperateViewText("关机");
                  }
                  break;
              }
+        //关机指令
         case PowerOff:
              {
                  if(pathStep==3)
                  {
                    pathStep=8;
+                   emit setOperateViewText("开机");
                  }
                  break;
              }
-       case Operation:
+        //复位指令
+        case Restoration:
+             {
+                 //复位操作
+                 if(pathStep==4||pathStep==5||pathStep==6||pathStep==7||pathStep==8)
+                 {
+                   for(int i=0;i<9;i++)
+                   {
+                      resetBit[6]=true;
+                   }
+                   pathStep=0;
+                 }
+                 break;
+             }
+        //运行指令
+        case Operation:
             {
                 if(pathStep==3)
                 {
@@ -2500,6 +2654,7 @@ void MainWindow::recvOperationCmd(int cmd)
                 }
                 break;
             }
+        //默认
         default:
             break;
     }
@@ -2511,17 +2666,12 @@ void MainWindow::on_stateButton_clicked()
     ui->m_stackwidget->setCurrentWidget(mMotusaFlatformStatus);
     viewId=1;
     setWindowTitle("状态主页");
-    //scramOControl.setValue(true,0);
-    //bool test[8]={false,false,false,false,false,false,false,false};
-    //int postion[8]={6,7,8,9,10,11,12,13};
-    //mMotusBasePlc.writePlcIo(test,postion,8,0);
 }
 
 //从PLC的选择
 void MainWindow::recvPlatfromStatus(int index)
 {
     plcIndex=index;
-    //qDebug()<<index;
 }
 
 //手动按键
@@ -2530,17 +2680,12 @@ void MainWindow::on_handButton_clicked()
     ui->m_stackwidget->setCurrentWidget(mMotusHand);
     viewId=2;
     setWindowTitle("手动主页");
-    //scramOControl.setValue(false,0);
-    //bool test[8]={true,false,true,false,true,false,true,false};
-    //int postion[8]={6,7,8,9,10,11,12,13};
-    //mMotusBasePlc.writePlcIo(test,postion,8,0);
 }
 
 //平台是否能够使用
 void MainWindow::recvPlatfromAble(int num ,bool able)
 {
     platfromAble[num]=able;
-    //qDebug()<<num<<able;
 }
 
 //接收主窗口的命令

@@ -245,19 +245,6 @@ void MotusHand::on_comboBox_currentIndexChanged(int index)
     platfromIndex=index+1;
 }
 
-//压杆锁定
-void MotusHand::on_pressureBarLock_clicked()
-{
-    static bool ret=false;
-    if(!staticPermission)
-    {
-        QMessageBox::information(NULL,"友情提示","请在手动模式下操作");
-        return;
-    }
-    emit sendMainWindoewCmd(platfromIndex,CompressBarLock,1,!ret);
-    ret=!ret;
-}
-
 //护栏升
 void MotusHand::on_guardBarUp_clicked()
 {

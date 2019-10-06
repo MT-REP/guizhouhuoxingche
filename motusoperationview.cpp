@@ -27,7 +27,6 @@ MotusOperationView::MotusOperationView(QWidget *parent) :
     //读电影数据
     if(readmoviefile("movie\\movie.txt",mMovieiIndexList))
     {
-        //qDebug()<<111223;
         for(int i=0;i<mMovieiIndexList.size();i++)
         {
            m_playmodel->setItem(i,0,new QStandardItem(mMovieiIndexList.at(i).fileMovieName));
@@ -40,6 +39,7 @@ MotusOperationView::MotusOperationView(QWidget *parent) :
             ui->playMovieSequenceEdit->setText(mMovieiIndexList.at(0).fileMovieSequence);
         }
     }
+    //mQTcpSocket.connectToHost("192.168.1.7",23);
 }
 
 //初始化函数
@@ -48,7 +48,7 @@ void MotusOperationView::init()
     //读取数据
     if(mMovieiIndexList.size()!=0&&readtxtfile(mMovieiIndexList.at(0).fileTxtName,mMovieData))
     {
-        emit txtDataChange(mMovieData);
+        emit txtDataChange(mMovieData,mMovieiIndexList.at(0).fileMovieSequence);
         ui->playProgressBar->setRange(0,mMovieData.size()-1);
         mCurrentMovieMessage.fileMovieName=mMovieiIndexList.at(0).fileMovieName;
         mCurrentMovieMessage.isExist=true;
@@ -80,11 +80,14 @@ void MotusOperationView::tableViewDoubleClicked(const QModelIndex &temp)
            {
                if(readtxtfile(mMovieiIndexList.at(i).fileTxtName,mMovieData))
                {
-                   emit txtDataChange(mMovieData);
+                   emit txtDataChange(mMovieData,mMovieiIndexList.at(i).fileMovieSequence);
                    ui->playProgressBar->setRange(0,mMovieData.size()-1);
                    mCurrentMovieMessage.fileMovieName=strName;
                    mCurrentMovieMessage.isExist=true;
                    mCurrentMovieMessage.isPlay=false;
+                   ui->playMovieEdit->setText(mMovieiIndexList.at(i).fileMovieName);
+                   ui->playDataEdit->setText(mMovieiIndexList.at(i).fileTxtName);
+                   ui->playMovieSequenceEdit->setText(mMovieiIndexList.at(i).fileMovieSequence);
                }
            }
         }
@@ -128,7 +131,7 @@ void MotusOperationView::on_saveFileButton_clicked()
     }
     if(ui->dataLineEdit->text()=="")
     {
-        QMessageBox::information(this, "友情提示", "请输入电影大小", QMessageBox::Ok); // 处理文件
+        QMessageBox::information(this, "友情提示", "请输入数据名称", QMessageBox::Ok); // 处理文件
         return;
     }
     if(ui->sequenceLineEdit->text()=="")
@@ -371,30 +374,44 @@ bool MotusOperationView::readtxtfile(QString filename,QList<M_MovieData>&movieDa
     }
 }
 
-//开机
+//设置开机按键上的文字
+void MotusOperationView::recvOperateViewText(QString text)
+{
+    ui->playFileLoad->setText(text);
+}
+
+//开机关机按键
 void MotusOperationView::on_playFileLoad_clicked()
 {
-  emit sendOperationCmd(StartUp);
+  QString str=ui->playFileLoad->text();
+  if(str.compare("开机")==0)
+    emit sendOperationCmd(StartUp);
+  else if(str.compare("关机")==0)
+    emit sendOperationCmd(PowerOff);
 }
 
-//关机
+//复位按键
 void MotusOperationView::on_playRestartButton_clicked()
 {
-   emit sendOperationCmd(PowerOff);
+    emit sendOperationCmd(Restoration);
 }
 
-//运行
+//运行按键
 void MotusOperationView::on_playStopButton_clicked()
 {
+    //const char VideoPlayCmd[6] = {0x50,0x4C,0x41,0x59,0x0D,0x0A};
+    //mQTcpSocket.write(VideoPlayCmd,6);
     emit sendOperationCmd(Operation);
 }
 
 //更新状态
 void MotusOperationView::updateOperationStatus(int step, QString hintMessage,QString errorMessage, int playCount)
 {
-    static QString strStep[9]={"初始默认值","自检处理","准备处理","待客处理","运动准备","平台运动","恢复处理","故障处理","关机处理"};
-    ui->playCurrentFlowPath->text();
-    ui->playCurrentErrorMessage->text();
+    static QString strStep[9]={"0初始默认值","1自检处理:","2准备处理:","3待客处理:","4运动准备:","5平台运动:","6恢复处理:","7故障处理:","8关机处理:"};
+    QString tempstr;
+    tempstr=strStep[step];
+    tempstr+=hintMessage;
+    ui->playCurrentFlowPath->setText(tempstr);
+    ui->playCurrentErrorMessage->setText(errorMessage);
     ui->playProgressBar->setValue(playCount);
-
 }

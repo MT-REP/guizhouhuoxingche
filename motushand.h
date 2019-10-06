@@ -38,8 +38,7 @@ private slots:
     void on_handButton_clicked();
     //平台调试切换
     void on_comboBox_currentIndexChanged(int index);
-    //压杆锁定
-    void on_pressureBarLock_clicked();
+
     //护栏上
     void on_guardBarUp_clicked();
     //护栏降
@@ -52,12 +51,13 @@ private slots:
     void on_platfromUp_clicked();
     //平台将
     void on_platfromDown_clicked();
+    //冷风特效
     void on_coldWind_clicked();
-
+    //喷水特效
     void on_sprayWater_clicked();
-
+    //座椅照明
     void on_seatLight_clicked();
-
+    //小车输出关闭
     void on_outputClear_clicked();
     //喷雾特效
     void on_smokeEffect_clicked();

@@ -283,16 +283,21 @@ bool MotusCarControl::clearOutput(int index)
         setLowSpeedControl(false,index);
         return false;
     }
-    //气刹输出
+    //气刹开输出关
     if(getGasBrakeControl(index))
     {
         setGasBrakeControl(false,index);
         return false;
     }
     //气刹输出
-    if(!getGasBrakeCloseControl(index))
+    if(!getGasBrake(index)&&!getGasBrakeCloseControl(index))
     {
         setGasBrakeCloseControl(true,index);
+        return false;
+    }
+    if(getGasBrake(index)&&getGasBrakeCloseControl(index))
+    {
+        setGasBrakeCloseControl(false,index);
         return false;
     }
     return true;
