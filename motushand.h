@@ -58,13 +58,10 @@ private slots:
     //座椅照明
     void on_seatLight_clicked();
     //小车输出关闭
-    void on_outputClear_clicked();
-    //喷雾特效
-    void on_smokeEffect_clicked();
+    void on_outputClear_clicked();    
     //频闪特效
     void on_strobeEffect_clicked();
-    //泡泡特效
-    void on_hubbleEffect_clicked();
+    //待客指示灯
     void on_waitingLight_clicked();
 
 private:

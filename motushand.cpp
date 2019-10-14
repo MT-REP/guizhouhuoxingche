@@ -10,7 +10,7 @@ MotusHand::MotusHand(QWidget *parent) :
     ui->setupUi(this);
     staticPermission=false;
     autoPermission=true;
-    platfromIndex=0;
+    platfromIndex=1;
 }
 
 //析构函数
@@ -56,19 +56,6 @@ void MotusHand::recvHandPermissin(bool able)
 }
 
 ////////////////////////////////主plc手动功能//////////////////////////////////
-//烟雾特效
-void MotusHand::on_smokeEffect_clicked()
-{
-    static bool ret=false;
-    if(!staticPermission)
-    {
-        QMessageBox::information(NULL,"友情提示","请在手动模式下操作");
-        return;
-    }
-    emit sendMainWindoewCmd(0,SmokeEffect,2,!ret);
-    ret=!ret;
-}
-
 //频闪特效
 void MotusHand::on_strobeEffect_clicked()
 {
@@ -79,19 +66,6 @@ void MotusHand::on_strobeEffect_clicked()
         return;
     }
     emit sendMainWindoewCmd(0,StrobeEffect,2,!ret);
-    ret=!ret;
-}
-
-//泡泡特效
-void MotusHand::on_hubbleEffect_clicked()
-{
-    static bool ret=false;
-    if(!staticPermission)
-    {
-        QMessageBox::information(NULL,"友情提示","请在手动模式下操作");
-        return;
-    }
-    emit sendMainWindoewCmd(0,HubbleEffect,2,!ret);
     ret=!ret;
 }
 /////////////////////////////////////////////////////////////////////////////

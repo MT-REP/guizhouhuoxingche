@@ -136,7 +136,7 @@ background-color: rgb(85, 85, 0);</string>
      <string notr="true">color: rgb(170, 255, 255);</string>
     </property>
     <property name="text">
-     <string>恢复</string>
+     <string>运行</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -273,7 +273,7 @@ background-color: rgb(85, 85, 0);</string>
      <string notr="true">color: rgb(170, 255, 255);</string>
     </property>
     <property name="text">
-     <string>继续</string>
+     <string>备用</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -328,7 +328,7 @@ background-color: rgb(85, 85, 0);</string>
      <string notr="true">color: rgb(170, 255, 255);</string>
     </property>
     <property name="text">
-     <string>恢复</string>
+     <string>运行</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -347,7 +347,7 @@ background-color: rgb(85, 85, 0);</string>
      <string notr="true">color: rgb(170, 255, 255);</string>
     </property>
     <property name="text">
-     <string>泡泡特效</string>
+     <string>备用O点</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -415,9 +415,9 @@ background-color: rgb(85, 85, 0);
    <widget class="QLabel" name="label_18">
     <property name="geometry">
      <rect>
-      <x>346</x>
+      <x>336</x>
       <y>23</y>
-      <width>31</width>
+      <width>41</width>
       <height>21</height>
      </rect>
     </property>
@@ -425,7 +425,7 @@ background-color: rgb(85, 85, 0);
      <string notr="true">color: rgb(170, 255, 255);</string>
     </property>
     <property name="text">
-     <string>继续</string>
+     <string>备用O点</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -523,7 +523,7 @@ background-color: rgb(85, 85, 0);</string>
      <string notr="true">color: rgb(170, 255, 255);</string>
     </property>
     <property name="text">
-     <string>烟雾特效</string>
+     <string>备用O点</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -641,7 +641,7 @@ background-color: rgb(85, 85, 0);</string>
      <string notr="true">color: rgb(170, 255, 255);</string>
     </property>
     <property name="text">
-     <string>室内照明1</string>
+     <string>备用O点</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -680,7 +680,7 @@ background-color: rgb(85, 85, 0);</string>
      <string notr="true">color: rgb(170, 255, 255);</string>
     </property>
     <property name="text">
-     <string>室内照明2</string>
+     <string>备用O点</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -699,7 +699,7 @@ background-color: rgb(85, 85, 0);</string>
      <string notr="true">color: rgb(170, 255, 255);</string>
     </property>
     <property name="text">
-     <string>室内照明3</string>
+     <string>备用O点</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -758,7 +758,7 @@ background-color: rgb(85, 85, 0);</string>
      <string notr="true">color: rgb(170, 255, 255);</string>
     </property>
     <property name="text">
-     <string>室内照明4</string>
+     <string>备用O点</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -777,7 +777,7 @@ background-color: rgb(85, 85, 0);</string>
      <string notr="true">color: rgb(170, 255, 255);</string>
     </property>
     <property name="text">
-     <string>室内照明5</string>
+     <string>备用O点</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -836,7 +836,7 @@ background-color: rgb(85, 85, 0);</string>
      <string notr="true">color: rgb(170, 255, 255);</string>
     </property>
     <property name="text">
-     <string>室内照明6</string>
+     <string>备用O点</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -855,7 +855,7 @@ background-color: rgb(85, 85, 0);</string>
      <string notr="true">color: rgb(170, 255, 255);</string>
     </property>
     <property name="text">
-     <string>大厅照明</string>
+     <string>备用O点</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

@@ -15,6 +15,13 @@ MotusOperationView::MotusOperationView(QWidget *parent) :
     ui(new Ui::MotusOperationView)
 {
     ui->setupUi(this);
+    ptn[0]=ui->pButton1;  ptn[1]=ui->pButton2; ptn[2]=ui->pButton3; ptn[3]=ui->pButton4; ptn[4]=ui->pButton5; ptn[5]=ui->pButton6;
+    ptn[6]=ui->pButton7;  ptn[7]=ui->pButton8; ptn[8]=ui->pButton9; ptn[9]=ui->pButton10; ptn[10]=ui->pButton11; ptn[11]=ui->pButton12;
+    ptn[12]=ui->pButton13;  ptn[13]=ui->pButton14; ptn[14]=ui->pButton15; ptn[15]=ui->pButton16; ptn[16]=ui->pButton17; ptn[17]=ui->pButton18;
+    ptn[18]=ui->pButton19;  ptn[19]=ui->pButton20; ptn[20]=ui->pButton21; ptn[21]=ui->pButton22; ptn[22]=ui->pButton23; ptn[23]=ui->pButton24;
+    ptn[24]=ui->pButton25;  ptn[25]=ui->pButton26; ptn[26]=ui->pButton27; ptn[27]=ui->pButton28; ptn[28]=ui->pButton29; ptn[29]=ui->pButton30;
+    ptn[30]=ui->pButton31;  ptn[31]=ui->pButton32; ptn[32]=ui->pButton33; ptn[33]=ui->pButton34; ptn[34]=ui->pButton35; ptn[35]=ui->pButton36;
+
     m_playmodel = new QStandardItemModel(this);//tableview的模式
     m_playmodel->setHorizontalHeaderItem(0, new QStandardItem("电影名称"));//tableview的列表头第一个
     m_playmodel->setHorizontalHeaderItem(1, new QStandardItem("电影序列"));//tableview的列表头的第二个
@@ -399,9 +406,21 @@ void MotusOperationView::on_playRestartButton_clicked()
 //运行按键
 void MotusOperationView::on_playStopButton_clicked()
 {
-    //const char VideoPlayCmd[6] = {0x50,0x4C,0x41,0x59,0x0D,0x0A};
-    //mQTcpSocket.write(VideoPlayCmd,6);
+    //char mdata[14] = {0x4C,0x4F,0x41,0x44,0x20,0x30,0x30,0x31,0x2E,0x58,0x4D,0x4C,0x0D,0x0A };
+    //mQTcpSocket.write(mdata,14);
     emit sendOperationCmd(Operation);
+}
+
+//设置状态
+void MotusOperationView::setViewStatus(bool ret[36])
+{
+    for(int i=0;i<36;i++)
+    {
+        if(!ret[i])
+            ptn[i]->setStyleSheet("border:5px groove gray;border-radius:15px;background-color: rgb(255, 0, 0);");
+        else
+            ptn[i]->setStyleSheet("border:5px groove gray;border-radius:15px;background-color: rgb(0, 255, 0);");
+    }
 }
 
 //更新状态

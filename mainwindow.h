@@ -14,12 +14,11 @@
 #include "motussinglecontrol.h"
 #include "motuscarcontrol.h"
 #include <QTcpSocket>
-//#include "motussocket.h"
-
+#include <QCloseEvent>
 class MotusTimer;
 
 // const char VideoPlayCmd[6] = {0x50,0x4C,0x41,0x59,0x0D,0x0A};	                  //PLAY\r\n
-// const char VideoStopCmd[6] = {0x53,0x54,0x4F,0x50,0x0D ,0x0A };                   //STOP\r\n
+// const char VideoStopCmd[6] = {0x53,0x54,0x4F,0x50,0x0D ,0x0A };                    //STOP\r\n
 // const char VideoRewindCmd[8] = {0x52,0x45 ,0x57 ,0x49 ,0x4E ,0x44, 0x0D ,0x0A };   //REWIND\r\n
 // const char VideoLoadCmd[14] = {0x4C,0x4F,0x41,0x44,0x20,0x30,0x30,0x31,0x2E,0x58,0x4D,0x4C,0x0D ,0x0A };//LOAD 001.:ML\r\n
 
@@ -38,7 +37,7 @@ enum PlatfromCode{NullCode=0,Automatic=1,HandMove=2};
 enum PlatfromHandCmd{NullCmd=0,
                      GuardBarUp=2,GuardBarDown=3,WaittingCustomer=4,CarFront=6,CarBack=7,
                      PlatfromUp=8, PlatfromDown=9,ColdWind=10,SprayWater=11,SeatLight=12,
-                     OutputClear=13,SmokeEffect=14,StrobeEffect=15,HubbleEffect=16,};
+                     OutputClear=13,StrobeEffect=14,};
 typedef struct OperaterStatus
 {
     bool liftbelt[6]; //安全带
@@ -72,6 +71,7 @@ private:
     MotusSocket mMotusSocket;
     QString stepMessage;     //步骤信息
     QString errorMessage;    //错误信息
+    bool shutDownBit;        //关机标志位
     bool resetBit[10];       //复位标志位
     int pathStep;            //步骤
     int viewId;              //窗口ID
@@ -149,6 +149,7 @@ private:
     MotusPlcOControl  waterSprayFromOut;  //喷水特效
     MotusPlcOControl  seatLightFromOut;   //座椅照明
     ////////////////////////////////////////////////////
+    void closeEvent(QCloseEvent *event);
 signals:
     void setOperateViewText(QString text);
     void sendHandPermissin(bool able);

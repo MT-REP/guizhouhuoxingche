@@ -188,13 +188,13 @@ bool MotusUserManagement::readuserfile(QString filename)//读取用户数据
             tempstr.clear();
             in>>tempstr;//读取用户名
             tempuser.userName=getXorEncryptDecrypt(tempstr,11);
-            qDebug()<<tempuser.userName;
+            //qDebug()<<tempuser.userName;
             in>>tempuser.userDegree;//读取用户等级
-            qDebug()<<tempuser.userDegree;
+            //qDebug()<<tempuser.userDegree;
             tempstr.clear();
             in>>tempstr;//读取用户密码
             tempuser.userPassword=getXorEncryptDecrypt(tempstr,11);
-            qDebug()<<tempuser.userPassword;
+            //qDebug()<<tempuser.userPassword;
             m_mianUser.append(tempuser);
         }
         file.close();

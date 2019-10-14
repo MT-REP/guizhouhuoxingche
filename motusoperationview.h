@@ -73,6 +73,7 @@ class MotusOperationView : public QDialog
 public:
     explicit MotusOperationView(QWidget *parent = 0);
     void init();
+    void setViewStatus(bool ret[36]);
     void updateOperationStatus(int step, QString hintMessage,QString errorMessage, int playCount);
     ~MotusOperationView();
 signals:
@@ -96,6 +97,7 @@ private:
     bool writetxtfile(QString filename,QList<M_MovieData>&movieData);           //写入电影数据
     bool deletetxtfile(const QString &filename);
 private:
+    QPushButton * ptn[36];
     //QTcpSocket mQTcpSocket;
     Ui::MotusOperationView *ui;
     QStandardItemModel *m_playmodel;     //文件模式

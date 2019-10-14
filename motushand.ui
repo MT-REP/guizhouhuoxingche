@@ -358,23 +358,10 @@
    <property name="title">
     <string/>
    </property>
-   <widget class="QPushButton" name="smokeEffect">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>23</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>烟雾特效</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="strobeEffect">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>349</x>
       <y>23</y>
       <width>91</width>
       <height>51</height>
@@ -382,19 +369,6 @@
     </property>
     <property name="text">
      <string>频闪特效</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="hubbleEffect">
-    <property name="geometry">
-     <rect>
-      <x>430</x>
-      <y>24</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>泡泡特效</string>
     </property>
    </widget>
   </widget>
