@@ -42,7 +42,8 @@ SOURCES += \
     motusplcicontrol.cpp \
     motusplcocontrol.cpp \
     motussinglecontrol.cpp \
-    motuscarcontrol.cpp
+    motuscarcontrol.cpp \
+    motuskeeptime.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -61,7 +62,8 @@ HEADERS += \
     motusplcicontrol.h \
     motusplcocontrol.h \
     motussinglecontrol.h \
-    motuscarcontrol.h
+    motuscarcontrol.h \
+    motuskeeptime.h
 
 FORMS += \
         mainwindow.ui \

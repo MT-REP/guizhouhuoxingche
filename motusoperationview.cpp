@@ -9,7 +9,8 @@
 #include <QMessageBox>
 #include <QDir>
 #include <QFileDialog>
-#include <QDebug>
+#include <QFont>
+#include <QTextCodec>
 MotusOperationView::MotusOperationView(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MotusOperationView)
@@ -28,7 +29,9 @@ MotusOperationView::MotusOperationView(QWidget *parent) :
     ui->playTableView->setModel(m_playmodel);//加载模式
     ui->playTableView->setSelectionBehavior(QAbstractItemView::SelectRows);//选择行
     ui->playTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);//不允许编译
-    ui->playTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    //ui->playTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->playTableView->setColumnWidth(0,160);
+    ui->playTableView->setColumnWidth(1,120);
     //双击
     connect(ui->playTableView,SIGNAL(doubleClicked(const QModelIndex &)),this,SLOT(tableViewDoubleClicked(const QModelIndex &)));
     //读电影数据
@@ -238,8 +241,9 @@ bool MotusOperationView::readmoviefile(QString filename,QList<M_MovieIndex>&mMov
    if(file.exists ())
    {
         //qDebug()<<123;
-        file.open(QIODevice::ReadOnly);
+        file.open(QIODevice::Text|QIODevice::ReadOnly);
         QTextStream out(&file);
+        out.setCodec("UTF-8");
         while(!out.atEnd())
         {
             QString  tempstr;
@@ -262,6 +266,7 @@ bool MotusOperationView::readmoviefile(QString filename,QList<M_MovieIndex>&mMov
                 }
             }
             tempmovieindex.fileMovieName=tempstrlist.at(0);
+            //tempmovieindex.fileMovieName=tempmovieindex.fileMovieName.toLocal8Bit();
             tempmovieindex.fileTxtName=tempstrlist.at(1);
             tempmovieindex.fileMovieSequence=tempstrlist.at(2);
             //qDebug()<<tempstrlist.at(0)<<tempstrlist.at(1)<<tempstrlist.at(2);
@@ -284,6 +289,7 @@ bool MotusOperationView::writemoviefile(QString filename,QList<M_MovieIndex>&mMo
     {
          file.open(QIODevice::Text|QIODevice::WriteOnly|QIODevice::Truncate);
          QTextStream out(&file);
+         out.setCodec("UTF-8");
          for ( int i=0; i!=mMovieiIndexList.size(); ++i )
          {
              out<<mMovieiIndexList.at(i).fileMovieName;

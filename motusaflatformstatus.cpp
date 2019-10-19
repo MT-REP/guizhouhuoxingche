@@ -67,6 +67,14 @@ void MotusaFlatformStatus::viewMainPlcStatus(bool status[21],int num)
 {
     for(int i=0;i<num;i++)
     {
+        if(i==0||i==5)
+        {
+            if(!status[i])
+                mainPushButton[i]->setStyleSheet("border:5px groove gray;border-radius:15px;background-color: rgb(85,85, 0);");
+            else
+                mainPushButton[i]->setStyleSheet("border:5px groove gray;border-radius:15px;background-color: rgb(255,0, 0);");
+            continue;
+        }
         if(!status[i])
             mainPushButton[i]->setStyleSheet("border:5px groove gray;border-radius:15px;background-color: rgb(85, 85, 0);");
         else
@@ -79,6 +87,14 @@ void MotusaFlatformStatus::viewFromPlcStatus(bool status[49],int num)
 {
     for(int i=0;i<num;i++)
     {
+        if(i==0||i==10||i==16||i==17)
+        {
+            if(!status[i])
+                fromPushButton[i]->setStyleSheet("border:5px groove gray;border-radius:15px;background-color: rgb(85, 85, 0);");
+            else
+                fromPushButton[i]->setStyleSheet("border:5px groove gray;border-radius:15px;background-color: rgb(255, 0, 0);");
+            continue;
+        }
         if(!status[i])
             fromPushButton[i]->setStyleSheet("border:5px groove gray;border-radius:15px;background-color: rgb(85, 85, 0);");
         else

@@ -122,6 +122,8 @@ MainWindow::MainWindow(QWidget *parent) :
     if (!mQTcpSocket.waitForConnected(1000))
     QMessageBox::information(this,"友情提示","未连接到视频播放器");
 
+    timeOpen=false;
+    timeOpen=mMotusKeepTime.readLog();  //时间限制类
     //启动定时器
     mMotusTimer->start();
     //登录显示界面
@@ -280,6 +282,11 @@ void MainWindow::masterClock(void)
                 if(airLowHostIn.getStatus(0))
                 {
                     stepMessage.sprintf("%d%s",0,"气压不足请检查气压设备");
+                    break;
+                }
+                if(!timeOpen)
+                {
+                    stepMessage.sprintf("%d%s",0,"系统需要更新!!!");
                     break;
                 }
                 //熄灭故障指示灯
@@ -971,6 +978,10 @@ void MainWindow::masterClock(void)
                 {
                     stepMessage.sprintf("%d%s",0,"气压不足请检查气压设备");
                     break;
+                }
+                else
+                {
+                    stepMessage.sprintf("%d%s",0,"待客状态");
                 }
                 if(!resetHostOut.getStatus(0))
                 {

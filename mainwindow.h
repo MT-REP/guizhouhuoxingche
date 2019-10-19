@@ -13,6 +13,7 @@
 #include "motusplcocontrol.h"
 #include "motussinglecontrol.h"
 #include "motuscarcontrol.h"
+#include "motuskeeptime.h"
 #include <QTcpSocket>
 #include <QCloseEvent>
 class MotusTimer;
@@ -97,6 +98,8 @@ private:
     QTcpSocket mQTcpSocket;
     MotusPlatfrom mMotusPlatfrom;  //平台对象
     MotusBasePlc mMotusBasePlc;    //平台基本plc类
+    MotusKeepTime mMotusKeepTime;  //时间限制类
+    bool timeOpen;
     MotusOperaterStatus mMotusOperaterStatus;//操作中间状态结构体
 
     /////////////////////主PLC拥有IO点//////////////////////////
