@@ -9,9 +9,9 @@ class MotusPlcOControl : public QObject
 public:
     explicit MotusPlcOControl(QObject *parent = nullptr);
     void initPara(MotusBasePlc *sMotusBasePlc,int sposition);
-    bool getStatus(int index);
-    void setValue(bool value,int index);
-    bool setControl(bool value,int index);
+    bool getStatus();
+    void setValue(bool value);
+    bool setControl(bool value);
 private:
     MotusBasePlc *mMotusBasePlc;
     int position;

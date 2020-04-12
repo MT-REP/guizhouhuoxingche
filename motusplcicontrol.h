@@ -10,7 +10,7 @@ class MotusPlcIControl : public QObject
 public:
     explicit MotusPlcIControl(QObject *parent = nullptr);
     void initPara(MotusBasePlc *sMotusBasePlc,int sposition);
-    bool getStatus(int index);
+    bool getStatus();
 private:
     MotusBasePlc *mMotusBasePlc;
     int position;

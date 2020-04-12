@@ -32,7 +32,6 @@ typedef struct PlcIOMessageStruct{
 
 //PLC的总信息
 typedef struct PlcMessageStruct{
-    int index;
     IpMessage mIpMessage;
     char data[15];
     int  totalLength;
@@ -47,7 +46,6 @@ typedef struct PlcMessageStruct{
     QList<PlcIOMessage>mPlcIOMessage;
     PlcMessageStruct()
     {
-        index=0;
         inNum=0;
         totalLength=0;
         outLenght=0;
@@ -73,17 +71,17 @@ class MotusBasePlc : public QObject
 public:
     explicit MotusBasePlc(QObject *parent = nullptr);
     void initPara();//初始化参数
-    bool getPlcIOStatus(bool *data,int &lenght,int index);//得到PLC的IO状态
-    bool getPlcConnectStatus(int index);//得到PLC的连接状态
-    bool getPlcIo(bool *data,int *postion,int length,int index);//得到给定PLC的状态
-    bool writePlcIo(bool *data,int *postion,int length,int index);//写PLC的状态
+    bool getPlcIOStatus(bool *data,int &lenght);//得到PLC的IO状态
+    bool getPlcConnectStatus();//得到PLC的连接状态
+    bool getPlcIo(bool *data,int *postion,int length);//得到给定PLC的状态
+    bool writePlcIo(bool *data,int *postion,int length);//写PLC的状态
 private:
     MotusSocket mMotusSocket;       //网络接收对象
     QList<IpMessage>mIpMessageList; //PLC的IP信息
-    PlcMessage mPlcMessage[7];      //PLC的全部信息
+    PlcMessage mPlcMessage;      //PLC的全部信息
     bool isInit;
     //数据处理
-    void dealData(char *data,int index);
+    void dealData(char *data);
     //读取PLC的IP信息
     bool readPlcIpFile(QString filename,QList<IpMessage>&mIpMessageList);
     //读取PLC的IO信息

@@ -7,32 +7,15 @@ MotusaFlatformStatus::MotusaFlatformStatus(QWidget *parent) :
 {
     ui->setupUi(this);
     //显示平台的状态
-    statusLineEdit[0]=ui->lineEdit_1; statusLineEdit[1]=ui->lineEdit_2; statusLineEdit[2]=ui->lineEdit_3;
-    statusLineEdit[3]=ui->lineEdit_4; statusLineEdit[4]=ui->lineEdit_5; statusLineEdit[5]=ui->lineEdit_6;
+    statusLineEdit=ui->lineEdit_1;
+    //PLC是否连接
+    plcStatusButton=ui->plcStatus0;
     //主控PLC状态
-    mainPushButton[0]=ui->pushButton_1; mainPushButton[5]=ui->pushButton_6; mainPushButton[10]=ui->pushButton_11; mainPushButton[15]=ui->pushButton_16; mainPushButton[20]=ui->pushButton_21;
-    mainPushButton[1]=ui->pushButton_2; mainPushButton[6]=ui->pushButton_7; mainPushButton[11]=ui->pushButton_12; mainPushButton[16]=ui->pushButton_17;
-    mainPushButton[2]=ui->pushButton_3; mainPushButton[7]=ui->pushButton_8; mainPushButton[12]=ui->pushButton_13; mainPushButton[17]=ui->pushButton_18;
-    mainPushButton[3]=ui->pushButton_4; mainPushButton[8]=ui->pushButton_9; mainPushButton[13]=ui->pushButton_14; mainPushButton[18]=ui->pushButton_19;
-    mainPushButton[4]=ui->pushButton_5; mainPushButton[9]=ui->pushButton_10; mainPushButton[14]=ui->pushButton_15; mainPushButton[19]=ui->pushButton_20;
-    //从PLC状态
-    fromPushButton[0]=ui->pButton_1;  fromPushButton[12]=ui->pButton_13; fromPushButton[24]=ui->pButton_25; fromPushButton[36]=ui->pButton_37;
-    fromPushButton[1]=ui->pButton_2;  fromPushButton[13]=ui->pButton_14; fromPushButton[25]=ui->pButton_26; fromPushButton[37]=ui->pButton_38;
-    fromPushButton[2]=ui->pButton_3;  fromPushButton[14]=ui->pButton_15; fromPushButton[26]=ui->pButton_27; fromPushButton[38]=ui->pButton_39;
-    fromPushButton[3]=ui->pButton_4;  fromPushButton[15]=ui->pButton_16; fromPushButton[27]=ui->pButton_28; fromPushButton[39]=ui->pButton_40;
-    fromPushButton[4]=ui->pButton_5;  fromPushButton[16]=ui->pButton_17; fromPushButton[28]=ui->pButton_29; fromPushButton[40]=ui->pButton_41;
-    fromPushButton[5]=ui->pButton_6;  fromPushButton[17]=ui->pButton_18; fromPushButton[29]=ui->pButton_30; fromPushButton[41]=ui->pButton_42;
-    fromPushButton[6]=ui->pButton_7;  fromPushButton[18]=ui->pButton_19; fromPushButton[30]=ui->pButton_31; fromPushButton[42]=ui->pButton_43;
-    fromPushButton[7]=ui->pButton_8;  fromPushButton[19]=ui->pButton_20; fromPushButton[31]=ui->pButton_32; fromPushButton[43]=ui->pButton_44;
-    fromPushButton[8]=ui->pButton_9;  fromPushButton[20]=ui->pButton_21; fromPushButton[32]=ui->pButton_33; fromPushButton[44]=ui->pButton_45;
-    fromPushButton[9]=ui->pButton_10; fromPushButton[21]=ui->pButton_22; fromPushButton[33]=ui->pButton_34; fromPushButton[45]=ui->pButton_46;
-    fromPushButton[10]=ui->pButton_11;fromPushButton[22]=ui->pButton_23; fromPushButton[34]=ui->pButton_35; fromPushButton[46]=ui->pButton_47;
-    fromPushButton[11]=ui->pButton_12;fromPushButton[23]=ui->pButton_24; fromPushButton[35]=ui->pButton_36; fromPushButton[47]=ui->pButton_48;
-    fromPushButton[48]=ui->pButton_49;
-    //
-    plcStatusButton[0]=ui->plcStatus0;plcStatusButton[1]=ui->plcStatus1;plcStatusButton[2]=ui->plcStatus2;
-    plcStatusButton[3]=ui->plcStatus3;plcStatusButton[4]=ui->plcStatus4;plcStatusButton[5]=ui->plcStatus5;
-    plcStatusButton[6]=ui->plcStatus6;
+    mainPushButton[0]=ui->pushButton1; mainPushButton[5]=ui->pushButton6; mainPushButton[10]=ui->pushButton11; mainPushButton[15]=ui->pushButton16;
+    mainPushButton[1]=ui->pushButton2; mainPushButton[6]=ui->pushButton7; mainPushButton[11]=ui->pushButton12; mainPushButton[16]=ui->pushButton17;
+    mainPushButton[2]=ui->pushButton3; mainPushButton[7]=ui->pushButton8; mainPushButton[12]=ui->pushButton13; mainPushButton[17]=ui->pushButton18;
+    mainPushButton[3]=ui->pushButton4; mainPushButton[8]=ui->pushButton9; mainPushButton[13]=ui->pushButton14;
+    mainPushButton[4]=ui->pushButton5; mainPushButton[9]=ui->pushButton10; mainPushButton[14]=ui->pushButton15;
 }
 
 //析构函数
@@ -42,32 +25,26 @@ MotusaFlatformStatus::~MotusaFlatformStatus()
 }
 
 //显示平台状态
-void MotusaFlatformStatus::viewPlatfromStatus(int status[6])
+void MotusaFlatformStatus::viewPlatfromStatus(int status)
 {
-    for(int i=0;i<6;i++)
-    {
-        statusLineEdit[i]->setText(QString("%1").arg(status[i]));
-    }
+   statusLineEdit->setText(QString("%1").arg(status));
 }
 
 //显示PLC状态
-void MotusaFlatformStatus::viewPlcStatus(bool status[7],int length)
+void MotusaFlatformStatus::viewPlcStatus(bool status)
 {
-    for(int i=0;i<length;i++)
-    {
-        if(!status[i])
-            plcStatusButton[i]->setStyleSheet("border:5px groove gray;border-radius:15px;background-color: rgb(85, 85, 0);");
-        else
-            plcStatusButton[i]->setStyleSheet("border:5px groove gray;border-radius:15px;background-color: rgb(0, 255, 0);");
-    }
+    if(!status)
+        plcStatusButton->setStyleSheet("border:5px groove gray;border-radius:15px;background-color: rgb(85, 85, 0);");
+    else
+        plcStatusButton->setStyleSheet("border:5px groove gray;border-radius:15px;background-color: rgb(0, 255, 0);");
 }
 
 //显示主控PLC的状态
-void MotusaFlatformStatus::viewMainPlcStatus(bool status[21],int num)
+void MotusaFlatformStatus::viewMainPlcStatus(bool *status,int num)
 {
     for(int i=0;i<num;i++)
     {
-        if(i==0||i==5)
+        if(i==0||i==3)
         {
             if(!status[i])
                 mainPushButton[i]->setStyleSheet("border:5px groove gray;border-radius:15px;background-color: rgb(85,85, 0);");
@@ -82,28 +59,3 @@ void MotusaFlatformStatus::viewMainPlcStatus(bool status[21],int num)
     }
 }
 
-//显示从PLC的状态
-void MotusaFlatformStatus::viewFromPlcStatus(bool status[49],int num)
-{
-    for(int i=0;i<num;i++)
-    {
-        if(i==0||i==10||i==16||i==17)
-        {
-            if(!status[i])
-                fromPushButton[i]->setStyleSheet("border:5px groove gray;border-radius:15px;background-color: rgb(85, 85, 0);");
-            else
-                fromPushButton[i]->setStyleSheet("border:5px groove gray;border-radius:15px;background-color: rgb(255, 0, 0);");
-            continue;
-        }
-        if(!status[i])
-            fromPushButton[i]->setStyleSheet("border:5px groove gray;border-radius:15px;background-color: rgb(85, 85, 0);");
-        else
-            fromPushButton[i]->setStyleSheet("border:5px groove gray;border-radius:15px;background-color: rgb(0, 255, 0);");
-    }
-}
-
-//平台切换
-void MotusaFlatformStatus::on_comboBox_currentIndexChanged(int index)
-{
-    emit platfromSwitch(index+1);
-}

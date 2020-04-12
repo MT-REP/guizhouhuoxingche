@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QUdpSocket>
 
-#define MaxNum 20
+#define MaxNum 2
 
 class MotusSocket : public QObject
 {

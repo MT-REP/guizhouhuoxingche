@@ -1,5 +1,6 @@
 #include "motussocket.h"
 #include <QMessageBox>
+//构造函数
 MotusSocket::MotusSocket(QObject *parent) : QObject(parent)
 {
     isInit=false;

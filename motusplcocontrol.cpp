@@ -14,12 +14,12 @@ void MotusPlcOControl::initPara(MotusBasePlc *sMotusBasePlc,int sposition)
 }
 
 //得到状态
-bool MotusPlcOControl::getStatus(int index)
+bool MotusPlcOControl::getStatus()
 {
     if(mMotusBasePlc==NULL)
         return false;
     bool ret=false;
-    if(mMotusBasePlc->getPlcIo(&ret,&position,1,index))
+    if(mMotusBasePlc->getPlcIo(&ret,&position,1))
     {
         return ret;
     }
@@ -27,20 +27,20 @@ bool MotusPlcOControl::getStatus(int index)
 }
 
 //设置数值
-bool MotusPlcOControl::setControl(bool value,int index)
+bool MotusPlcOControl::setControl(bool value)
 {
-    if(getStatus(index)!=value)
+    if(getStatus()!=value)
     {
-        setValue(value,index);
+        setValue(value);
         return false;
     }
     return true;
 }
 
 //设置数值
-void MotusPlcOControl::setValue(bool value,int index)
+void MotusPlcOControl::setValue(bool value)
 {
     if(mMotusBasePlc==NULL)
         return;
-    mMotusBasePlc->writePlcIo(&value,&position,1,index);
+    mMotusBasePlc->writePlcIo(&value,&position,1);
 }

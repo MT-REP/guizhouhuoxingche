@@ -31,8 +31,8 @@
   <widget class="QPushButton" name="handButton">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>60</y>
+     <x>0</x>
+     <y>0</y>
      <width>91</width>
      <height>51</height>
     </rect>
@@ -41,336 +41,73 @@
     <string>自动</string>
    </property>
   </widget>
-  <widget class="QGroupBox" name="platfromAbleGroupBox">
+  <widget class="QPushButton" name="platfromDown">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>460</y>
-     <width>951</width>
-     <height>161</height>
+     <x>0</x>
+     <y>98</y>
+     <width>91</width>
+     <height>51</height>
     </rect>
    </property>
-   <property name="title">
-    <string/>
+   <property name="text">
+    <string>平台降</string>
    </property>
-   <widget class="QPushButton" name="disablePlatfrom1">
-    <property name="geometry">
-     <rect>
-      <x>84</x>
-      <y>61</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(170, 255, 0);</string>
-    </property>
-    <property name="text">
-     <string>禁用平台1</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="disablePlatfrom3">
-    <property name="geometry">
-     <rect>
-      <x>364</x>
-      <y>61</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(170, 255, 0);</string>
-    </property>
-    <property name="text">
-     <string>禁用平台3</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="disablePlatfrom4">
-    <property name="geometry">
-     <rect>
-      <x>504</x>
-      <y>61</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(170, 255, 0);</string>
-    </property>
-    <property name="text">
-     <string>禁用平台4</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="disablePlatfrom5">
-    <property name="geometry">
-     <rect>
-      <x>644</x>
-      <y>61</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(170, 255, 0);</string>
-    </property>
-    <property name="text">
-     <string>禁用平台5</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="disablePlatfrom6">
-    <property name="geometry">
-     <rect>
-      <x>784</x>
-      <y>61</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(170, 255, 0);</string>
-    </property>
-    <property name="text">
-     <string>禁用平台6</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="disablePlatfrom2">
-    <property name="geometry">
-     <rect>
-      <x>224</x>
-      <y>61</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(170, 255, 0);</string>
-    </property>
-    <property name="text">
-     <string>禁用平台2</string>
-    </property>
-   </widget>
   </widget>
-  <widget class="QGroupBox" name="handFunctionGroupBox">
+  <widget class="QPushButton" name="platfromUp">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>180</y>
-     <width>951</width>
-     <height>261</height>
+     <x>0</x>
+     <y>49</y>
+     <width>91</width>
+     <height>51</height>
     </rect>
    </property>
-   <property name="title">
-    <string/>
+   <property name="text">
+    <string>平台升</string>
    </property>
-   <widget class="QPushButton" name="carFront">
-    <property name="geometry">
-     <rect>
-      <x>673</x>
-      <y>86</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>小车前进</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="guardBarUp">
-    <property name="geometry">
-     <rect>
-      <x>254</x>
-      <y>85</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>护栏升</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="guardBarDown">
-    <property name="geometry">
-     <rect>
-      <x>394</x>
-      <y>86</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>护栏降</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="waitingLight">
-    <property name="geometry">
-     <rect>
-      <x>534</x>
-      <y>86</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>待客</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="carBack">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>191</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>小车后退</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="platfromDown">
-    <property name="geometry">
-     <rect>
-      <x>300</x>
-      <y>192</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>平台降</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="platfromUp">
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>192</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>平台升</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="comboBox">
-    <property name="geometry">
-     <rect>
-      <x>853</x>
-      <y>18</y>
-      <width>81</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>平台1</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>平台2</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>平台3</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>平台4</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>平台5</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>平台6</string>
-     </property>
-    </item>
-   </widget>
-   <widget class="QPushButton" name="coldWind">
-    <property name="geometry">
-     <rect>
-      <x>440</x>
-      <y>193</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>冷风特效</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="sprayWater">
-    <property name="geometry">
-     <rect>
-      <x>580</x>
-      <y>193</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>喷水特效</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="seatLight">
-    <property name="geometry">
-     <rect>
-      <x>720</x>
-      <y>193</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>座椅照明</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="outputClear">
-    <property name="geometry">
-     <rect>
-      <x>850</x>
-      <y>193</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>输出清除</string>
-    </property>
-   </widget>
   </widget>
-  <widget class="QGroupBox" name="mainGroupBox">
+  <widget class="QPushButton" name="disableSafetyBelt">
    <property name="geometry">
     <rect>
-     <x>148</x>
-     <y>36</y>
-     <width>831</width>
-     <height>101</height>
+     <x>0</x>
+     <y>590</y>
+     <width>91</width>
+     <height>51</height>
     </rect>
    </property>
-   <property name="title">
-    <string/>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(170, 255, 0);</string>
    </property>
-   <widget class="QPushButton" name="strobeEffect">
-    <property name="geometry">
-     <rect>
-      <x>349</x>
-      <y>23</y>
-      <width>91</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>频闪特效</string>
-    </property>
-   </widget>
+   <property name="text">
+    <string>禁用安全带</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="illumination">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>147</y>
+     <width>91</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>照明</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="fan">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>196</y>
+     <width>91</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>风扇</string>
+   </property>
   </widget>
  </widget>
  <resources/>

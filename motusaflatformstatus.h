@@ -11,25 +11,17 @@ class MotusaFlatformStatus;
 class MotusaFlatformStatus : public QDialog
 {
     Q_OBJECT
-
 public:
     explicit MotusaFlatformStatus(QWidget *parent = 0);
-    void viewPlatfromStatus(int status[6]);
-    void viewPlcStatus(bool status[7],int length);
-    void viewMainPlcStatus(bool status[13],int num);
-    void viewFromPlcStatus(bool status[13],int num);
+    void viewPlatfromStatus(int status);
+    void viewPlcStatus(bool status);
+    void viewMainPlcStatus(bool *status,int num);
     ~MotusaFlatformStatus();
-signals:
-    void platfromSwitch(int platfromSwitch);
-private slots:
-    //当前索引状态改变
-    void on_comboBox_currentIndexChanged(int index);
 private:
     Ui::MotusaFlatformStatus *ui;
-    QLineEdit *statusLineEdit[6];
-    QPushButton *plcStatusButton[7];
-    QPushButton *mainPushButton[21];
-    QPushButton *fromPushButton[49];
+    QLineEdit *statusLineEdit;
+    QPushButton *plcStatusButton;
+    QPushButton *mainPushButton[19];
 };
 
 #endif // MOTUSAFLATFORMSTATUS_H

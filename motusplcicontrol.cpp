@@ -15,12 +15,12 @@ void MotusPlcIControl::initPara(MotusBasePlc *sMotusBasePlc,int sposition)
 }
 
 //得到状态
-bool MotusPlcIControl::getStatus(int index)
+bool MotusPlcIControl::getStatus()
 {
     if(mMotusBasePlc==NULL)
         return false;
     bool ret=false;
-    if(mMotusBasePlc->getPlcIo(&ret,&position,1,index))
+    if(mMotusBasePlc->getPlcIo(&ret,&position,1))
     {
         return ret;
     }

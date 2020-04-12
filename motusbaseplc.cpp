@@ -15,35 +15,13 @@ MotusBasePlc::MotusBasePlc(QObject *parent) : QObject(parent),mMotusSocket(this)
         return;
     }
     //读取PLC的IO信息
-    isInit=readPlcIpFile("plcIO0.txt",mPlcMessage[0]);
+    isInit=readPlcIpFile("plcIO0.txt",mPlcMessage);
     if(!isInit)
     {
         QMessageBox::information(NULL,"友情提示","文件读取失败");
         return;
     }
-    //读取PLC的IO信息
-    isInit=readPlcIpFile("plcIO1.txt",mPlcMessage[1]);
-    if(!isInit)
-    {
-        QMessageBox::information(NULL,"友情提示","文件读取失败");
-        return;
-    }
-    //qDebug()<<mPlcMessage[1].mPlcIOMessage.size();
-    for(int i=0;i<7;i++)
-    {
-        mPlcMessage[i].index=i;
-        //赋值给PLC信息的网络信息
-        mPlcMessage[i].mIpMessage=mIpMessageList.at(i);
-        if(i>=2)
-        {
-            mPlcMessage[i].mPlcIOMessage=mPlcMessage[1].mPlcIOMessage;
-            mPlcMessage[i].totalLength=mPlcMessage[1].totalLength;
-            mPlcMessage[i].inNum=mPlcMessage[1].inNum;
-            mPlcMessage[i].outLenght=mPlcMessage[1].outLenght;
-            mPlcMessage[i].valueLenght=mPlcMessage[1].valueLenght;
-            //qDebug()<<mPlcMessage[i].mPlcIOMessage.size();
-        }
-    }
+    mPlcMessage.mIpMessage=mIpMessageList.at(0);
 }
 
 //参数初始化
@@ -51,11 +29,8 @@ void MotusBasePlc::initPara()
 {
     if(!isInit)
         return;
-    for(int i=0;i<7;i++)
-    {
-        //设置网络信息
-        mMotusSocket.setRemoteIpAndPort(mPlcMessage[i].mIpMessage.ip,mPlcMessage[i].mIpMessage.port,mPlcMessage[i].index);
-    }
+    //设置网络信息
+    mMotusSocket.setRemoteIpAndPort(mPlcMessage.mIpMessage.ip,mPlcMessage.mIpMessage.port,0);
     isInit=mMotusSocket.initSocket(10050);
     if(!isInit)
     {
@@ -75,91 +50,87 @@ void MotusBasePlc::recvDataSign(char *data,int lenght,QHostAddress recvRemoteadd
     char recvData=0;
     QString strIP;
     strIP=recvRemoteaddr.toString().remove("::ffff:");
-    for(int i=0;i<7;i++)
+    //qDebug()<<strIP;
+    //qDebug()<<mPlcMessage[i].mIpMessage.ip;
+    //ip值相比较
+    if(strIP.compare(mPlcMessage.mIpMessage.ip)==0)
     {
-        //qDebug()<<strIP;
-        //qDebug()<<mPlcMessage[i].mIpMessage.ip;
-        //ip值相比较
-        if(strIP.compare(mPlcMessage[i].mIpMessage.ip)==0)
+        //qDebug()<<1<<i<<mPlcMessage[i].totalLength<<lenght;
+        if(lenght==(mPlcMessage.totalLength+2))
         {
-            //qDebug()<<1<<i<<mPlcMessage[i].totalLength<<lenght;
-            if(lenght==(mPlcMessage[i].totalLength+2))
+            //异或值相比较
+            for(int j=0;j<lenght-1;j++)
             {
-                //异或值相比较
-                for(int j=0;j<lenght-1;j++)
-                {
-                   recvData^=data[j];
-                }
-                //数据处理
-                if(recvData==data[lenght-1])
-                {
-                    //qDebug()<<2;
-                    dealData(data,i);
-                    break;
-                }
+               recvData^=data[j];
+            }
+            //数据处理
+            if(recvData==data[lenght-1])
+            {
+                //qDebug()<<2;
+                dealData(data);
             }
         }
     }
 }
 
 //数据处理
-void MotusBasePlc::dealData(char *data,int index)
+void MotusBasePlc::dealData(char *data)
 {
       //qDebug()<<index;
       //qDebug()<<mPlcMessage[0].totalLength<<mPlcMessage[0].outLenght;
       //总数据
-      memcpy(mPlcMessage[index].data,&data[1],mPlcMessage[index].totalLength);
+      memcpy(mPlcMessage.data,&data[1],mPlcMessage.totalLength);
       //for(int i=0;i<mPlcMessage[index].totalLength;i++)
       //{
       //   qDebug()<<i<<(int)mPlcMessage[index].data[i]<<endl;
       //}
       //输入IN
-      memcpy(mPlcMessage[index].inData,mPlcMessage[index].data,mPlcMessage[index].totalLength-mPlcMessage[index].outLenght);
+      memcpy(mPlcMessage.inData,mPlcMessage.data,mPlcMessage.totalLength-mPlcMessage.outLenght);
       //for(int i=0;i<mPlcMessage[index].totalLength-mPlcMessage[index].outLenght;i++)
       //{
       //   qDebug()<<i<<(int)mPlcMessage[index].inData[i]<<endl;
       //}
       //输出OUT
-      memcpy(mPlcMessage[index].outData,
-             &mPlcMessage[index].data[mPlcMessage[index].totalLength-mPlcMessage[index].outLenght],
-             mPlcMessage[index].outLenght);
+      memcpy(mPlcMessage.outData,
+             &mPlcMessage.data[mPlcMessage.totalLength-mPlcMessage.outLenght],
+             mPlcMessage.outLenght);
       //for(int i=0;i<mPlcMessage[index].outLenght;i++)
       //{
       //   qDebug()<<i<<(int)mPlcMessage[index].outData[i]<<endl;
       //}
-      mPlcMessage[index].recvCount=0;
-      mPlcMessage[index].connect=true;
+      mPlcMessage.recvCount=0;
+      mPlcMessage.connect=true;
       //循环处理
-      for(int i=0;i<mPlcMessage[index].mPlcIOMessage.size();i++)
+      for(int i=0;i<mPlcMessage.mPlcIOMessage.size();i++)
       {
         unsigned char check=0;
-        if(i<mPlcMessage[index].inNum)
+        if(i<mPlcMessage.inNum)
         {
-            check=mPlcMessage[index].inData[(mPlcMessage[index].mPlcIOMessage.at(i).position)/8];
-            check=check>>(mPlcMessage[index].mPlcIOMessage.at(i).position%8);
+            check=mPlcMessage.inData[(mPlcMessage.mPlcIOMessage.at(i).position)/8];
+            check=check>>(mPlcMessage.mPlcIOMessage.at(i).position%8);
             check&=0x01;
-            if(check==mPlcMessage[index].mPlcIOMessage.at(i).volid)
+            if(check==mPlcMessage.mPlcIOMessage.at(i).volid)
             {
-                mPlcMessage[index].valueData[i]=true;
+                mPlcMessage.valueData[i]=true;
             }
             else
             {
-                mPlcMessage[index].valueData[i]=false;
+                mPlcMessage.valueData[i]=false;
             }
             //qDebug()<<i<<mPlcMessage[index].valueData[i]<<endl;
         }
         else
         {
-            check=mPlcMessage[index].outData[(mPlcMessage[index].mPlcIOMessage.at(i).position)/8];
-            check=check>>(mPlcMessage[index].mPlcIOMessage.at(i).position%8);
+            check=mPlcMessage.outData[(mPlcMessage.mPlcIOMessage.at(i).position)/8];
+            check=check>>(mPlcMessage.mPlcIOMessage.at(i).position%8);
             check&=0x01;
-            if(check==mPlcMessage[index].mPlcIOMessage.at(i).volid)
+            if(check==mPlcMessage.mPlcIOMessage.at(i).volid)
             {
-                mPlcMessage[index].valueData[i]=true;
+                mPlcMessage.valueData[i]=true;
             }
             else
             {
-                mPlcMessage[index].valueData[i]=false;
+                mPlcMessage.valueData[i]=false;
             }
             //qDebug()<<i<<mPlcMessage[index].valueData[i]<<endl;
         }
@@ -167,33 +138,33 @@ void MotusBasePlc::dealData(char *data,int index)
 }
 
 //得到输入输出
-bool MotusBasePlc::getPlcIOStatus(bool *data,int &lenght,int index)
+bool MotusBasePlc::getPlcIOStatus(bool *data,int &lenght)
 {
     if(isInit&&data!=NULL)
     {
-        lenght=mPlcMessage[index].valueLenght;
-        memcpy(data,mPlcMessage[index].valueData,lenght);
+        lenght=mPlcMessage.valueLenght;
+        memcpy(data,mPlcMessage.valueData,lenght);
         return true;
     }
     return false;
 }
 
 //得到PLC的状态
-bool MotusBasePlc::getPlcConnectStatus(int index)
+bool MotusBasePlc::getPlcConnectStatus()
 {
-    mPlcMessage[index].recvCount++;
-    if(mPlcMessage[index].recvCount>=30)
+    mPlcMessage.recvCount++;
+    if(mPlcMessage.recvCount>=30)
     {
-        mPlcMessage[index].recvCount=30;
-        mPlcMessage[index].connect=false;
+        mPlcMessage.recvCount=30;
+        mPlcMessage.connect=false;
     }
-    return mPlcMessage[index].connect;
+    return mPlcMessage.connect;
 }
 
 //得到给定PLC的状态
-bool MotusBasePlc::getPlcIo(bool *data,int *postion,int length,int index)
+bool MotusBasePlc::getPlcIo(bool *data,int *postion,int length)
 {
-    if(!mPlcMessage[index].connect||!isInit)
+    if(!mPlcMessage.connect||!isInit)
     {
         return false;
     }
@@ -203,15 +174,15 @@ bool MotusBasePlc::getPlcIo(bool *data,int *postion,int length,int index)
     }
     for(int i=0;i<length;i++)
     {
-        data[i]=mPlcMessage[index].valueData[postion[i]];
+        data[i]=mPlcMessage.valueData[postion[i]];
     }
     return true;
 }
 
 //写PLC的状态
-bool MotusBasePlc::writePlcIo(bool *data,int *postion,int length,int index)
+bool MotusBasePlc::writePlcIo(bool *data,int *postion,int length)
 {
-    if(!mPlcMessage[index].connect||!isInit)
+    if(!mPlcMessage.connect||!isInit)
     {
         return false;
     }
@@ -221,17 +192,17 @@ bool MotusBasePlc::writePlcIo(bool *data,int *postion,int length,int index)
     }
     char writedata[10]={0x55};
     writedata[0]=0x55;
-    int  writeLen=mPlcMessage[index].outLenght+2;
-    for(int i=0;i<mPlcMessage[index].outLenght;i++)
+    int  writeLen=mPlcMessage.outLenght+2;
+    for(int i=0;i<mPlcMessage.outLenght;i++)
     {
-        writedata[1+i]=mPlcMessage[index].outData[i];
+        writedata[1+i]=mPlcMessage.outData[i];
         //qDebug()<<i<<(int)writedata[1+i]<<endl;
     }
     unsigned char check=0;
     int realPositon=0;
     for(int i=0;i<length;i++)
     {
-        realPositon=mPlcMessage[index].mPlcIOMessage.at(postion[i]).position;
+        realPositon=mPlcMessage.mPlcIOMessage.at(postion[i]).position;
         if(data[i])//判断
         {
             check=0x1<<(realPositon%8);//移位运算
@@ -249,16 +220,16 @@ bool MotusBasePlc::writePlcIo(bool *data,int *postion,int length,int index)
         check^=writedata[i];
         if(i>=1)
         {
-            mPlcMessage[index].outData[i-1]=writedata[i];
+            mPlcMessage.outData[i-1]=writedata[i];
         }
         //qDebug()<<i<<(unsigned char)writedata[i]<<endl;
     }
     writedata[writeLen-1]=check;
-    mMotusSocket.sendData(writedata,writeLen,index);
+    mMotusSocket.sendData(writedata,writeLen,0);
     return true;
 }
 
-//读取用户数据
+//读取PLC的IP信息*
 bool MotusBasePlc::readPlcIpFile(QString filename,QList<IpMessage>&mIpMessageList)
 {
     //QDir dir;
@@ -290,7 +261,8 @@ bool MotusBasePlc::readPlcIpFile(QString filename,QList<IpMessage>&mIpMessageLis
         }
         file.close();
         return true;
-    }else
+    }
+    else
     {
         return false;
     }
@@ -346,7 +318,8 @@ bool MotusBasePlc::readPlcIpFile(QString filename,PlcMessage &mPlcMessage)
         //qDebug()<<mPlcMessage.valueLenght;
         file.close();
         return true;
-    }else
+    }
+    else
     {
         return false;
     }
