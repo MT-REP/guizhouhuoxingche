@@ -21,7 +21,7 @@ private:
     Ui::MotusaFlatformStatus *ui;
     QLineEdit *statusLineEdit;
     QPushButton *plcStatusButton;
-    QPushButton *mainPushButton[19];
+    QPushButton *mainPushButton[21];
 };
 
 #endif // MOTUSAFLATFORMSTATUS_H

@@ -11,11 +11,11 @@ MotusaFlatformStatus::MotusaFlatformStatus(QWidget *parent) :
     //PLC是否连接
     plcStatusButton=ui->plcStatus0;
     //主控PLC状态
-    mainPushButton[0]=ui->pushButton1; mainPushButton[5]=ui->pushButton6; mainPushButton[10]=ui->pushButton11; mainPushButton[15]=ui->pushButton16;
+    mainPushButton[0]=ui->pushButton1; mainPushButton[5]=ui->pushButton6; mainPushButton[10]=ui->pushButton11; mainPushButton[15]=ui->pushButton16;mainPushButton[20]=ui->pushButton21;
     mainPushButton[1]=ui->pushButton2; mainPushButton[6]=ui->pushButton7; mainPushButton[11]=ui->pushButton12; mainPushButton[16]=ui->pushButton17;
     mainPushButton[2]=ui->pushButton3; mainPushButton[7]=ui->pushButton8; mainPushButton[12]=ui->pushButton13; mainPushButton[17]=ui->pushButton18;
-    mainPushButton[3]=ui->pushButton4; mainPushButton[8]=ui->pushButton9; mainPushButton[13]=ui->pushButton14;
-    mainPushButton[4]=ui->pushButton5; mainPushButton[9]=ui->pushButton10; mainPushButton[14]=ui->pushButton15;
+    mainPushButton[3]=ui->pushButton4; mainPushButton[8]=ui->pushButton9; mainPushButton[13]=ui->pushButton14; mainPushButton[18]=ui->pushButton19;
+    mainPushButton[4]=ui->pushButton5; mainPushButton[9]=ui->pushButton10; mainPushButton[14]=ui->pushButton15;mainPushButton[19]=ui->pushButton20;
 }
 
 //析构函数

@@ -104,12 +104,15 @@ private:
     MotusPlcIControl  safetyBelt4;     //安全带4
     MotusPlcIControl  safetyBelt5;     //安全带5
     MotusPlcIControl  safetyBelt6;     //安全带6
-    MotusPlcIControl  platfromLow;     //平台寻底信号
+    MotusPlcIControl  safetyBelt7;     //安全带7
+    MotusPlcIControl  safetyBelt8;     //安全带8
+    MotusPlcIControl  safetyBelt9;     //安全带9
     MotusPlcIControl  carDoor1;        //舱门1
     MotusPlcIControl  carDoor2;        //舱门2
-    MotusPlcOControl  faultHostOut;    //故障指示灯
+    MotusPlcIControl  platfromLow;     //平台寻底信号
+    MotusPlcOControl  runHostOut;      //待客指示灯
     MotusPlcOControl  resetHostOut;    //复位指示灯
-    MotusPlcOControl  runHostOut;      //运行指示灯
+    MotusPlcOControl  faultHostOut;    //故障指示灯
     MotusPlcOControl  lightHostOut;    //照明
     MotusPlcOControl  fanHostOut;      //风扇
     ////////////////////////////////////////////////////

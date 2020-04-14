@@ -16,9 +16,9 @@ MotusOperationView::MotusOperationView(QWidget *parent) :
     ui(new Ui::MotusOperationView)
 {
     ui->setupUi(this);
-    ptn[0]=ui->pButton_1;  ptn[1]=ui->pButton_2;
-    ptn[2]=ui->pButton_3;  ptn[3]=ui->pButton_4;
-    ptn[4]=ui->pButton_5;  ptn[5]=ui->pButton_6;
+    ptn[0]=ui->pButton_1;  ptn[1]=ui->pButton_2;ptn[8]=ui->pButton_9;
+    ptn[2]=ui->pButton_3;  ptn[3]=ui->pButton_4;ptn[9]=ui->pButton_10;
+    ptn[4]=ui->pButton_5;  ptn[5]=ui->pButton_6;ptn[10]=ui->pButton_11;
     ptn[6]=ui->pButton_7;  ptn[7]=ui->pButton_8;
 
     pbar[0]=ui->progressBar_1; pbar[1]=ui->progressBar_2; pbar[2]=ui->progressBar_3;
@@ -437,9 +437,9 @@ void MotusOperationView::setCyinder(int cylinder[6])
 
 
 //设置状态
-void MotusOperationView::setViewStatus(bool ret[8])
+void MotusOperationView::setViewStatus(bool ret[11])
 {
-    for(int i=0;i<8;i++)
+    for(int i=0;i<11;i++)
     {
         if(!ret[i])
             ptn[i]->setStyleSheet("border:5px groove gray;border-radius:15px;background-color: rgb(255, 0, 0);");

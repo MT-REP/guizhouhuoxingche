@@ -55,6 +55,11 @@ MainWindow::MainWindow(QWidget *parent) :
     mMotusPlatfrom.initPara();
     mMotusBasePlc.initPara();
     ////////////////////////主plc输入输出///////////////////////////////////////
+    MotusPlcOControl  runHostOut;      //待客指示灯
+    MotusPlcOControl  resetHostOut;    //复位指示灯
+    MotusPlcOControl  faultHostOut;    //故障指示灯
+    MotusPlcOControl  lightHostOut;    //照明
+    MotusPlcOControl  fanHostOut;      //风扇
     scramHostIn.initPara(&mMotusBasePlc,0);
     runHostIn.initPara(&mMotusBasePlc,1);
     resetHostIn.initPara(&mMotusBasePlc,2);
@@ -65,15 +70,18 @@ MainWindow::MainWindow(QWidget *parent) :
     safetyBelt4.initPara(&mMotusBasePlc,7);
     safetyBelt5.initPara(&mMotusBasePlc,8);
     safetyBelt6.initPara(&mMotusBasePlc,9);
-    platfromLow.initPara(&mMotusBasePlc,10);
-    carDoor1.initPara(&mMotusBasePlc,11);
-    carDoor2.initPara(&mMotusBasePlc,12);
+    safetyBelt7.initPara(&mMotusBasePlc,10);
+    safetyBelt8.initPara(&mMotusBasePlc,11);
+    safetyBelt9.initPara(&mMotusBasePlc,12);
+    carDoor1.initPara(&mMotusBasePlc,13);
+    carDoor2.initPara(&mMotusBasePlc,14);
+    platfromLow.initPara(&mMotusBasePlc,15);
 
-    faultHostOut.initPara(&mMotusBasePlc,13);
-    resetHostOut.initPara(&mMotusBasePlc,14);
-    runHostOut.initPara(&mMotusBasePlc,15);
-    lightHostOut.initPara(&mMotusBasePlc,16);
-    fanHostOut.initPara(&mMotusBasePlc,17);
+    runHostOut.initPara(&mMotusBasePlc,16);
+    resetHostOut.initPara(&mMotusBasePlc,17);
+    faultHostOut.initPara(&mMotusBasePlc,18);
+    lightHostOut.initPara(&mMotusBasePlc,19);
+    fanHostOut.initPara(&mMotusBasePlc,20);
     /////////////////////////////////////////////////////////////////////
     //int width=QApplication::desktop()->width();
     //int height=QApplication::desktop()->height();
@@ -207,10 +215,10 @@ void MainWindow::masterClock(void)
                 if(steppath1==1&&resetHostOut.setControl(false))
                 {
                     steppath1+=1;
-                    stepMessage.sprintf("%d%s",steppath1,"熄灭运行指示灯");
+                    stepMessage.sprintf("%d%s",steppath1,"熄灭待客指示灯");
                     break;
                 }
-                //熄灭运行指示灯
+                //熄灭待客指示灯
                 if(steppath1==2&&runHostOut.setControl(false))
                 {
                     steppath1+=1;
@@ -314,7 +322,7 @@ void MainWindow::masterClock(void)
                 if(steppath2==1&&resetHostOut.setControl(true))
                 {
                     steppath2+=1;
-                    stepMessage.sprintf("%d%s",steppath2,"点亮运行指示灯");
+                    stepMessage.sprintf("%d%s",steppath2,"点亮待客指示灯");
                     break;
                 }
                 else if(steppath2==1&&!plcStatus)
@@ -324,12 +332,12 @@ void MainWindow::masterClock(void)
                     mMotusRunLog->addStringLog(errorMessage);
                     break;
                 }
-                //点亮运行指示灯
+                //点亮待客指示灯
                 if(steppath2==2&&runHostOut.setControl(true))
                 {
                     steppath2=0;
                     pathStep=3;
-                    stepMessage.sprintf("%d%s",steppath2,"按下运行按键");
+                    stepMessage.sprintf("%d%s",steppath2,"按下确认按键");
                     break;
                 }
                 else if(steppath2==2&&!plcStatus)
@@ -350,11 +358,12 @@ void MainWindow::masterClock(void)
                    retBool=true;
                 else
                     retBool=safetyBelt1.getStatus()&&safetyBelt2.getStatus()&&safetyBelt3.getStatus()
-                            &&safetyBelt4.getStatus()&&safetyBelt5.getStatus()&&safetyBelt6.getStatus();
+                            &&safetyBelt4.getStatus()&&safetyBelt5.getStatus()&&safetyBelt6.getStatus()
+                            &&safetyBelt7.getStatus()&&safetyBelt8.getStatus()&&safetyBelt9.getStatus();
                 if(plcStatus&&runHostIn.getStatus()&&retBool&&carDoor1.getStatus()&&carDoor2.getStatus())
                 {
                     pathStep=4;
-                    stepMessage.sprintf("%d%s",0,"运行指示灯熄灭");
+                    stepMessage.sprintf("%d%s",0,"待客指示灯熄灭");
                     break;
                 }
                 else if(plcStatus&&runHostIn.getStatus()&&(!retBool||!carDoor1.getStatus()||!carDoor2.getStatus()))
@@ -382,7 +391,7 @@ void MainWindow::masterClock(void)
                 emit sendPlay(false);
                 //复位初始化
                 if(resetBit[4]){  steppath4=0;  resetBit[4]=false; }                
-                //熄灭运行指示灯
+                //熄灭待客指示灯
                 if(steppath4==0&&plcStatus&&runHostOut.setControl(false))
                 {
                     steppath4+=1;
@@ -391,7 +400,7 @@ void MainWindow::masterClock(void)
                 }
                 else if(steppath4==0&&plcStatus&&runHostOut.getStatus())
                 {
-                    stepMessage.sprintf("%d%s",steppath4,"熄灭运行指示灯");
+                    stepMessage.sprintf("%d%s",steppath4,"熄灭待客指示灯");
                     break;
                 }
                 else if(steppath4==0&&!plcStatus)
@@ -654,7 +663,7 @@ void MainWindow::masterClock(void)
                 if(steppath6==1&&plcStatus&&lightHostOut.setControl(true))
                 {
                     steppath6+=1;
-                    stepMessage.sprintf("%d%s",steppath6,"运行指示灯点亮");
+                    stepMessage.sprintf("%d%s",steppath6,"待客指示灯点亮");
                     break;
                 }
                 else if(steppath6==1&&!plcStatus)
@@ -664,12 +673,12 @@ void MainWindow::masterClock(void)
                     mMotusRunLog->addStringLog(errorMessage);
                     break;
                 }
-                //运行指示灯点亮
+                //待客指示灯点亮
                 if(steppath6==2&&plcStatus&&runHostOut.setControl(true))
                 {
                     steppath6=0;
                     pathStep=3;
-                    stepMessage.sprintf("%d%s",steppath6,"按下运行按键");
+                    stepMessage.sprintf("%d%s",steppath6,"按下确认按键");
                     break;
                 }
                 else if(steppath6==2&&!plcStatus)
@@ -721,16 +730,16 @@ void MainWindow::masterClock(void)
                 if(steppath7==1&&plcStatus&&resetHostOut.setControl(false))
                 {
                     steppath7+=1;
-                    stepMessage.sprintf("%d%s",steppath7,"熄灭运行指示灯");
+                    stepMessage.sprintf("%d%s",steppath7,"熄灭待客指示灯");
                     break;
                 }
                 else if(steppath7==1&&!plcStatus)
                 {
                     steppath7+=1;
-                    stepMessage.sprintf("%d%s",steppath7,"熄灭运行指示灯");
+                    stepMessage.sprintf("%d%s",steppath7,"熄灭待客指示灯");
                     break;
                 }
-                //熄灭运行指示灯
+                //熄灭待客指示灯
                 if(steppath7==2&&plcStatus&&runHostOut.setControl(false))
                 {
                     steppath7+=1;
@@ -783,7 +792,7 @@ void MainWindow::masterClock(void)
                 if(steppath8==0&&plcStatus&&resetHostOut.setControl(false))
                 {
                     steppath8+=1;
-                    stepMessage.sprintf("%d%s",steppath8,"熄灭运行指示灯");
+                    stepMessage.sprintf("%d%s",steppath8,"熄灭待客指示灯");
                     break;
                 }
                 else if(steppath8==0&&plcStatus&&resetHostOut.getStatus())
@@ -798,7 +807,7 @@ void MainWindow::masterClock(void)
                     mMotusRunLog->addStringLog(errorMessage);
                     break;
                 }
-                //熄灭运行指示灯
+                //熄灭待客指示灯
                 if(steppath8==1&&plcStatus&&runHostOut.setControl(false))
                 {
                     steppath8+=1;
@@ -886,14 +895,17 @@ void MainWindow::masterClock(void)
               int lenght=0;
               if(mMotusBasePlc.getPlcIOStatus(status,lenght))
               {
-                  valuedata[0]=status[11];
+                  valuedata[0]=status[13];
                   valuedata[1]=status[4];
                   valuedata[2]=status[5];
                   valuedata[3]=status[6];
-                  valuedata[4]=status[12];
+                  valuedata[4]=status[14];
                   valuedata[5]=status[7];
                   valuedata[6]=status[8];
                   valuedata[7]=status[9];
+                  valuedata[8]=status[10];
+                  valuedata[9]=status[11];
+                  valuedata[10]=status[12];
               }
               mMotusOperationView->setViewStatus(valuedata);
               mMotusOperationView->updateOperationStatus(pathStep, stepMessage,errorMessage, playMovieCount);
