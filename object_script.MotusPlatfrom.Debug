@@ -15,8 +15,8 @@ INPUT(
 ./temp\obj\motusbaseplc.o
 ./temp\obj\motusplcicontrol.o
 ./temp\obj\motusplcocontrol.o
-./temp\obj\motussinglecontrol.o
-./temp\obj\motuscarcontrol.o
+./temp\obj\motuskeeptime.o
+./temp\obj\motusplayer.o
 ./temp\obj\qrc_resources.o
 ./temp\obj\moc_mainwindow.o
 ./temp\obj\moc_motustimer.o
@@ -33,6 +33,6 @@ INPUT(
 ./temp\obj\moc_motusbaseplc.o
 ./temp\obj\moc_motusplcicontrol.o
 ./temp\obj\moc_motusplcocontrol.o
-./temp\obj\moc_motussinglecontrol.o
-./temp\obj\moc_motuscarcontrol.o
+./temp\obj\moc_motuskeeptime.o
+./temp\obj\moc_motusplayer.o
 );

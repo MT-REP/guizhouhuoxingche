@@ -61,8 +61,8 @@ SOURCES       = main.cpp \
 		motusbaseplc.cpp \
 		motusplcicontrol.cpp \
 		motusplcocontrol.cpp \
-		motussinglecontrol.cpp \
-		motuscarcontrol.cpp temp\rcc\qrc_resources.cpp \
+		motuskeeptime.cpp \
+		motusplayer.cpp temp\rcc\qrc_resources.cpp \
 		temp\moc\moc_mainwindow.cpp \
 		temp\moc\moc_motustimer.cpp \
 		temp\moc\moc_motussocket.cpp \
@@ -78,8 +78,8 @@ SOURCES       = main.cpp \
 		temp\moc\moc_motusbaseplc.cpp \
 		temp\moc\moc_motusplcicontrol.cpp \
 		temp\moc\moc_motusplcocontrol.cpp \
-		temp\moc\moc_motussinglecontrol.cpp \
-		temp\moc\moc_motuscarcontrol.cpp
+		temp\moc\moc_motuskeeptime.cpp \
+		temp\moc\moc_motusplayer.cpp
 OBJECTS       = temp/obj/main.o \
 		temp/obj/mainwindow.o \
 		temp/obj/motustimer.o \
@@ -96,8 +96,8 @@ OBJECTS       = temp/obj/main.o \
 		temp/obj/motusbaseplc.o \
 		temp/obj/motusplcicontrol.o \
 		temp/obj/motusplcocontrol.o \
-		temp/obj/motussinglecontrol.o \
-		temp/obj/motuscarcontrol.o \
+		temp/obj/motuskeeptime.o \
+		temp/obj/motusplayer.o \
 		temp/obj/qrc_resources.o \
 		temp/obj/moc_mainwindow.o \
 		temp/obj/moc_motustimer.o \
@@ -114,8 +114,8 @@ OBJECTS       = temp/obj/main.o \
 		temp/obj/moc_motusbaseplc.o \
 		temp/obj/moc_motusplcicontrol.o \
 		temp/obj/moc_motusplcocontrol.o \
-		temp/obj/moc_motussinglecontrol.o \
-		temp/obj/moc_motuscarcontrol.o
+		temp/obj/moc_motuskeeptime.o \
+		temp/obj/moc_motusplayer.o
 
 DIST          =  mainwindow.h \
 		motustimer.h \
@@ -132,8 +132,8 @@ DIST          =  mainwindow.h \
 		motusbaseplc.h \
 		motusplcicontrol.h \
 		motusplcocontrol.h \
-		motussinglecontrol.h \
-		motuscarcontrol.h main.cpp \
+		motuskeeptime.h \
+		motusplayer.h main.cpp \
 		mainwindow.cpp \
 		motustimer.cpp \
 		motussocket.cpp \
@@ -149,8 +149,8 @@ DIST          =  mainwindow.h \
 		motusbaseplc.cpp \
 		motusplcicontrol.cpp \
 		motusplcocontrol.cpp \
-		motussinglecontrol.cpp \
-		motuscarcontrol.cpp
+		motuskeeptime.cpp \
+		motusplayer.cpp
 QMAKE_TARGET  = MotusPlatfrom
 DESTDIR        = debug\ #avoid trailing-slash linebreak
 TARGET         = MotusPlatfrom.exe
@@ -173,10 +173,10 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) MotusPlatfrom.zip $(SOURCES) $(DIST) MotusPlatfrom.pro C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\spec_pre.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\qdevice.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\device_config.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\common\g++-base.conf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\common\angle.conf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\common\sanitize.conf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\common\gcc-base.conf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\qconfig.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3danimation.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3danimation_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dcore.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dcore_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dextras.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dextras_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dinput.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dinput_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dlogic.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dlogic_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquick.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquick_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickanimation.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickanimation_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickextras.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickextras_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickinput.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickinput_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickrender.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickrender_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickscene2d.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickscene2d_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3drender.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3drender_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_accessibility_support_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_axbase.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_axbase_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_axcontainer.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_axcontainer_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_axserver.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_axserver_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_bluetooth.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_bluetooth_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_bootstrap_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_core.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_core_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_dbus.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_designer.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_devicediscovery_support_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_egl_support_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_fb_support_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_fontdatabase_support_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_gamepad.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_gamepad_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_gui.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_help.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_help_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_location.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_location_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_multimedia.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_multimedia_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_network.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_network_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_nfc.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_nfc_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_opengl.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_openglextensions.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_openglextensions_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_packetprotocol_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_platformcompositor_support_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_positioning.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_positioning_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_qml.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_qmldebug_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_qmldevtools_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_quick.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_quicktemplates2_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_scxml.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_scxml_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_sensors.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_sensors_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_serialbus.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_serialbus_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_serialport.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_serialport_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_sql.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_svg.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_testlib.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_texttospeech.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_texttospeech_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_theme_support_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_uitools.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_webchannel.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_webchannel_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_websockets.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_websockets_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_widgets.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_winextras.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_winextras_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_xml.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\qt_functions.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\qt_config.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\win32-g++\qmake.conf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\spec_post.prf .qmake.stash C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\exclusive_builds.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\toolchain.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\default_pre.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\win32\default_pre.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\resolve_config.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\exclusive_builds_post.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\default_post.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\build_pass.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\precompile_header.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\warn_on.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\qt.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\resources.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\moc.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\win32\opengl.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\uic.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\qmake_use.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\file_copies.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\win32\windows.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\testcase_targets.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\exceptions.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\yacc.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\lex.prf MotusPlatfrom.pro resources.qrc C:\Qt\Qt5.9.3\5.9.3\mingw53_32\lib\qtmaind.prl C:\Qt\Qt5.9.3\5.9.3\mingw53_32\lib\Qt5Widgetsd.prl C:\Qt\Qt5.9.3\5.9.3\mingw53_32\lib\Qt5Guid.prl C:\Qt\Qt5.9.3\5.9.3\mingw53_32\lib\Qt5Networkd.prl C:\Qt\Qt5.9.3\5.9.3\mingw53_32\lib\Qt5Cored.prl   resources.qrc C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\data\dummy.cpp mainwindow.h motustimer.h motussocket.h motusrunlog.h motususerlogin.h motuschangepassword.h motususermanagement.h motuslevelswitch.h motusaflatformstatus.h motushand.h motusoperationview.h motusplatfrom.h motusbaseplc.h motusplcicontrol.h motusplcocontrol.h motussinglecontrol.h motuscarcontrol.h main.cpp mainwindow.cpp motustimer.cpp motussocket.cpp motusrunlog.cpp motususerlogin.cpp motuschangepassword.cpp motususermanagement.cpp motuslevelswitch.cpp motusaflatformstatus.cpp motushand.cpp motusoperationview.cpp motusplatfrom.cpp motusbaseplc.cpp motusplcicontrol.cpp motusplcocontrol.cpp motussinglecontrol.cpp motuscarcontrol.cpp mainwindow.ui motusrunlog.ui motususerlogin.ui motuschangepassword.ui motususermanagement.ui motuslevelswitch.ui motusaflatformstatus.ui motushand.ui motusoperationview.ui    
+	$(ZIP) MotusPlatfrom.zip $(SOURCES) $(DIST) MotusPlatfrom.pro C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\spec_pre.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\qdevice.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\device_config.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\common\g++-base.conf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\common\angle.conf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\common\sanitize.conf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\common\gcc-base.conf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\qconfig.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3danimation.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3danimation_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dcore.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dcore_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dextras.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dextras_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dinput.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dinput_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dlogic.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dlogic_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquick.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquick_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickanimation.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickanimation_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickextras.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickextras_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickinput.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickinput_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickrender.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickrender_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickscene2d.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3dquickscene2d_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3drender.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_3drender_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_accessibility_support_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_axbase.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_axbase_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_axcontainer.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_axcontainer_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_axserver.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_axserver_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_bluetooth.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_bluetooth_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_bootstrap_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_concurrent.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_concurrent_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_core.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_core_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_dbus.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_dbus_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_designer.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_designer_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_designercomponents_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_devicediscovery_support_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_egl_support_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_eventdispatcher_support_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_fb_support_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_fontdatabase_support_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_gamepad.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_gamepad_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_gui.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_gui_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_help.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_help_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_location.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_location_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_multimedia.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_multimedia_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_network.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_network_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_nfc.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_nfc_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_opengl.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_opengl_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_openglextensions.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_openglextensions_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_packetprotocol_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_platformcompositor_support_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_positioning.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_positioning_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_printsupport.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_printsupport_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_qml.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_qml_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_qmldebug_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_qmldevtools_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_qmltest.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_qmltest_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_quick.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_quick_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_quickparticles_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_quicktemplates2_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_quickwidgets.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_quickwidgets_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_scxml.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_scxml_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_sensors.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_sensors_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_serialbus.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_serialbus_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_serialport.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_serialport_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_sql.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_sql_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_svg.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_svg_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_testlib.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_testlib_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_texttospeech.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_texttospeech_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_theme_support_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_uiplugin.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_uitools.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_uitools_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_webchannel.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_webchannel_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_websockets.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_websockets_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_widgets.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_widgets_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_winextras.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_winextras_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_xml.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_xml_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\qt_functions.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\qt_config.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\win32-g++\qmake.conf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\spec_post.prf .qmake.stash C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\exclusive_builds.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\toolchain.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\default_pre.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\win32\default_pre.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\resolve_config.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\exclusive_builds_post.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\default_post.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\build_pass.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\precompile_header.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\warn_on.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\qt.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\resources.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\moc.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\win32\opengl.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\uic.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\qmake_use.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\file_copies.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\win32\windows.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\testcase_targets.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\exceptions.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\yacc.prf C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\lex.prf MotusPlatfrom.pro resources.qrc C:\Qt\Qt5.9.3\5.9.3\mingw53_32\lib\qtmaind.prl C:\Qt\Qt5.9.3\5.9.3\mingw53_32\lib\Qt5Widgetsd.prl C:\Qt\Qt5.9.3\5.9.3\mingw53_32\lib\Qt5Guid.prl C:\Qt\Qt5.9.3\5.9.3\mingw53_32\lib\Qt5Networkd.prl C:\Qt\Qt5.9.3\5.9.3\mingw53_32\lib\Qt5Cored.prl   resources.qrc C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\data\dummy.cpp mainwindow.h motustimer.h motussocket.h motusrunlog.h motususerlogin.h motuschangepassword.h motususermanagement.h motuslevelswitch.h motusaflatformstatus.h motushand.h motusoperationview.h motusplatfrom.h motusbaseplc.h motusplcicontrol.h motusplcocontrol.h motuskeeptime.h motusplayer.h main.cpp mainwindow.cpp motustimer.cpp motussocket.cpp motusrunlog.cpp motususerlogin.cpp motuschangepassword.cpp motususermanagement.cpp motuslevelswitch.cpp motusaflatformstatus.cpp motushand.cpp motusoperationview.cpp motusplatfrom.cpp motusbaseplc.cpp motusplcicontrol.cpp motusplcocontrol.cpp motuskeeptime.cpp motusplayer.cpp mainwindow.ui motusrunlog.ui motususerlogin.ui motuschangepassword.ui motususermanagement.ui motuslevelswitch.ui motusaflatformstatus.ui motushand.ui motusoperationview.ui    
 
 clean: compiler_clean 
-	-$(DEL_FILE) temp\obj\main.o temp\obj\mainwindow.o temp\obj\motustimer.o temp\obj\motussocket.o temp\obj\motusrunlog.o temp\obj\motususerlogin.o temp\obj\motuschangepassword.o temp\obj\motususermanagement.o temp\obj\motuslevelswitch.o temp\obj\motusaflatformstatus.o temp\obj\motushand.o temp\obj\motusoperationview.o temp\obj\motusplatfrom.o temp\obj\motusbaseplc.o temp\obj\motusplcicontrol.o temp\obj\motusplcocontrol.o temp\obj\motussinglecontrol.o temp\obj\motuscarcontrol.o temp\obj\qrc_resources.o temp\obj\moc_mainwindow.o temp\obj\moc_motustimer.o temp\obj\moc_motussocket.o temp\obj\moc_motusrunlog.o temp\obj\moc_motususerlogin.o temp\obj\moc_motuschangepassword.o temp\obj\moc_motususermanagement.o temp\obj\moc_motuslevelswitch.o temp\obj\moc_motusaflatformstatus.o temp\obj\moc_motushand.o temp\obj\moc_motusoperationview.o temp\obj\moc_motusplatfrom.o temp\obj\moc_motusbaseplc.o temp\obj\moc_motusplcicontrol.o temp\obj\moc_motusplcocontrol.o temp\obj\moc_motussinglecontrol.o temp\obj\moc_motuscarcontrol.o
+	-$(DEL_FILE) temp\obj\main.o temp\obj\mainwindow.o temp\obj\motustimer.o temp\obj\motussocket.o temp\obj\motusrunlog.o temp\obj\motususerlogin.o temp\obj\motuschangepassword.o temp\obj\motususermanagement.o temp\obj\motuslevelswitch.o temp\obj\motusaflatformstatus.o temp\obj\motushand.o temp\obj\motusoperationview.o temp\obj\motusplatfrom.o temp\obj\motusbaseplc.o temp\obj\motusplcicontrol.o temp\obj\motusplcocontrol.o temp\obj\motuskeeptime.o temp\obj\motusplayer.o temp\obj\qrc_resources.o temp\obj\moc_mainwindow.o temp\obj\moc_motustimer.o temp\obj\moc_motussocket.o temp\obj\moc_motusrunlog.o temp\obj\moc_motususerlogin.o temp\obj\moc_motuschangepassword.o temp\obj\moc_motususermanagement.o temp\obj\moc_motuslevelswitch.o temp\obj\moc_motusaflatformstatus.o temp\obj\moc_motushand.o temp\obj\moc_motusoperationview.o temp\obj\moc_motusplatfrom.o temp\obj\moc_motusbaseplc.o temp\obj\moc_motusplcicontrol.o temp\obj\moc_motusplcocontrol.o temp\obj\moc_motuskeeptime.o temp\obj\moc_motusplayer.o
 	-$(DEL_FILE) temp\obj\motus_res.o
 
 distclean: clean 
@@ -236,9 +236,9 @@ compiler_moc_predefs_clean:
 temp/moc/moc_predefs.h: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/features/data/dummy.cpp
 	g++ -fno-keep-inline-dllexport -g -std=gnu++11 -Wextra -Wall -W -dM -E -o temp\moc\moc_predefs.h C:\Qt\Qt5.9.3\5.9.3\mingw53_32\mkspecs\features\data\dummy.cpp
 
-compiler_moc_header_make_all: temp/moc/moc_mainwindow.cpp temp/moc/moc_motustimer.cpp temp/moc/moc_motussocket.cpp temp/moc/moc_motusrunlog.cpp temp/moc/moc_motususerlogin.cpp temp/moc/moc_motuschangepassword.cpp temp/moc/moc_motususermanagement.cpp temp/moc/moc_motuslevelswitch.cpp temp/moc/moc_motusaflatformstatus.cpp temp/moc/moc_motushand.cpp temp/moc/moc_motusoperationview.cpp temp/moc/moc_motusplatfrom.cpp temp/moc/moc_motusbaseplc.cpp temp/moc/moc_motusplcicontrol.cpp temp/moc/moc_motusplcocontrol.cpp temp/moc/moc_motussinglecontrol.cpp temp/moc/moc_motuscarcontrol.cpp
+compiler_moc_header_make_all: temp/moc/moc_mainwindow.cpp temp/moc/moc_motustimer.cpp temp/moc/moc_motussocket.cpp temp/moc/moc_motusrunlog.cpp temp/moc/moc_motususerlogin.cpp temp/moc/moc_motuschangepassword.cpp temp/moc/moc_motususermanagement.cpp temp/moc/moc_motuslevelswitch.cpp temp/moc/moc_motusaflatformstatus.cpp temp/moc/moc_motushand.cpp temp/moc/moc_motusoperationview.cpp temp/moc/moc_motusplatfrom.cpp temp/moc/moc_motusbaseplc.cpp temp/moc/moc_motusplcicontrol.cpp temp/moc/moc_motusplcocontrol.cpp temp/moc/moc_motuskeeptime.cpp temp/moc/moc_motusplayer.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) temp\moc\moc_mainwindow.cpp temp\moc\moc_motustimer.cpp temp\moc\moc_motussocket.cpp temp\moc\moc_motusrunlog.cpp temp\moc\moc_motususerlogin.cpp temp\moc\moc_motuschangepassword.cpp temp\moc\moc_motususermanagement.cpp temp\moc\moc_motuslevelswitch.cpp temp\moc\moc_motusaflatformstatus.cpp temp\moc\moc_motushand.cpp temp\moc\moc_motusoperationview.cpp temp\moc\moc_motusplatfrom.cpp temp\moc\moc_motusbaseplc.cpp temp\moc\moc_motusplcicontrol.cpp temp\moc\moc_motusplcocontrol.cpp temp\moc\moc_motussinglecontrol.cpp temp\moc\moc_motuscarcontrol.cpp
+	-$(DEL_FILE) temp\moc\moc_mainwindow.cpp temp\moc\moc_motustimer.cpp temp\moc\moc_motussocket.cpp temp\moc\moc_motusrunlog.cpp temp\moc\moc_motususerlogin.cpp temp\moc\moc_motuschangepassword.cpp temp\moc\moc_motususermanagement.cpp temp\moc\moc_motuslevelswitch.cpp temp\moc\moc_motusaflatformstatus.cpp temp\moc\moc_motushand.cpp temp\moc\moc_motusoperationview.cpp temp\moc\moc_motusplatfrom.cpp temp\moc\moc_motusbaseplc.cpp temp\moc\moc_motusplcicontrol.cpp temp\moc\moc_motusplcocontrol.cpp temp\moc\moc_motuskeeptime.cpp temp\moc\moc_motusplayer.cpp
 temp/moc/moc_mainwindow.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QMainWindow \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qmainwindow.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtwidgetsglobal.h \
@@ -348,10 +348,12 @@ temp/moc/moc_mainwindow.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QM
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QList \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QModelIndex \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qabstractitemmodel.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QProgressBar \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qprogressbar.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qframe.h \
 		motusaflatformstatus.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QLineEdit \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlineedit.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qframe.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtextcursor.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtextformat.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qpen.h \
@@ -376,10 +378,14 @@ temp/moc/moc_mainwindow.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QM
 		motusbaseplc.h \
 		motusplcicontrol.h \
 		motusplcocontrol.h \
+		motuskeeptime.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/QTcpSocket \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QCloseEvent \
 		mainwindow.h \
 		temp/moc/moc_predefs.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/moc.exe
-	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2019YearProgram/QTHostComputer/MotusMoGao -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward mainwindow.h -o temp\moc\moc_mainwindow.cpp
+	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2020program/MotusCar -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward mainwindow.h -o temp\moc\moc_mainwindow.cpp
 
 temp/moc/moc_motustimer.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QObject \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobject.h \
@@ -432,7 +438,7 @@ temp/moc/moc_motustimer.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QObje
 		motustimer.h \
 		temp/moc/moc_predefs.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/moc.exe
-	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2019YearProgram/QTHostComputer/MotusMoGao -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motustimer.h -o temp\moc\moc_motustimer.cpp
+	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2020program/MotusCar -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motustimer.h -o temp\moc\moc_motustimer.cpp
 
 temp/moc/moc_motussocket.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QObject \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobject.h \
@@ -504,7 +510,7 @@ temp/moc/moc_motussocket.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QObj
 		motussocket.h \
 		temp/moc/moc_predefs.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/moc.exe
-	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2019YearProgram/QTHostComputer/MotusMoGao -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motussocket.h -o temp\moc\moc_motussocket.cpp
+	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2020program/MotusCar -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motussocket.h -o temp\moc\moc_motussocket.cpp
 
 temp/moc/moc_motusrunlog.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QDialog \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qdialog.h \
@@ -618,7 +624,7 @@ temp/moc/moc_motusrunlog.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/Q
 		motusrunlog.h \
 		temp/moc/moc_predefs.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/moc.exe
-	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2019YearProgram/QTHostComputer/MotusMoGao -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motusrunlog.h -o temp\moc\moc_motusrunlog.cpp
+	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2020program/MotusCar -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motusrunlog.h -o temp\moc\moc_motusrunlog.cpp
 
 temp/moc/moc_motususerlogin.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QDialog \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qdialog.h \
@@ -725,7 +731,7 @@ temp/moc/moc_motususerlogin.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidget
 		motususerlogin.h \
 		temp/moc/moc_predefs.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/moc.exe
-	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2019YearProgram/QTHostComputer/MotusMoGao -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motususerlogin.h -o temp\moc\moc_motususerlogin.cpp
+	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2020program/MotusCar -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motususerlogin.h -o temp\moc\moc_motususerlogin.cpp
 
 temp/moc/moc_motuschangepassword.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QDialog \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qdialog.h \
@@ -831,7 +837,7 @@ temp/moc/moc_motuschangepassword.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtW
 		motuschangepassword.h \
 		temp/moc/moc_predefs.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/moc.exe
-	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2019YearProgram/QTHostComputer/MotusMoGao -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motuschangepassword.h -o temp\moc\moc_motuschangepassword.cpp
+	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2020program/MotusCar -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motuschangepassword.h -o temp\moc\moc_motuschangepassword.cpp
 
 temp/moc/moc_motususermanagement.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QDialog \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qdialog.h \
@@ -938,7 +944,7 @@ temp/moc/moc_motususermanagement.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtW
 		motususermanagement.h \
 		temp/moc/moc_predefs.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/moc.exe
-	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2019YearProgram/QTHostComputer/MotusMoGao -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motususermanagement.h -o temp\moc\moc_motususermanagement.cpp
+	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2020program/MotusCar -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motususermanagement.h -o temp\moc\moc_motususermanagement.cpp
 
 temp/moc/moc_motuslevelswitch.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QDialog \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qdialog.h \
@@ -1044,7 +1050,7 @@ temp/moc/moc_motuslevelswitch.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidg
 		motuslevelswitch.h \
 		temp/moc/moc_predefs.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/moc.exe
-	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2019YearProgram/QTHostComputer/MotusMoGao -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motuslevelswitch.h -o temp\moc\moc_motuslevelswitch.cpp
+	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2020program/MotusCar -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motuslevelswitch.h -o temp\moc\moc_motuslevelswitch.cpp
 
 temp/moc/moc_motusaflatformstatus.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QDialog \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qdialog.h \
@@ -1157,7 +1163,7 @@ temp/moc/moc_motusaflatformstatus.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qt
 		motusaflatformstatus.h \
 		temp/moc/moc_predefs.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/moc.exe
-	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2019YearProgram/QTHostComputer/MotusMoGao -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motusaflatformstatus.h -o temp\moc\moc_motusaflatformstatus.cpp
+	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2020program/MotusCar -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motusaflatformstatus.h -o temp\moc\moc_motusaflatformstatus.cpp
 
 temp/moc/moc_motushand.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QDialog \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qdialog.h \
@@ -1263,7 +1269,7 @@ temp/moc/moc_motushand.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QDi
 		motushand.h \
 		temp/moc/moc_predefs.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/moc.exe
-	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2019YearProgram/QTHostComputer/MotusMoGao -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motushand.h -o temp\moc\moc_motushand.cpp
+	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2020program/MotusCar -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motushand.h -o temp\moc\moc_motushand.cpp
 
 temp/moc/moc_motusoperationview.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QDialog \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qdialog.h \
@@ -1369,10 +1375,13 @@ temp/moc/moc_motusoperationview.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWi
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QList \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QModelIndex \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qabstractitemmodel.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QProgressBar \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qprogressbar.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qframe.h \
 		motusoperationview.h \
 		temp/moc/moc_predefs.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/moc.exe
-	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2019YearProgram/QTHostComputer/MotusMoGao -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motusoperationview.h -o temp\moc\moc_motusoperationview.cpp
+	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2020program/MotusCar -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motusoperationview.h -o temp\moc\moc_motusoperationview.cpp
 
 temp/moc/moc_motusplatfrom.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QObject \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobject.h \
@@ -1445,7 +1454,7 @@ temp/moc/moc_motusplatfrom.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QO
 		motusplatfrom.h \
 		temp/moc/moc_predefs.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/moc.exe
-	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2019YearProgram/QTHostComputer/MotusMoGao -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motusplatfrom.h -o temp\moc\moc_motusplatfrom.cpp
+	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2020program/MotusCar -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motusplatfrom.h -o temp\moc\moc_motusplatfrom.cpp
 
 temp/moc/moc_motusbaseplc.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QObject \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobject.h \
@@ -1537,7 +1546,7 @@ temp/moc/moc_motusbaseplc.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QOb
 		motusbaseplc.h \
 		temp/moc/moc_predefs.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/moc.exe
-	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2019YearProgram/QTHostComputer/MotusMoGao -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motusbaseplc.h -o temp\moc\moc_motusbaseplc.cpp
+	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2020program/MotusCar -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motusbaseplc.h -o temp\moc\moc_motusbaseplc.cpp
 
 temp/moc/moc_motusplcicontrol.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QObject \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobject.h \
@@ -1630,7 +1639,7 @@ temp/moc/moc_motusplcicontrol.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore
 		motusplcicontrol.h \
 		temp/moc/moc_predefs.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/moc.exe
-	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2019YearProgram/QTHostComputer/MotusMoGao -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motusplcicontrol.h -o temp\moc\moc_motusplcicontrol.cpp
+	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2020program/MotusCar -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motusplcicontrol.h -o temp\moc\moc_motusplcicontrol.cpp
 
 temp/moc/moc_motusplcocontrol.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QObject \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobject.h \
@@ -1723,9 +1732,9 @@ temp/moc/moc_motusplcocontrol.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore
 		motusplcocontrol.h \
 		temp/moc/moc_predefs.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/moc.exe
-	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2019YearProgram/QTHostComputer/MotusMoGao -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motusplcocontrol.h -o temp\moc\moc_motusplcocontrol.cpp
+	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2020program/MotusCar -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motusplcocontrol.h -o temp\moc\moc_motusplcocontrol.cpp
 
-temp/moc/moc_motussinglecontrol.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QObject \
+temp/moc/moc_motuskeeptime.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QObject \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobject.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobjectdefs.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qnamespace.h \
@@ -1772,8 +1781,62 @@ temp/moc/moc_motussinglecontrol.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCo
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qvarlengtharray.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcontainerfwd.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobject_impl.h \
-		motusbaseplc.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QString \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QFile \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qfile.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qfiledevice.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qiodevice.h \
+		motuskeeptime.h \
+		temp/moc/moc_predefs.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/moc.exe
+	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2020program/MotusCar -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motuskeeptime.h -o temp\moc\moc_motuskeeptime.cpp
+
+temp/moc/moc_motusplayer.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QObject \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobject.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobjectdefs.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qnamespace.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qglobal.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qconfig-bootstrapped.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qconfig.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qtcore-config.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qsystemdetection.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qprocessordetection.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcompilerdetection.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qtypeinfo.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qsysinfo.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qlogging.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qflags.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qatomic.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qbasicatomic.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qatomic_bootstrap.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qgenericatomic.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qatomic_cxx11.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qatomic_msvc.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qglobalstatic.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qmutex.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qnumeric.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qversiontagging.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobjectdefs_impl.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qstring.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qchar.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qbytearray.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qrefcount.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qarraydata.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qstringbuilder.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qlist.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qalgorithms.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qiterator.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qhashfunctions.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qpair.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qbytearraylist.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qstringlist.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qregexp.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qstringmatcher.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcoreevent.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qscopedpointer.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qmetatype.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qvarlengtharray.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcontainerfwd.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobject_impl.h \
 		motussocket.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/QUdpSocket \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qudpsocket.h \
@@ -1795,80 +1858,10 @@ temp/moc/moc_motussinglecontrol.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCo
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qsharedpointer.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qsharedpointer_impl.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qhostaddress.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QList \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qevent.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtguiglobal.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtgui-config.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qwindowdefs.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qwindowdefs_win.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qregion.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qrect.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qmargins.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qsize.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qdatastream.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qkeysequence.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qurl.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qurlquery.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qfile.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qfiledevice.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qvector2d.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtouchdevice.h \
-		motussinglecontrol.h \
+		motusplayer.h \
 		temp/moc/moc_predefs.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/moc.exe
-	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2019YearProgram/QTHostComputer/MotusMoGao -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motussinglecontrol.h -o temp\moc\moc_motussinglecontrol.cpp
-
-temp/moc/moc_motuscarcontrol.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QObject \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobject.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobjectdefs.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qnamespace.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qglobal.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qconfig-bootstrapped.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qconfig.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qtcore-config.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qsystemdetection.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qprocessordetection.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcompilerdetection.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qtypeinfo.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qsysinfo.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qlogging.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qflags.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qatomic.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qbasicatomic.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qatomic_bootstrap.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qgenericatomic.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qatomic_cxx11.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qatomic_msvc.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qglobalstatic.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qmutex.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qnumeric.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qversiontagging.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobjectdefs_impl.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qstring.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qchar.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qbytearray.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qrefcount.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qarraydata.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qstringbuilder.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qlist.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qalgorithms.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qiterator.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qhashfunctions.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qpair.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qbytearraylist.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qstringlist.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qregexp.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qstringmatcher.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcoreevent.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qscopedpointer.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qmetatype.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qvarlengtharray.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcontainerfwd.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobject_impl.h \
-		motuscarcontrol.h \
-		temp/moc/moc_predefs.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/moc.exe
-	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2019YearProgram/QTHostComputer/MotusMoGao -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motuscarcontrol.h -o temp\moc\moc_motuscarcontrol.cpp
+	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\moc.exe $(DEFINES) --include temp/moc/moc_predefs.h -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/mkspecs/win32-g++ -ID:/2020program/MotusCar -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/Qwt -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtANGLE -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork -IC:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/lib/gcc/i686-w64-mingw32/5.3.0/include-fixed -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++ -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/i686-w64-mingw32 -IC:/Qt/Qt5.9.3/Tools/mingw530_32/i686-w64-mingw32/include/c++/backward motusplayer.h -o temp\moc\moc_motusplayer.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -2033,10 +2026,12 @@ temp/obj/main.o: main.cpp mainwindow.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QList \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QModelIndex \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qabstractitemmodel.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QProgressBar \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qprogressbar.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qframe.h \
 		motusaflatformstatus.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QLineEdit \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlineedit.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qframe.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtextcursor.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtextformat.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qpen.h \
@@ -2061,6 +2056,10 @@ temp/obj/main.o: main.cpp mainwindow.h \
 		motusbaseplc.h \
 		motusplcicontrol.h \
 		motusplcocontrol.h \
+		motuskeeptime.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/QTcpSocket \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QCloseEvent \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QApplication \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qapplication.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -2180,10 +2179,12 @@ temp/obj/mainwindow.o: mainwindow.cpp mainwindow.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QList \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QModelIndex \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qabstractitemmodel.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QProgressBar \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qprogressbar.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qframe.h \
 		motusaflatformstatus.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QLineEdit \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlineedit.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qframe.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtextcursor.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtextformat.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qpen.h \
@@ -2208,6 +2209,10 @@ temp/obj/mainwindow.o: mainwindow.cpp mainwindow.h \
 		motusbaseplc.h \
 		motusplcicontrol.h \
 		motusplcocontrol.h \
+		motuskeeptime.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/QTcpSocket \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QCloseEvent \
 		temp/ui/ui_mainwindow.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QVariant \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QAction \
@@ -2251,6 +2256,8 @@ temp/obj/mainwindow.o: mainwindow.cpp mainwindow.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QWidget \
 		motustimer.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qt_windows.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QMessageBox \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qmessagebox.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\mainwindow.o mainwindow.cpp
 
@@ -3298,8 +3305,14 @@ temp/obj/motusaflatformstatus.o: motusaflatformstatus.cpp motusaflatformstatus.h
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qinputmethod.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QButtonGroup \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QComboBox \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qcombobox.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QGroupBox \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qgroupbox.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QHeaderView \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qheaderview.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qabstractitemmodel.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qitemselectionmodel.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyleoption.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractspinbox.h \
@@ -3311,14 +3324,6 @@ temp/obj/motusaflatformstatus.o: motusaflatformstatus.cpp motusaflatformstatus.h
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabbar.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabwidget.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qabstractitemmodel.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QGroupBox \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qgroupbox.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qheaderview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qitemselectionmodel.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QLabel \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlabel.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QPushButton \
@@ -3444,8 +3449,13 @@ temp/obj/motushand.o: motushand.cpp motushand.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qinputmethod.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QButtonGroup \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QComboBox \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qcombobox.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QHeaderView \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qheaderview.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qframe.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qabstractitemmodel.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qitemselectionmodel.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyleoption.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractspinbox.h \
@@ -3457,15 +3467,6 @@ temp/obj/motushand.o: motushand.cpp motushand.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabbar.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabwidget.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qframe.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qabstractitemmodel.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QGroupBox \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qgroupbox.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qheaderview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qitemselectionmodel.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QPushButton \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
@@ -3475,6 +3476,8 @@ temp/obj/motushand.o: motushand.cpp motushand.h \
 		motusoperationview.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QList \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QModelIndex \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QProgressBar \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qprogressbar.h \
 		motusaflatformstatus.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QLineEdit \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlineedit.h \
@@ -3501,6 +3504,10 @@ temp/obj/motushand.o: motushand.cpp motushand.h \
 		motusbaseplc.h \
 		motusplcicontrol.h \
 		motusplcocontrol.h \
+		motuskeeptime.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/QTcpSocket \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QCloseEvent \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QMessageBox \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qmessagebox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\motushand.o motushand.cpp
@@ -3610,6 +3617,9 @@ temp/obj/motusoperationview.o: motusoperationview.cpp motusoperationview.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QList \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QModelIndex \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qabstractitemmodel.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QProgressBar \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qprogressbar.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qframe.h \
 		temp/ui/ui_motusoperationview.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QVariant \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QAction \
@@ -3630,12 +3640,13 @@ temp/obj/motusoperationview.o: motusoperationview.cpp motusoperationview.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlayout.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlayoutitem.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qboxlayout.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QGroupBox \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qgroupbox.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QHBoxLayout \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QHeaderView \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qheaderview.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qframe.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qitemselectionmodel.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyleoption.h \
@@ -3656,20 +3667,42 @@ temp/obj/motusoperationview.o: motusoperationview.cpp motusoperationview.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtextformat.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qpen.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtextoption.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QProgressBar \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qprogressbar.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QPushButton \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qpushbutton.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QSpacerItem \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QTableView \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtableview.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QVBoxLayout \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QWidget \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QStandardItemModel \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qstandarditemmodel.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QAbstractItemView \
+		mainwindow.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QMainWindow \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qmainwindow.h \
+		motusaflatformstatus.h \
+		motususermanagement.h \
+		motushand.h \
+		motusrunlog.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QString \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QFile \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QStandardItem \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qstandarditemmodel.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QStandardItemModel \
+		motusplatfrom.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QObject \
+		motussocket.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/QUdpSocket \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qudpsocket.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qhostaddress.h \
+		motusbaseplc.h \
+		motusplcicontrol.h \
+		motusplcocontrol.h \
+		motuskeeptime.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/QTcpSocket \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QCloseEvent \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QAbstractItemView \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QTextStream \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QMessageBox \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qmessagebox.h \
@@ -3678,7 +3711,9 @@ temp/obj/motusoperationview.o: motusoperationview.cpp motusoperationview.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qfileinfo.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QFileDialog \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qfiledialog.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QDebug
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QFont \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QTextCodec \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qtextcodec.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\motusoperationview.o motusoperationview.cpp
 
 temp/obj/motusplatfrom.o: motusplatfrom.cpp motusplatfrom.h \
@@ -3749,7 +3784,8 @@ temp/obj/motusplatfrom.o: motusplatfrom.cpp motusplatfrom.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcontiguouscache.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qsharedpointer.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qsharedpointer_impl.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qhostaddress.h
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qhostaddress.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\motusplatfrom.o motusplatfrom.cpp
 
 temp/obj/motusbaseplc.o: motusbaseplc.cpp motusbaseplc.h \
@@ -4053,7 +4089,7 @@ temp/obj/motusplcocontrol.o: motusplcocontrol.cpp motusplcocontrol.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtouchdevice.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\motusplcocontrol.o motusplcocontrol.cpp
 
-temp/obj/motussinglecontrol.o: motussinglecontrol.cpp motussinglecontrol.h \
+temp/obj/motuskeeptime.o: motuskeeptime.cpp motuskeeptime.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QObject \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobject.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobjectdefs.h \
@@ -4101,50 +4137,29 @@ temp/obj/motussinglecontrol.o: motussinglecontrol.cpp motussinglecontrol.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qvarlengtharray.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcontainerfwd.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobject_impl.h \
-		motusbaseplc.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QString \
-		motussocket.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/QUdpSocket \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qudpsocket.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QFile \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qfile.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qfiledevice.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qiodevice.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qdebug.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QDateTime \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qdatetime.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qshareddata.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qhash.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qmap.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QTextStream \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qtextstream.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qlocale.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qvariant.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qshareddata.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qmap.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qdebug.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qvector.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qpoint.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qset.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcontiguouscache.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qsharedpointer.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qsharedpointer_impl.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qhostaddress.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QList \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qevent.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtguiglobal.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtgui-config.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qwindowdefs.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qwindowdefs_win.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qregion.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qrect.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qmargins.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qsize.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qdatastream.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qkeysequence.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qurl.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qurlquery.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qfile.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qfiledevice.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qvector2d.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtouchdevice.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\motussinglecontrol.o motussinglecontrol.cpp
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qsharedpointer_impl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\motuskeeptime.o motuskeeptime.cpp
 
-temp/obj/motuscarcontrol.o: motuscarcontrol.cpp motuscarcontrol.h \
+temp/obj/motusplayer.o: motusplayer.cpp motusplayer.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QObject \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobject.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobjectdefs.h \
@@ -4191,8 +4206,29 @@ temp/obj/motuscarcontrol.o: motuscarcontrol.cpp motuscarcontrol.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qmetatype.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qvarlengtharray.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcontainerfwd.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobject_impl.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\motuscarcontrol.o motuscarcontrol.cpp
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qobject_impl.h \
+		motussocket.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/QUdpSocket \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qudpsocket.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qtnetworkglobal.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qtnetwork-config.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qabstractsocket.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qiodevice.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qdebug.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qhash.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qmap.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qtextstream.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qlocale.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qvariant.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qshareddata.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qvector.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qpoint.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qset.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcontiguouscache.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qsharedpointer.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qsharedpointer_impl.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qhostaddress.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\motusplayer.o motusplayer.cpp
 
 temp/obj/qrc_resources.o: temp/rcc/qrc_resources.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\qrc_resources.o temp\rcc\qrc_resources.cpp
@@ -4242,11 +4278,11 @@ temp/obj/moc_motusplcicontrol.o: temp/moc/moc_motusplcicontrol.cpp
 temp/obj/moc_motusplcocontrol.o: temp/moc/moc_motusplcocontrol.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\moc_motusplcocontrol.o temp\moc\moc_motusplcocontrol.cpp
 
-temp/obj/moc_motussinglecontrol.o: temp/moc/moc_motussinglecontrol.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\moc_motussinglecontrol.o temp\moc\moc_motussinglecontrol.cpp
+temp/obj/moc_motuskeeptime.o: temp/moc/moc_motuskeeptime.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\moc_motuskeeptime.o temp\moc\moc_motuskeeptime.cpp
 
-temp/obj/moc_motuscarcontrol.o: temp/moc/moc_motuscarcontrol.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\moc_motuscarcontrol.o temp\moc\moc_motuscarcontrol.cpp
+temp/obj/moc_motusplayer.o: temp/moc/moc_motusplayer.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\moc_motusplayer.o temp\moc\moc_motusplayer.cpp
 
 ####### Install
 
