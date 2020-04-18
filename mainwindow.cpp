@@ -414,13 +414,13 @@ void MainWindow::masterClock(void)
                 if(steppath4==1)
                 {
                     //LOAD 001.XML
-                    char mdata[8] = {'l','o','a','d',' ','0','0','0'};
-                    int  sque=movieSque.toInt();
-                    mdata[5]=0x30+sque/100;
-                    mdata[6]=0x30+(sque%100)/10;
-                    mdata[7]=0x30+sque%10;
+                    char mdata[4] = {'l','o','a','d'};
+                    //int  sque=movieSque.toInt();
+                    //mdata[5]=0x30+sque/100;
+                    //mdata[6]=0x30+(sque%100)/10;
+                    //mdata[7]=0x30+sque%10;
                     //mQTcpSocket.write(mdata,14);
-                    mMotusPlayer.sendData(mdata,8);
+                    mMotusPlayer.sendData(mdata,4);
                     steppath4+=1;
                     stepMessage.sprintf("%d%s",steppath4,"平台回中");
                     break;
@@ -512,7 +512,7 @@ void MainWindow::masterClock(void)
                 if(steppath4==6)
                 {
                     QString str=mMotusPlayer.getData();
-                    if(str.compare("play start")==0)
+                    if(str.compare("playing")==0)
                     {
                         mMotusOperaterStatus.playbit=true;
                         steppath4=0;
