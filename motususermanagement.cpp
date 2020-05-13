@@ -156,12 +156,12 @@ void MotusUserManagement::setbuttontext(int lever)
     {
     case 1:
         {
-            ui->userLabel->setStyleSheet("border-image: url(:/picture/caozuo.png);");
+            ui->userLabel->setStyleSheet("border-image: url(:/picture/caozuoyuan.PNG);");
             break;
         }
     case 2:
         {
-             ui->userLabel->setStyleSheet("border-image: url(:/picture/guanli.png);");
+             ui->userLabel->setStyleSheet("border-image: url(:/picture/guanliyuan.PNG);");
             break;
         }
     default:break;

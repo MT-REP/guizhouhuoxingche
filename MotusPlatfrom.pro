@@ -101,3 +101,5 @@ INCLUDEPATH += C:\Qt\Qt5.9.3\5.9.3\mingw53_32\include\Qwt
 
 RESOURCES += \
     resources.qrc
+
+DISTFILES +=

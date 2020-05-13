@@ -31,15 +31,18 @@ MotusOperationView::MotusOperationView(QWidget *parent) :
     pbar[4]->setRange(0,100);
     pbar[5]->setRange(0,100);
 
+
+
+
     m_playmodel = new QStandardItemModel(this);//tableview的模式
     m_playmodel->setHorizontalHeaderItem(0, new QStandardItem("电影名称"));//tableview的列表头第一个
-    m_playmodel->setHorizontalHeaderItem(1, new QStandardItem("电影序列"));//tableview的列表头的第二个
+    m_playmodel->setHorizontalHeaderItem(1, new QStandardItem("数据名称"));//tableview的列表头的第三个
+    m_playmodel->setHorizontalHeaderItem(2, new QStandardItem("电影序列"));//tableview的列表头的第二个
     ui->playTableView->setModel(m_playmodel);//加载模式
     ui->playTableView->setSelectionBehavior(QAbstractItemView::SelectRows);//选择行
     ui->playTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);//不允许编译
-    //ui->playTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->playTableView->setColumnWidth(0,160);
-    ui->playTableView->setColumnWidth(1,120);
+    ui->playTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    //ui->playTableView->setAlternatingRowColors(true);
     //双击
     connect(ui->playTableView,SIGNAL(doubleClicked(const QModelIndex &)),this,SLOT(tableViewDoubleClicked(const QModelIndex &)));
     //读电影数据
@@ -48,7 +51,8 @@ MotusOperationView::MotusOperationView(QWidget *parent) :
         for(int i=0;i<mMovieiIndexList.size();i++)
         {
            m_playmodel->setItem(i,0,new QStandardItem(mMovieiIndexList.at(i).fileMovieName));
-           m_playmodel->setItem(i,1,new QStandardItem(mMovieiIndexList.at(i).fileMovieSequence));
+           m_playmodel->setItem(i,1,new QStandardItem(mMovieiIndexList.at(i).fileTxtName));
+           m_playmodel->setItem(i,2,new QStandardItem(mMovieiIndexList.at(i).fileMovieSequence));
         }
         if(mMovieiIndexList.size()>0)
         {
@@ -173,9 +177,9 @@ void MotusOperationView::on_saveFileButton_clicked()
     QString str[3];
     QList<QStandardItem *>templist;
     mSaveMovieMessage.mMovieIndex.fileMovieName=str[0]=ui->movieLineEdit->text();
-    mSaveMovieMessage.mMovieIndex.fileTxtName=str[2]=ui->dataLineEdit->text();
-    mSaveMovieMessage.mMovieIndex.fileMovieSequence=str[1]=ui->sequenceLineEdit->text();
-    for(int i=0;i<2;i++)
+    mSaveMovieMessage.mMovieIndex.fileTxtName=str[1]=ui->dataLineEdit->text();
+    mSaveMovieMessage.mMovieIndex.fileMovieSequence=str[2]=ui->sequenceLineEdit->text();
+    for(int i=0;i<3;i++)
     {
         templist.append(new QStandardItem(str[i]));
     }

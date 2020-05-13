@@ -1,9 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>picture/downpage.png</file>
-        <file>picture/tableback.png</file>
-        <file>picture/uppage.png</file>
-        <file>picture/errorbackground.png</file>
         <file>picture/loginbeijing.png</file>
         <file>picture/passwordChange.png</file>
         <file>picture/caozuo.png</file>
@@ -12,22 +8,30 @@
         <file>picture/guanli.png</file>
         <file>picture/guanli_hover.png</file>
         <file>picture/guanli_pressed.png</file>
-        <file>picture/userbackground.png</file>
         <file>picture/userSwitchBackground.png</file>
-        <file>picture/tuichu.png</file>
-        <file>picture/yonghu.png</file>
-        <file>picture/cuowu.png</file>
-        <file>picture/jiankong.png</file>
-        <file>picture/shoudong.png</file>
-        <file>picture/yundong.png</file>
-        <file>picture/run.png</file>
-        <file>picture/reset.png</file>
-        <file>picture/kaiji.png</file>
-        <file>picture/savefile.png</file>
-        <file>picture/deletefile.png</file>
-        <file>picture/openfile.png</file>
-        <file>picture/playbackground.png</file>
-        <file>picture/statusbackground.jpg</file>
-        <file>picture/handbackground.png</file>
+        <file>picture/hand_press.PNG</file>
+        <file>picture/jilu_press.PNG</file>
+        <file>picture/status.PNG</file>
+        <file>picture/status_press.PNG</file>
+        <file>picture/takeoff.PNG</file>
+        <file>picture/takeoff_press.PNG</file>
+        <file>picture/user.PNG</file>
+        <file>picture/user_press.PNG</file>
+        <file>picture/bofang.PNG</file>
+        <file>picture/bofang_press.PNG</file>
+        <file>picture/hand.PNG</file>
+        <file>picture/jilu.PNG</file>
+        <file>picture/caozuoyuan.PNG</file>
+        <file>picture/guanliyuan.PNG</file>
+        <file>picture/userSwitch.PNG</file>
+        <file>picture/xmima.PNG</file>
+        <file>picture/down.PNG</file>
+        <file>picture/up.PNG</file>
+        <file>picture/deletefile.PNG</file>
+        <file>picture/kaiji.PNG</file>
+        <file>picture/openfile.PNG</file>
+        <file>picture/reset.PNG</file>
+        <file>picture/run.PNG</file>
+        <file>picture/savefile.PNG</file>
     </qresource>
 </RCC>

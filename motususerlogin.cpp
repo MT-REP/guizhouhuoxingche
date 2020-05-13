@@ -9,7 +9,6 @@ MotusUserLogin::MotusUserLogin(QWidget *parent,int code) :
     ui->setupUi(this);
     this->code=code;
     setWindowTitle("登录界面");
-    //qDebug()<<this->code;
 }
 
 //析构函数

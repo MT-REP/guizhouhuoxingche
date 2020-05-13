@@ -26,10 +26,11 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#MotusOperationView{ border-image: url(:/picture/playbackground.png);}
+   <string notr="true">#MotusOperationView{background-color: rgb(241, 241, 241);}
+
 </string>
   </property>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -38,17 +39,14 @@
      <height>641</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="mainGridLayout">
-    <property name="leftMargin">
-     <number>5</number>
+   <layout class="QVBoxLayout" name="mainVLayout">
+    <property name="bottomMargin">
+     <number>2</number>
     </property>
-    <property name="topMargin">
-     <number>5</number>
-    </property>
-    <item row="0" column="0">
-     <layout class="QHBoxLayout" name="topHLayout">
+    <item>
+     <layout class="QHBoxLayout" name="rightHLayout" stretch="1,5">
       <item>
-       <layout class="QVBoxLayout" name="leftTopVLayout" stretch="1,3">
+       <layout class="QVBoxLayout" name="leftTopVLayout" stretch="1,0">
         <item>
          <layout class="QVBoxLayout" name="leftVLayout">
           <item>
@@ -69,17 +67,16 @@
               </property>
               <property name="styleSheet">
                <string notr="true">QPushButton{
-background-color: rgb(70, 198,55);
 border-radius:5px;
 }
-QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
+QPushButton:hover{color: rgb(0,0,0);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
               </property>
               <property name="text">
                <string>开机</string>
               </property>
               <property name="icon">
                <iconset resource="resources.qrc">
-                <normaloff>:/picture/kaiji.png</normaloff>:/picture/kaiji.png</iconset>
+                <normaloff>:/picture/kaiji.PNG</normaloff>:/picture/kaiji.PNG</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -105,17 +102,16 @@ QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px
               </property>
               <property name="styleSheet">
                <string notr="true">QPushButton{
-background-color: rgb(0, 227,234);
 border-radius:5px;
 }
-QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
+QPushButton:hover{color: rgb(0,0,0);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
               </property>
               <property name="text">
                <string>复位</string>
               </property>
               <property name="icon">
                <iconset resource="resources.qrc">
-                <normaloff>:/picture/reset.png</normaloff>:/picture/reset.png</iconset>
+                <normaloff>:/picture/reset.PNG</normaloff>:/picture/reset.PNG</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -141,17 +137,16 @@ QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px
               </property>
               <property name="styleSheet">
                <string notr="true">QPushButton{
-background-color: rgb(28, 161,218);
 border-radius:5px;
 }
-QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
+QPushButton:hover{color: rgb(0,0,0);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
               </property>
               <property name="text">
                <string>运行</string>
               </property>
               <property name="icon">
                <iconset resource="resources.qrc">
-                <normaloff>:/picture/run.png</normaloff>:/picture/run.png</iconset>
+                <normaloff>:/picture/run.PNG</normaloff>:/picture/run.PNG</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -288,6 +283,12 @@ QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px
           </property>
           <item row="0" column="0">
            <widget class="QGroupBox" name="groupBox1">
+            <property name="minimumSize">
+             <size>
+              <width>600</width>
+              <height>400</height>
+             </size>
+            </property>
             <property name="font">
              <font>
               <family>宋体</family>
@@ -448,10 +449,18 @@ background-color: rgb(85, 85, 0);
              <property name="geometry">
               <rect>
                <x>62</x>
-               <y>246</y>
+               <y>245</y>
                <width>31</width>
                <height>141</height>
               </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QProgressBar {
+   background-color: rgb(241, 241, 241);
+   border: 1px solid grey;
+   border-radius: 10px;
+   text-align: center;
+}</string>
              </property>
              <property name="value">
               <number>24</number>
@@ -464,10 +473,18 @@ background-color: rgb(85, 85, 0);
              <property name="geometry">
               <rect>
                <x>126</x>
-               <y>246</y>
+               <y>245</y>
                <width>31</width>
                <height>141</height>
               </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QProgressBar {
+   background-color: rgb(241, 241, 241);
+   border: 1px solid grey;
+   border-radius: 10px;
+   text-align: center;
+}</string>
              </property>
              <property name="value">
               <number>24</number>
@@ -480,10 +497,18 @@ background-color: rgb(85, 85, 0);
              <property name="geometry">
               <rect>
                <x>190</x>
-               <y>246</y>
+               <y>245</y>
                <width>31</width>
                <height>141</height>
               </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QProgressBar {
+   background-color: rgb(241, 241, 241);
+   border: 1px solid grey;
+   border-radius: 10px;
+   text-align: center;
+}</string>
              </property>
              <property name="value">
               <number>24</number>
@@ -496,10 +521,18 @@ background-color: rgb(85, 85, 0);
              <property name="geometry">
               <rect>
                <x>255</x>
-               <y>246</y>
+               <y>245</y>
                <width>31</width>
                <height>141</height>
               </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QProgressBar {
+   background-color: rgb(241, 241, 241);
+   border: 1px solid grey;
+   border-radius: 10px;
+   text-align: center;
+}</string>
              </property>
              <property name="value">
               <number>24</number>
@@ -512,10 +545,18 @@ background-color: rgb(85, 85, 0);
              <property name="geometry">
               <rect>
                <x>318</x>
-               <y>246</y>
+               <y>245</y>
                <width>31</width>
                <height>141</height>
               </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QProgressBar {
+   background-color: rgb(241, 241, 241);
+   border: 1px solid grey;
+   border-radius: 10px;
+   text-align: center;
+}</string>
              </property>
              <property name="value">
               <number>24</number>
@@ -528,10 +569,18 @@ background-color: rgb(85, 85, 0);
              <property name="geometry">
               <rect>
                <x>382</x>
-               <y>246</y>
+               <y>245</y>
                <width>31</width>
                <height>141</height>
               </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QProgressBar {
+   background-color: rgb(241, 241, 241);
+   border: 1px solid grey;
+   border-radius: 10px;
+   text-align: center;
+}</string>
              </property>
              <property name="value">
               <number>24</number>
@@ -648,7 +697,7 @@ background-color: rgb(85, 85, 0);
              <property name="geometry">
               <rect>
                <x>65</x>
-               <y>226</y>
+               <y>225</y>
                <width>25</width>
                <height>16</height>
               </rect>
@@ -664,7 +713,7 @@ background-color: rgb(85, 85, 0);
              <property name="geometry">
               <rect>
                <x>129</x>
-               <y>226</y>
+               <y>225</y>
                <width>25</width>
                <height>16</height>
               </rect>
@@ -680,7 +729,7 @@ background-color: rgb(85, 85, 0);
              <property name="geometry">
               <rect>
                <x>193</x>
-               <y>226</y>
+               <y>225</y>
                <width>25</width>
                <height>16</height>
               </rect>
@@ -696,7 +745,7 @@ background-color: rgb(85, 85, 0);
              <property name="geometry">
               <rect>
                <x>259</x>
-               <y>226</y>
+               <y>225</y>
                <width>25</width>
                <height>16</height>
               </rect>
@@ -712,7 +761,7 @@ background-color: rgb(85, 85, 0);
              <property name="geometry">
               <rect>
                <x>321</x>
-               <y>226</y>
+               <y>225</y>
                <width>25</width>
                <height>16</height>
               </rect>
@@ -728,7 +777,7 @@ background-color: rgb(85, 85, 0);
              <property name="geometry">
               <rect>
                <x>385</x>
-               <y>226</y>
+               <y>225</y>
                <width>25</width>
                <height>16</height>
               </rect>
@@ -838,28 +887,9 @@ background-color: rgb(85, 85, 0);</string>
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="rightHLayout">
+       <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QTableView" name="playTableView">
-          <property name="minimumSize">
-           <size>
-            <width>270</width>
-            <height>361</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>楷体</family>
-            <pointsize>14</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background:transparent;</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="dataVLayout">
+         <layout class="QHBoxLayout" name="fileHLayout">
           <item>
            <widget class="QPushButton" name="selectFileButton">
             <property name="minimumSize">
@@ -876,26 +906,99 @@ background-color: rgb(85, 85, 0);</string>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton{
-background-color: rgb(122, 175,207);
 border-radius:5px;
 }
-QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
+QPushButton:hover{color: rgb(0,0,0);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
             </property>
             <property name="text">
              <string>选择文件</string>
             </property>
             <property name="icon">
              <iconset resource="resources.qrc">
-              <normaloff>:/picture/openfile.png</normaloff>:/picture/openfile.png</iconset>
+              <normaloff>:/picture/openfile.PNG</normaloff>:/picture/openfile.PNG</iconset>
             </property>
             <property name="iconSize">
              <size>
-              <width>45</width>
-              <height>45</height>
+              <width>40</width>
+              <height>40</height>
              </size>
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QPushButton" name="saveFileButton">
+            <property name="minimumSize">
+             <size>
+              <width>90</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>楷体</family>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+border-radius:5px;
+}
+QPushButton:hover{color: rgb(0,0,0);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
+            </property>
+            <property name="text">
+             <string>保存文件</string>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/picture/savefile.PNG</normaloff>:/picture/savefile.PNG</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="deleteFileButton">
+            <property name="minimumSize">
+             <size>
+              <width>90</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>楷体</family>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+border-radius:5px;
+}
+QPushButton:hover{color: rgb(0,0,0);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
+            </property>
+            <property name="text">
+             <string>删除文件</string>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/picture/deletefile.PNG</normaloff>:/picture/deletefile.PNG</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="nameHLayout">
           <item>
            <widget class="QLabel" name="movieLabel">
             <property name="minimumSize">
@@ -926,11 +1029,23 @@ QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px
               <height>28</height>
              </size>
             </property>
+            <property name="font">
+             <font>
+              <family>新宋体</family>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
             <property name="styleSheet">
-             <string notr="true">border-width:1;border-style:outset;background:transparent;</string>
+             <string notr="true">border-width:0 0 1 0;
+border-style:outset;
+background:transparent;</string>
             </property>
            </widget>
           </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="dataHLayout">
           <item>
            <widget class="QLabel" name="datalabel">
             <property name="minimumSize">
@@ -961,11 +1076,23 @@ QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px
               <height>28</height>
              </size>
             </property>
+            <property name="font">
+             <font>
+              <family>新宋体</family>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
             <property name="styleSheet">
-             <string notr="true">border-width:1;border-style:outset;background:transparent;</string>
+             <string notr="true">border-width:0 0 1 0;
+border-style:outset;
+background:transparent;</string>
             </property>
            </widget>
           </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="listHLayout">
           <item>
            <widget class="QLabel" name="sequenceLabel">
             <property name="minimumSize">
@@ -999,80 +1126,211 @@ QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px
               <height>28</height>
              </size>
             </property>
-            <property name="styleSheet">
-             <string notr="true">border-width:1;border-style:outset;background:transparent;</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="saveFileButton">
-            <property name="minimumSize">
-             <size>
-              <width>90</width>
-              <height>50</height>
-             </size>
-            </property>
             <property name="font">
              <font>
-              <family>楷体</family>
+              <family>新宋体</family>
               <pointsize>16</pointsize>
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">QPushButton{
-background-color: rgb(122, 175,207);
-border-radius:5px;
-}
-QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
-            </property>
-            <property name="text">
-             <string>保存文件</string>
-            </property>
-            <property name="icon">
-             <iconset resource="resources.qrc">
-              <normaloff>:/picture/savefile.png</normaloff>:/picture/savefile.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>45</width>
-              <height>45</height>
-             </size>
+             <string notr="true">border-width:0 0 1 0;
+border-style:outset;
+background:transparent;</string>
             </property>
            </widget>
           </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QTableView" name="playTableView">
+          <property name="minimumSize">
+           <size>
+            <width>270</width>
+            <height>361</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>新宋体</family>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QHeaderView::section:first
+{
+	border-style:inset;
+	background-color: rgb(241, 241,241);
+    height: 30px;
+	border: none;
+    font: 16pt &quot;新宋体&quot;;
+}
+ 
+QHeaderView::section:middle
+{
+	border-style:inset;
+	background-color: rgb(241, 241,241);
+    height: 30px;
+	border: none;
+    font: 16pt &quot;新宋体&quot;;
+}
+ 
+QHeaderView::section:last
+{
+	border-style:inset;
+	background-color: rgb(241, 241,241);
+    height: 30px;
+    border: none;
+    font: 16pt &quot;新宋体&quot;;
+}
+
+QTableView {
+    color: black;                                                                   
+    background-color: rgb(241, 241, 241);              
+    alternate-background-color: rgb(255, 255, 255);
+    selection-color: black;                            
+    selection-background-color: rgb(192, 192, 192);        
+    border: none;
+}
+
+
+</string>
+          </property>
+          <property name="showGrid">
+           <bool>false</bool>
+          </property>
+          <property name="gridStyle">
+           <enum>Qt::NoPen</enum>
+          </property>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderHighlightSections">
+           <bool>false</bool>
+          </attribute>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="detailsLayout">
           <item>
-           <widget class="QPushButton" name="deleteFileButton">
+           <widget class="QLabel" name="playMovie">
             <property name="minimumSize">
              <size>
               <width>90</width>
-              <height>50</height>
+              <height>20</height>
              </size>
             </property>
             <property name="font">
              <font>
-              <family>楷体</family>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>当前影片</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="playMovieEdit">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>新宋体</family>
               <pointsize>16</pointsize>
              </font>
             </property>
             <property name="styleSheet">
-             <string notr="true">QPushButton{
-background-color: rgb(96, 187,214);
-border-radius:5px;
-}
-QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
+             <string notr="true">border-width:0;border-style:outset;background:transparent;</string>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="playData">
+            <property name="minimumSize">
+             <size>
+              <width>90</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+             </font>
             </property>
             <property name="text">
-             <string>删除文件</string>
+             <string>数据文件</string>
             </property>
-            <property name="icon">
-             <iconset resource="resources.qrc">
-              <normaloff>:/picture/deletefile.png</normaloff>:/picture/deletefile.png</iconset>
-            </property>
-            <property name="iconSize">
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="playDataEdit">
+            <property name="minimumSize">
              <size>
-              <width>45</width>
-              <height>45</height>
+              <width>80</width>
+              <height>30</height>
              </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>新宋体</family>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">border-width:0;border-style:outset;background:transparent;</string>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="playMovieSequence">
+            <property name="minimumSize">
+             <size>
+              <width>90</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>电影序列</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="playMovieSequenceEdit">
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>新宋体</family>
+              <pointsize>16</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">border-width:0;border-style:outset;background:transparent;</string>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -1082,166 +1340,43 @@ QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px
       </item>
      </layout>
     </item>
-    <item row="1" column="0">
-     <layout class="QVBoxLayout" name="playDetialVLayout">
+    <item>
+     <layout class="QHBoxLayout" name="rateHLayout">
       <item>
-       <layout class="QHBoxLayout" name="rateHLayout">
-        <item>
-         <widget class="QLabel" name="playPlayProgress">
-          <property name="minimumSize">
-           <size>
-            <width>90</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>播放进度</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QProgressBar" name="playProgressBar">
-          <property name="minimumSize">
-           <size>
-            <width>700</width>
-            <height>25</height>
-           </size>
-          </property>
-          <property name="value">
-           <number>0</number>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <widget class="QLabel" name="playPlayProgress">
+        <property name="minimumSize">
+         <size>
+          <width>90</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>16</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>播放进度</string>
+        </property>
+       </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="detailsLayout">
-        <item>
-         <widget class="QLabel" name="playMovie">
-          <property name="minimumSize">
-           <size>
-            <width>90</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>当前影片</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="playMovieEdit">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>200</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-width:0;border-style:outset;background:transparent;</string>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="playData">
-          <property name="minimumSize">
-           <size>
-            <width>90</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>数据文件</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="playDataEdit">
-          <property name="minimumSize">
-           <size>
-            <width>100</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-width:0;border-style:outset;background:transparent;</string>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="playMovieSequence">
-          <property name="minimumSize">
-           <size>
-            <width>90</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>电影序列</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="playMovieSequenceEdit">
-          <property name="minimumSize">
-           <size>
-            <width>100</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">border-width:0;border-style:outset;background:transparent;</string>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <widget class="QProgressBar" name="playProgressBar">
+        <property name="minimumSize">
+         <size>
+          <width>700</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(241, 241, 241);
+
+</string>
+        </property>
+        <property name="value">
+         <number>0</number>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>

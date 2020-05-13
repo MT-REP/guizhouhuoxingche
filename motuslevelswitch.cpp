@@ -7,6 +7,7 @@ MotusLevelSwitch::MotusLevelSwitch(QWidget *parent) :
     ui(new Ui::MotusLevelSwitch)
 {
     ui->setupUi(this);
+    setWindowTitle("用户切换界面");
 }
 
 //析构函数

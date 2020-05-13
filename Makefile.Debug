@@ -200,33 +200,37 @@ compiler_rcc_clean:
 temp/rcc/qrc_resources.cpp: resources.qrc \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/rcc.exe \
 		picture/savefile.png \
-		picture/yonghu.png \
+		picture/xmima.PNG \
+		picture/jilu_press.PNG \
+		picture/takeoff.PNG \
+		picture/hand_press.PNG \
 		picture/loginbeijing.png \
 		picture/openfile.png \
 		picture/caozuo_hover.png \
 		picture/kaiji.png \
+		picture/user_press.PNG \
 		picture/passwordChange.png \
-		picture/errorbackground.png \
-		picture/shoudong.png \
-		picture/tuichu.png \
+		picture/bofang.PNG \
 		picture/caozuo_pressed.jpg \
-		picture/cuowu.png \
-		picture/statusbackground.jpg \
-		picture/yundong.png \
+		picture/takeoff_press.PNG \
+		picture/guanliyuan.PNG \
 		picture/deletefile.png \
-		picture/tableback.png \
 		picture/guanli.png \
+		picture/bofang_press.PNG \
+		picture/caozuoyuan.PNG \
+		picture/up.PNG \
 		picture/reset.png \
+		picture/hand.PNG \
 		picture/run.png \
 		picture/caozuo.png \
 		picture/guanli_hover.png \
-		picture/uppage.png \
-		picture/playbackground.png \
-		picture/handbackground.png \
-		picture/jiankong.png \
+		picture/down.PNG \
+		picture/status_press.PNG \
+		picture/userSwitch.PNG \
+		picture/user.PNG \
 		picture/guanli_pressed.png \
-		picture/downpage.png \
-		picture/userbackground.png \
+		picture/status.PNG \
+		picture/jilu.PNG \
 		picture/userSwitchBackground.png
 	C:\Qt\Qt5.9.3\5.9.3\mingw53_32\bin\rcc.exe -name resources resources.qrc -o temp\rcc\qrc_resources.cpp
 
@@ -382,6 +386,7 @@ temp/moc/moc_mainwindow.cpp: C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QM
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/QTcpSocket \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QCloseEvent \
+		motusplayer.h \
 		mainwindow.h \
 		temp/moc/moc_predefs.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/bin/moc.exe
@@ -2060,6 +2065,7 @@ temp/obj/main.o: main.cpp mainwindow.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/QTcpSocket \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QCloseEvent \
+		motusplayer.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QApplication \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qapplication.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcoreapplication.h \
@@ -2213,47 +2219,8 @@ temp/obj/mainwindow.o: mainwindow.cpp mainwindow.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/QTcpSocket \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QCloseEvent \
+		motusplayer.h \
 		temp/ui/ui_mainwindow.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QVariant \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QAction \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qaction.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qactiongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QApplication \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qeventloop.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qguiapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qinputmethod.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QButtonGroup \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QGridLayout \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qgridlayout.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlayout.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlayoutitem.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qboxlayout.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QHBoxLayout \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qheaderview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qitemselectionmodel.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyleoption.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractspinbox.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qvalidator.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qregularexpression.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qslider.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractslider.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyle.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabbar.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QPushButton \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QStackedWidget \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstackedwidget.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QWidget \
 		motustimer.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qt_windows.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QMessageBox \
@@ -2535,26 +2502,10 @@ temp/obj/motusrunlog.o: motusrunlog.cpp motusrunlog.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QStandardItemModel \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QModelIndex \
 		temp/ui/ui_motusrunlog.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QVariant \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QAction \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qaction.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qactiongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QApplication \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qeventloop.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qguiapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qinputmethod.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QButtonGroup \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QGridLayout \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qgridlayout.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlayout.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlayoutitem.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qboxlayout.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qheaderview.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QDateTime \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qdatetime.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QTextStream \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QAbstractItemView \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qframe.h \
@@ -2570,18 +2521,8 @@ temp/obj/motusrunlog.o: motusrunlog.cpp motusrunlog.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabbar.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabwidget.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QPushButton \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QSpacerItem \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QTableView \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtableview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QVBoxLayout \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QWidget \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QDateTime \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qdatetime.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QTextStream \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QAbstractItemView
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QHeaderView \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qheaderview.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\motusrunlog.o motusrunlog.cpp
 
 temp/obj/motususerlogin.o: motususerlogin.cpp motususerlogin.h \
@@ -2688,47 +2629,6 @@ temp/obj/motususerlogin.o: motususerlogin.cpp motususerlogin.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtouchdevice.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QCloseEvent \
 		temp/ui/ui_motususerlogin.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QVariant \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QAction \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qaction.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qicon.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qactiongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QApplication \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qeventloop.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qguiapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qinputmethod.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QButtonGroup \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qheaderview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qframe.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qabstractitemmodel.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qitemselectionmodel.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyleoption.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractspinbox.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qvalidator.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qregularexpression.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qslider.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractslider.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyle.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabbar.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabwidget.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QLineEdit \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlineedit.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtextcursor.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtextformat.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qpen.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtextoption.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QPushButton \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qmessagebox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\motususerlogin.o motususerlogin.cpp
 
@@ -2835,47 +2735,6 @@ temp/obj/motuschangepassword.o: motuschangepassword.cpp motuschangepassword.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qvector2d.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtouchdevice.h \
 		temp/ui/ui_motuschangepassword.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QVariant \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QAction \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qaction.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qicon.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qactiongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QApplication \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qeventloop.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qguiapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qinputmethod.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QButtonGroup \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qheaderview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qframe.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qabstractitemmodel.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qitemselectionmodel.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyleoption.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractspinbox.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qvalidator.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qregularexpression.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qslider.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractslider.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyle.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabbar.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabwidget.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QLineEdit \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlineedit.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtextcursor.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtextformat.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qpen.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtextoption.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QPushButton \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QMessageBox \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qmessagebox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\motuschangepassword.o motuschangepassword.cpp
@@ -2984,50 +2843,6 @@ temp/obj/motususermanagement.o: motususermanagement.cpp motususermanagement.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtouchdevice.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QList \
 		temp/ui/ui_motususermanagement.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QVariant \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QAction \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qaction.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qicon.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qactiongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QApplication \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qeventloop.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qguiapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qinputmethod.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QButtonGroup \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QGridLayout \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qgridlayout.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlayout.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlayoutitem.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qboxlayout.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qheaderview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qframe.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qabstractitemmodel.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qitemselectionmodel.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyleoption.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractspinbox.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qvalidator.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qregularexpression.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qslider.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractslider.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyle.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabbar.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabwidget.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QLabel \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlabel.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QSpacerItem \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QToolButton \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtoolbutton.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QWidget \
 		motuschangepassword.h \
 		motuslevelswitch.h \
 		motususerlogin.h \
@@ -3143,42 +2958,7 @@ temp/obj/motuslevelswitch.o: motuslevelswitch.cpp motuslevelswitch.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qfiledevice.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qvector2d.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtouchdevice.h \
-		temp/ui/ui_motuslevelswitch.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QVariant \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QAction \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qaction.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qicon.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qactiongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QApplication \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qeventloop.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qguiapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qinputmethod.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QButtonGroup \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qheaderview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qframe.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qabstractitemmodel.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qitemselectionmodel.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyleoption.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractspinbox.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qvalidator.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qregularexpression.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qslider.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractslider.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyle.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabbar.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabwidget.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QPushButton \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractbutton.h
+		temp/ui/ui_motuslevelswitch.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\motuslevelswitch.o motuslevelswitch.cpp
 
 temp/obj/motusaflatformstatus.o: motusaflatformstatus.cpp motusaflatformstatus.h \
@@ -3291,44 +3071,6 @@ temp/obj/motusaflatformstatus.o: motusaflatformstatus.cpp motusaflatformstatus.h
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qpen.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtextoption.h \
 		temp/ui/ui_motusaflatformstatus.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QVariant \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QAction \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qaction.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qicon.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qactiongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QApplication \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qeventloop.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qguiapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qinputmethod.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QButtonGroup \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QGroupBox \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qgroupbox.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qheaderview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qabstractitemmodel.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qitemselectionmodel.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyleoption.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractspinbox.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qvalidator.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qregularexpression.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qslider.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractslider.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyle.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabbar.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabwidget.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QLabel \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlabel.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QPushButton \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\motusaflatformstatus.o motusaflatformstatus.cpp
 
@@ -3435,49 +3177,18 @@ temp/obj/motushand.o: motushand.cpp motushand.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qvector2d.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtouchdevice.h \
 		temp/ui/ui_motushand.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QVariant \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QAction \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qaction.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qicon.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qactiongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QApplication \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qeventloop.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qguiapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qinputmethod.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QButtonGroup \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qheaderview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qframe.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qabstractitemmodel.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qitemselectionmodel.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyleoption.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractspinbox.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qvalidator.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qregularexpression.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qslider.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractslider.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyle.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabbar.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabwidget.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QPushButton \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
 		mainwindow.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QMainWindow \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qmainwindow.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabwidget.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qicon.h \
 		motusoperationview.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QList \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QModelIndex \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qabstractitemmodel.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QProgressBar \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qprogressbar.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qframe.h \
 		motusaflatformstatus.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QLineEdit \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlineedit.h \
@@ -3508,6 +3219,7 @@ temp/obj/motushand.o: motushand.cpp motushand.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/QTcpSocket \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QCloseEvent \
+		motusplayer.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QMessageBox \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qmessagebox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o temp\obj\motushand.o motushand.cpp
@@ -3621,63 +3333,18 @@ temp/obj/motusoperationview.o: motusoperationview.cpp motusoperationview.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qprogressbar.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qframe.h \
 		temp/ui/ui_motusoperationview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QVariant \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QAction \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qaction.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qicon.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qactiongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QApplication \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qcoreapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qeventloop.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qdesktopwidget.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qguiapplication.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qinputmethod.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QButtonGroup \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qbuttongroup.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QGridLayout \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qgridlayout.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlayout.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlayoutitem.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qboxlayout.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QGroupBox \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qgroupbox.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QHBoxLayout \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QHeaderView \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qheaderview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qitemselectionmodel.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyleoption.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractspinbox.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qvalidator.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qregularexpression.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qslider.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractslider.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyle.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabbar.h \
+		mainwindow.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QMainWindow \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qmainwindow.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabwidget.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qrubberband.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QLabel \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlabel.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qicon.h \
+		motusaflatformstatus.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QLineEdit \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qlineedit.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtextcursor.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtextformat.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qpen.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qtextoption.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QPushButton \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qpushbutton.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QTableView \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtableview.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QVBoxLayout \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QWidget \
-		mainwindow.h \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QMainWindow \
-		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qmainwindow.h \
-		motusaflatformstatus.h \
 		motususermanagement.h \
 		motushand.h \
 		motusrunlog.h \
@@ -3702,7 +3369,23 @@ temp/obj/motusoperationview.o: motusoperationview.cpp motusoperationview.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/QTcpSocket \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtNetwork/qtcpsocket.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/QCloseEvent \
+		motusplayer.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QAbstractItemView \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemview.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractscrollarea.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qitemselectionmodel.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractitemdelegate.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyleoption.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractspinbox.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtGui/qvalidator.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/qregularexpression.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qslider.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qabstractslider.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qstyle.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qtabbar.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qrubberband.h \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QHeaderView \
+		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qheaderview.h \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtCore/QTextStream \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/QMessageBox \
 		C:/Qt/Qt5.9.3/5.9.3/mingw53_32/include/QtWidgets/qmessagebox.h \

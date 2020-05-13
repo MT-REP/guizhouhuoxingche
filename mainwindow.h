@@ -15,6 +15,8 @@
 #include <QTcpSocket>
 #include <QCloseEvent>
 #include "motusplayer.h"
+//#include <QToolBar> //
+//#include <QAction>  //
 class MotusTimer;
 
 // const char VideoPlayCmd[6] = {0x50,0x4C,0x41,0x59,0x0D,0x0A};	                  //PLAY\r\n
@@ -61,6 +63,8 @@ public:
     ~MainWindow();
 private:
     Ui::MainWindow *ui;
+//    QToolBar *toolbar;
+//    QAction *act[6];
     MotusSocket mMotusSocket;
     QString stepMessage;     //步骤信息
     QString errorMessage;    //错误信息
@@ -121,6 +125,8 @@ signals:
     void setOperateViewText(QString text);
     void sendHandPermissin(bool able);
     void sendPlay(bool isplay);
+private:
+    void buttonView(int view);
 public slots:
     void recvSafetyBeltAble(bool able);
     void recvOperationCmd(int cmd);

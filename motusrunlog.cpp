@@ -5,7 +5,7 @@
 #include<QAbstractItemView>
 #include<QHeaderView>
 //#include <QDir>
-//#include <QDebug>
+#include <QDebug>
 MotusRunLog::MotusRunLog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MotusRunLog)
@@ -20,6 +20,7 @@ MotusRunLog::MotusRunLog(QWidget *parent) :
     ui->errorRecordTableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->errorRecordTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->errorRecordTableView->verticalHeader()->hide();
+    ui->errorRecordTableView->setAlternatingRowColors(true);
     //创建数据文件
     init();
     //读取数据文件
@@ -40,7 +41,6 @@ MotusRunLog::MotusRunLog(QWidget *parent) :
         m_item[i][1]->setText(merrorRecord.at(i).strEvent);
         m_row+=1;
     }
-    setLayout(ui->maingridLayout);
 }
 
 //析构函数
@@ -65,6 +65,7 @@ void MotusRunLog::init()
          file.close();
          //qDebug()<<"文件创建成功";
     }
+    //qDebug()<<"文件文件存在";
 }
 
 //添加事件函数
@@ -126,7 +127,7 @@ void MotusRunLog::readLog()
     file.setFileName(currentFileName);
     if(file.exists ())
     {
-         unsigned int time=0;
+         int time=0;
          QString tempStr;
          QDateTime current_date_time = QDateTime::currentDateTime();
          //得到年数
@@ -146,6 +147,7 @@ void MotusRunLog::readLog()
              QStringList  tempstrlist;
              ErrorRecord tempValue;
              tempstr=out.readLine();
+             //qDebug()<<tempstr;
              tempstrlist=tempstr.split (",");
              if(tempstrlist.isEmpty())
              {
@@ -153,7 +155,7 @@ void MotusRunLog::readLog()
                 return;
              }
              int recordTime=tempstrlist.at(0).toInt();
-             if(time-recordTime<3)
+             if((time-recordTime)<3)
              {
                 tempValue.month=tempstrlist.at(0).toInt();
                 tempValue.strTime=tempstrlist.at(1);

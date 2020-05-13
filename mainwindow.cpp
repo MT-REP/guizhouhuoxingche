@@ -91,8 +91,6 @@ MainWindow::MainWindow(QWidget *parent) :
     //播放界面切换
     on_playButton_clicked();
 
-    ui->centralWidget->setLayout(ui->mainGridLayout);
-
     //mQTcpSocket.connectToHost("192.168.1.7",23);
     //if (!mQTcpSocket.waitForConnected(1000))
     //QMessageBox::information(this,"友情提示","未连接到视频播放器");
@@ -940,6 +938,7 @@ void MainWindow::on_playButton_clicked()
     ui->m_stackwidget->setCurrentWidget(mMotusOperationView);
     viewId=0;
     setWindowTitle("播放主页");
+    buttonView(viewId);
 }
 
 //接收控制指令
@@ -1004,6 +1003,7 @@ void MainWindow::on_stateButton_clicked()
     ui->m_stackwidget->setCurrentWidget(mMotusaFlatformStatus);
     viewId=1;
     setWindowTitle("状态主页");
+    buttonView(viewId);
 }
 
 
@@ -1013,6 +1013,7 @@ void MainWindow::on_handButton_clicked()
     ui->m_stackwidget->setCurrentWidget(mMotusHand);
     viewId=2;
     setWindowTitle("手动主页");
+    buttonView(viewId);
 }
 
 //安全带是否可用
@@ -1045,6 +1046,7 @@ void MainWindow::on_errorCheckButton_clicked()
     ui->m_stackwidget->setCurrentWidget(mMotusRunLog);
      viewId=3;
     setWindowTitle("记录主页");
+    buttonView(viewId);
 }
 
 //用户按键
@@ -1053,6 +1055,84 @@ void MainWindow::on_userButton_clicked()
     ui->m_stackwidget->setCurrentWidget(mMotusUserManagement);
     viewId=4;
     setWindowTitle("用户主页");
+    buttonView(viewId);
+}
+
+//按键切换
+void MainWindow::buttonView(int view)
+{
+    static int oldView =1;
+    if(oldView == view) return;
+    switch(oldView)
+    {
+        case -1: break;
+        case 0:  {
+                    ui->playButton->setStyleSheet("QPushButton{border-style:inset; background-color:rgb(46,57,66);}QPushButton:hover{color: rgb(255,255,255);}");
+                    ui->playButton->setIcon(QIcon(":/picture/bofang.PNG"));
+                    ui->playButton->setIconSize(QSize(50,50));
+                    break;}
+        case 1:  {
+                    ui->stateButton->setStyleSheet("QPushButton{border-style:inset; background-color:rgb(46,57,66);}QPushButton:hover{color: rgb(255,255,255);}");
+                    ui->stateButton->setIcon(QIcon(":/picture/status.PNG"));
+                    ui->stateButton->setIconSize(QSize(50,50));
+                    break;}
+        case 2:  {
+                    ui->handButton->setStyleSheet("QPushButton{border-style:inset; background-color:rgb(46,57,66);}QPushButton:hover{color: rgb(255,255,255);}");
+                    ui->handButton->setIcon(QIcon(":/picture/hand.PNG"));
+                    ui->handButton->setIconSize(QSize(50,50));
+                    break;}
+        case 3:  {
+                    ui->errorCheckButton->setStyleSheet("QPushButton{border-style:inset; background-color:rgb(46,57,66);}QPushButton:hover{color: rgb(255,255,255);}");
+                    ui->errorCheckButton->setIcon(QIcon(":/picture/jilu.PNG"));
+                    ui->errorCheckButton->setIconSize(QSize(50,50));
+                    break;}
+        case 4:  {
+                    ui->userButton->setStyleSheet("QPushButton{border-style:inset; background-color:rgb(46,57,66);}QPushButton:hover{color: rgb(255,255,255);}");
+                    ui->userButton->setIcon(QIcon(":/picture/user.PNG"));
+                    ui->userButton->setIconSize(QSize(50,50));
+                    break;}
+        case 5:  {
+                    ui->exitButton->setStyleSheet("QPushButton{border-style:inset; background-color:rgb(46,57,66);}QPushButton:hover{color: rgb(255,255,255);}");
+                    ui->exitButton->setIcon(QIcon(":/picture/takeoff.PNG"));
+                    ui->exitButton->setIconSize(QSize(50,50));
+                    break;}
+        default:break;
+    }
+    switch(view)
+    {
+        case 0:  {
+                    ui->playButton->setStyleSheet("QPushButton{border-style:inset;background-color:rgb(241,241,241);}QPushButton:hover{color: rgb(0,0,0);}");
+                    ui->playButton->setIcon(QIcon(":/picture/bofang_press.PNG"));
+                    ui->playButton->setIconSize(QSize(50,50));
+                    break;}
+        case 1:  {
+                    ui->stateButton->setStyleSheet("QPushButton{border-style:inset;background-color:rgb(241,241,241);}QPushButton:hover{color: rgb(0,0,0);}");
+                    ui->stateButton->setIcon(QIcon(":/picture/status_press.PNG"));
+                    ui->stateButton->setIconSize(QSize(50,50));
+                    break;}
+        case 2:  {
+                    ui->handButton->setStyleSheet("QPushButton{border-style:inset;background-color:rgb(241,241,241);}QPushButton:hover{color: rgb(0,0,0);}");
+                    ui->handButton->setIcon(QIcon(":/picture/hand_press.PNG"));
+                    ui->handButton->setIconSize(QSize(50,50));
+                    break;}
+        case 3:  {
+                    ui->errorCheckButton->setStyleSheet("QPushButton{border-style:inset;background-color:rgb(241,241,241);}QPushButton:hover{color: rgb(0,0,0);}");
+                    ui->errorCheckButton->setIcon(QIcon(":/picture/jilu_press.PNG"));
+                    ui->errorCheckButton->setIconSize(QSize(50,50));
+                    break;}
+        case 4:  {
+                    ui->userButton->setStyleSheet("QPushButton{border-style:inset;background-color:rgb(241,241,241);}QPushButton:hover{color: rgb(0,0,0);}");
+                    ui->userButton->setIcon(QIcon(":/picture/user_press.PNG"));
+                    ui->userButton->setIconSize(QSize(50,50));
+                    break;}
+        case 5:  {
+                    ui->exitButton->setStyleSheet("QPushButton{border-style:inset;background-color:rgb(241,241,241);}QPushButton:hover{color: rgb(0,0,0);}");
+                    ui->exitButton->setIcon(QIcon(":/picture/takeoff_press.PNG"));
+                    ui->exitButton->setIconSize(QSize(50,50));
+                    break;}
+        default:break;
+    }
+    oldView=view;
 }
 
 //关闭消息
@@ -1067,6 +1147,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
 //退出按键
 void MainWindow::on_exitButton_clicked()
 {
+      viewId=5;
+      buttonView(viewId);
       QMessageBox::StandardButton reply;
       reply = QMessageBox::warning(this, "警告", "是否关机并关闭软件",QMessageBox::Yes | QMessageBox::No);
       if(reply==QMessageBox::Yes)

@@ -22,11 +22,17 @@
     <height>640</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <family>新宋体</family>
+    <pointsize>16</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#MotusRunLog { border-image: url(:/picture/errorbackground.png); } #MotusRunLog * { border-image:url(); }
+   <string notr="true">#MotusRunLog { background-color: rgb(241, 241, 241); } 
 
 </string>
   </property>
@@ -36,17 +42,49 @@
      <x>0</x>
      <y>0</y>
      <width>1021</width>
-     <height>631</height>
+     <height>641</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="maingridLayout">
-    <property name="topMargin">
-     <number>5</number>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="leftMargin">
+     <number>2</number>
     </property>
-    <property name="bottomMargin">
-     <number>5</number>
-    </property>
-    <item row="0" column="1">
+    <item>
+     <widget class="QTableView" name="errorRecordTableView">
+      <property name="font">
+       <font>
+        <family>新宋体</family>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QHeaderView::section:first
+{
+	border-style:inset;
+	background-color: rgb(241, 241,241);
+    height: 30px;
+    font: 16pt &quot;新宋体&quot;;
+}
+ 
+QHeaderView::section:middle
+{
+	border-style:inset;
+	background-color: rgb(241, 241,241);
+    height: 30px;
+    font: 16pt &quot;新宋体&quot;;
+}
+ 
+QHeaderView::section:last
+{
+	border-style:inset;
+	background-color: rgb(241, 241,241);
+    height: 30px;
+    font: 16pt &quot;新宋体&quot;;
+}</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
        <number>10</number>
@@ -76,17 +114,16 @@
         </property>
         <property name="styleSheet">
          <string notr="true">QPushButton{ 
-background-color: rgb(83, 127,172);
 border-radius:6px;
 }
-QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
+QPushButton:hover{color: rgb(0,0,0);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
         </property>
         <property name="text">
          <string>上一页</string>
         </property>
         <property name="icon">
          <iconset resource="resources.qrc">
-          <normaloff>:/picture/uppage.png</normaloff>:/picture/uppage.png</iconset>
+          <normaloff>:/picture/up.PNG</normaloff>:/picture/up.PNG</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -112,17 +149,16 @@ QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px
         </property>
         <property name="styleSheet">
          <string notr="true">QPushButton{ 
-background-color: rgb(97, 144,186);
 border-radius:6px;
 }
-QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
+QPushButton:hover{color: rgb(0,0,0);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
         </property>
         <property name="text">
          <string>下一页</string>
         </property>
         <property name="icon">
          <iconset resource="resources.qrc">
-          <normaloff>:/picture/downpage.png</normaloff>:/picture/downpage.png</iconset>
+          <normaloff>:/picture/down.PNG</normaloff>:/picture/down.PNG</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -152,26 +188,6 @@ QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px
        </spacer>
       </item>
      </layout>
-    </item>
-    <item row="0" column="0">
-     <widget class="QTableView" name="errorRecordTableView">
-      <property name="font">
-       <font>
-        <family>新宋体</family>
-        <pointsize>16</pointsize>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QTableView 
-{
-border-image: url(:/picture/tableback.png);
-}
-QTableView QHeaderView::section 
-{
-background-color:rgb(175,245,253)
-}</string>
-      </property>
-     </widget>
     </item>
    </layout>
   </widget>

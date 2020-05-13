@@ -9,302 +9,293 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
-    <height>720</height>
+    <width>1223</width>
+    <height>640</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>1024</width>
-    <height>720</height>
+    <height>640</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1024</width>
-    <height>720</height>
+    <width>2000</width>
+    <height>640</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#MainWindow{background-color: rgb(28, 38,45);}
+</string>
+  </property>
   <widget class="QWidget" name="centralWidget">
+   <widget class="QStackedWidget" name="m_stackwidget">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>0</y>
+      <width>1024</width>
+      <height>640</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>1024</width>
+      <height>640</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>1024</width>
+      <height>640</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="page"/>
+    <widget class="QWidget" name="page_2"/>
+   </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>-10</y>
-      <width>1026</width>
-      <height>731</height>
+      <y>0</y>
+      <width>201</width>
+      <height>641</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="mainGridLayout">
-     <property name="bottomMargin">
-      <number>0</number>
-     </property>
-     <property name="verticalSpacing">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="rightMargin">
       <number>1</number>
      </property>
-     <item row="0" column="0">
-      <widget class="QStackedWidget" name="m_stackwidget">
+     <item>
+      <widget class="QPushButton" name="playButton">
        <property name="minimumSize">
         <size>
-         <width>1024</width>
-         <height>640</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>1024</width>
-         <height>640</height>
+         <width>106</width>
+         <height>60</height>
         </size>
        </property>
        <property name="font">
         <font>
+         <family>楷体</family>
          <pointsize>16</pointsize>
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true"/>
+        <string notr="true">QPushButton{ 
+border-style:inset;
+background-color: rgb(46, 57,66);
+}
+QPushButton:hover{color: rgb(255,255,255);} </string>
        </property>
-       <property name="currentIndex">
-        <number>0</number>
+       <property name="text">
+        <string>播放控制</string>
        </property>
-       <widget class="QWidget" name="page"/>
-       <widget class="QWidget" name="page_2"/>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/picture/bofang.PNG</normaloff>:/picture/bofang.PNG</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <property name="spacing">
-        <number>15</number>
+     <item>
+      <widget class="QPushButton" name="stateButton">
+       <property name="minimumSize">
+        <size>
+         <width>106</width>
+         <height>60</height>
+        </size>
        </property>
-       <property name="leftMargin">
-        <number>5</number>
+       <property name="font">
+        <font>
+         <family>楷体</family>
+         <pointsize>16</pointsize>
+        </font>
        </property>
-       <property name="rightMargin">
-        <number>5</number>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{ 
+border-style:inset;
+background-color: rgb(46, 57,66);
+}
+QPushButton:hover{color: rgb(255,255,255);} </string>
        </property>
-       <property name="bottomMargin">
-        <number>5</number>
+       <property name="text">
+        <string>状态监控</string>
        </property>
-       <item>
-        <widget class="QPushButton" name="playButton">
-         <property name="minimumSize">
-          <size>
-           <width>105</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>楷体</family>
-           <pointsize>16</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton{ 
-background-color: rgb(36, 163, 206);
-border-radius:5px;
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/picture/status.PNG</normaloff>:/picture/status.PNG</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="handButton">
+       <property name="minimumSize">
+        <size>
+         <width>106</width>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>楷体</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{ 
+border-style:inset;
+background-color: rgb(46, 57,66);
 }
-QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
-         </property>
-         <property name="text">
-          <string>播放控制</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/picture/yundong.png</normaloff>:/picture/yundong.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>42</width>
-           <height>42</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="stateButton">
-         <property name="minimumSize">
-          <size>
-           <width>105</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>楷体</family>
-           <pointsize>16</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton{ 
-background-color: rgb(16, 111,195);
-border-radius:5px;
+QPushButton:hover{color: rgb(255,255,255);} </string>
+       </property>
+       <property name="text">
+        <string>手动画面</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/picture/hand.PNG</normaloff>:/picture/hand.PNG</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="errorCheckButton">
+       <property name="minimumSize">
+        <size>
+         <width>106</width>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>楷体</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{ 
+border-style:inset;
+background-color: rgb(46, 57,66);
 }
-QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
-         </property>
-         <property name="text">
-          <string>状态监控</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/picture/jiankong.png</normaloff>:/picture/jiankong.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>42</width>
-           <height>42</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="handButton">
-         <property name="minimumSize">
-          <size>
-           <width>105</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>楷体</family>
-           <pointsize>16</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton{ 
-background-color: rgb(55, 106,151);
-border-radius:5px;
+QPushButton:hover{color: rgb(255,255,255);} </string>
+       </property>
+       <property name="text">
+        <string>错误报告</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/picture/jilu.PNG</normaloff>:/picture/jilu.PNG</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="userButton">
+       <property name="minimumSize">
+        <size>
+         <width>106</width>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>楷体</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{ 
+border-style:inset;
+background-color: rgb(46, 57,66);
 }
-QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
-         </property>
-         <property name="text">
-          <string>手动画面</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/picture/shoudong.png</normaloff>:/picture/shoudong.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>46</width>
-           <height>46</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="errorCheckButton">
-         <property name="minimumSize">
-          <size>
-           <width>105</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>楷体</family>
-           <pointsize>16</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton{ 
-background-color: rgb(242, 177, 93);
-border-radius:5px;
+QPushButton:hover{color: rgb(255,255,255);} </string>
+       </property>
+       <property name="text">
+        <string>用户管理</string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/picture/user.PNG</normaloff>:/picture/user.PNG</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="exitButton">
+       <property name="minimumSize">
+        <size>
+         <width>106</width>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>楷体</family>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{ 
+border-style:inset;
+background-color: rgb(46, 57,66);
 }
-QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
-         </property>
-         <property name="text">
-          <string>错误报告</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/picture/cuowu.png</normaloff>:/picture/cuowu.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>46</width>
-           <height>46</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="userButton">
-         <property name="minimumSize">
-          <size>
-           <width>105</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>楷体</family>
-           <pointsize>16</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton{ 
-background-color: rgb(36, 163, 206);
-border-radius:5px;
-}
-QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
-         </property>
-         <property name="text">
-          <string>用户管理</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/picture/yonghu.png</normaloff>:/picture/yonghu.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>42</width>
-           <height>42</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="exitButton">
-         <property name="minimumSize">
-          <size>
-           <width>105</width>
-           <height>60</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>楷体</family>
-           <pointsize>16</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton{ 
-background-color: rgb(110, 190, 201);
-border-radius:5px;
-}
-QPushButton:hover{color: rgb(255,255,255);} QPushButton:pressed{padding-left:3px;padding-top:3px;}</string>
-         </property>
-         <property name="text">
-          <string>退出</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/picture/tuichu.png</normaloff>:/picture/tuichu.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>50</width>
-           <height>50</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
+QPushButton:hover{color: rgb(255,255,255);} </string>
+       </property>
+       <property name="text">
+        <string>退出    </string>
+       </property>
+       <property name="icon">
+        <iconset resource="resources.qrc">
+         <normaloff>:/picture/takeoff.PNG</normaloff>:/picture/takeoff.PNG</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>

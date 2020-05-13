@@ -6,6 +6,7 @@ MotusChangePassword::MotusChangePassword(QWidget *parent) :
     ui(new Ui::MotusChangePassword)
 {
     ui->setupUi(this);
+    setWindowTitle("密码修改界面");
 }
 
 //析构函数
